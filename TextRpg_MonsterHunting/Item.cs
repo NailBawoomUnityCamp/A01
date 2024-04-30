@@ -34,7 +34,7 @@ namespace TextRpg_MonsterHunting
 	}
 
 	//장비 아이템 클래스
-	public class EquipmentItem : Item
+	public class Equipment : Item
 	{
 		public string Name { get; private set; }
 		public EquipmentType EquipType { get; private set; }
@@ -46,7 +46,7 @@ namespace TextRpg_MonsterHunting
 
 		//Json 저장용 생성자
 		[JsonConstructor]
-		public EquipmentItem(string name, EquipmentType equipType, int stat, string discription,
+		public Equipment(string name, EquipmentType equipType, int stat, string discription,
 			 ItemType itemType, bool equipped)
 		{
 			this.Name = name;
@@ -57,7 +57,7 @@ namespace TextRpg_MonsterHunting
 			this.Equipped = equipped;
 		}
 
-		public EquipmentItem(string name, EquipmentType equipType, int stat, string discription,
+		public Equipment(string name, EquipmentType equipType, int stat, string discription,
 			 ItemType itemType)
 		{
 			Name = name;
@@ -123,6 +123,8 @@ namespace TextRpg_MonsterHunting
 			Equipped = false;
 		}
 
+		//아이템 소비 기능
+		//소비된 아이템은 inventory에서 제거(주인공에 인벤토리 추가시 구현)
 		public void Use(Character hero)
 		{
 			switch (ItemType)
@@ -140,6 +142,7 @@ namespace TextRpg_MonsterHunting
 					//마나 수정 필요
 					break;
 			}
+			//hero.Inventory.Remove(this);
 		}
 
 		public void PrintData()
