@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextRpg_MonsterHunting
 {
-    internal class Character
+    public class Character
     {
         public int Level { get; private set; }
         public string Name { get; private set; }

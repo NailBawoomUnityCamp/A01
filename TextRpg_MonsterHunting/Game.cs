@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextRpg_MonsterHunting
 {
-	internal class Game
+	public class Game
 	{
 		//우리의 주인공
 		Character hero;
