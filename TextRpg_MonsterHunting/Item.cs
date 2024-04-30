@@ -44,7 +44,7 @@ namespace TextRpg_MonsterHunting
 
 		public bool Equipped { get; set; }
 
-		//Json 저장용 생성자
+		//Json 불러오는용 생성자
 		[JsonConstructor]
 		public Equipment(string name, EquipmentType equipType, int stat, string discription,
 			 ItemType itemType, bool equipped)
@@ -123,6 +123,8 @@ namespace TextRpg_MonsterHunting
 			Equipped = false;
 		}
 
+		//아이템 소비 기능
+		//소비된 아이템은 inventory에서 제거(주인공에 인벤토리 추가시 구현)
 		public void Use(Character hero)
 		{
 			switch (ItemType)
@@ -140,6 +142,7 @@ namespace TextRpg_MonsterHunting
 					//마나 수정 필요
 					break;
 			}
+			//hero.Inventory.Remove(this);
 		}
 
 		public void PrintData()
