@@ -8,47 +8,61 @@ namespace TextRpg_MonsterHunting
 {
     internal class Character
     {
+        public const double MaxHealth = 100;
+
         public int Level { get; private set; }
         public string Name { get; private set; }
-        public float BaseAttackPower { get; private set; }
-        public float TotalAttackPower { get; private set; }
-        public float BaseDefensePower { get; private set; }
-        public float TotalDefensePower { get; private set; }
-        public float BaseHealth { get; private set; }
-        public float TotalHealth { get; private set; }
+        public double BaseAttackPower { get; private set; }
+        public double TotalAttackPower { get; private set; }
+        public double BaseDefensePower { get; private set; }
+        public double TotalDefensePower { get; private set; }
+        public double CurrentHealth { get; private set; }
         public int Experience { get; private set; }
         public int Gold { get; private set; }
+        public bool IsDie { get; private set; }
 
 
-        public Character(int level, string name, float baseAttackPower, float baseDefensePower, float baseHealth, int gold)
+        public Character(int level, string name, double baseAttackPower, double baseDefensePower, int gold)
         {
             Level = level;
             Name = name;
             BaseAttackPower = baseAttackPower;
             BaseDefensePower = baseDefensePower;
-            BaseHealth = baseHealth;
             TotalAttackPower = gold;
+
+            CurrentHealth = 100;
         }
 
         // 캐릭터의 정보 출력
         public void PrintCharacterInfo() { }
 
         // 총 방어력 합산/감산
-        public void ChangeDefense(float changeDefense)
+        public void ChangeDefense(double changeDefense)
         {
             TotalDefensePower = BaseDefensePower + changeDefense;
         }
 
         // 총 공격력 합산/감산
-        public void ChangeAttack(float changeAttack)
+        public void ChangeAttack(double changeAttack)
         {
             TotalAttackPower = BaseAttackPower + changeAttack;
         }
 
         // 총 체력 합산/감산
-        public void ChangeHealth(float changeHealth)
+        public void ChangeHealth(double changeHealth)
         {
-            TotalHealth = BaseHealth + changeHealth;
+            CurrentHealth += changeHealth;
+
+            // 체력이 최대 체력을 넘어가는지 확인
+            if (CurrentHealth > MaxHealth)
+            {
+                CurrentHealth = MaxHealth;
+            }
+            // 체력이 0 이하로 내려가는지 확인
+            else if (CurrentHealth <= 0)
+            {
+                IsDie = true;
+            }
         }
 
         // 골드 증가/감소
@@ -62,6 +76,7 @@ namespace TextRpg_MonsterHunting
         {
             switch (Experience)
             {
+                // 레벨업
                 case 10:
                     Level = 2;
                     break;
@@ -75,9 +90,31 @@ namespace TextRpg_MonsterHunting
                     Level = 5;
                     break;
                 default:
+                    // 경험치 증가
                     Experience += monsterLevel;
                     break;
             }
+        }
+
+        // 공격 기능, 피해량 반환
+        public double Attack()
+        {
+            // 일치하는 몬스터를 선택하지 않음
+
+            // 이미 죽은 몬스터 공격
+
+            // 일치하는 몬스터 선택
+            // 공격력은 10%의 오차를 가짐
+            double errorRange = TotalAttackPower * 0.1;
+            errorRange = Math.Ceiling(errorRange); // 올림
+
+            // 피해량 계산
+            Random random = new Random();
+            double min = TotalAttackPower - errorRange;
+            double max = TotalAttackPower + errorRange;
+            double attackDamage = min + random.NextDouble() * (max - min);
+
+            return attackDamage; // 피해량 반환
         }
     }
 }
