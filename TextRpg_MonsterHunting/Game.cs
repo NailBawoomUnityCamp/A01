@@ -20,7 +20,7 @@ namespace TextRpg_MonsterHunting
 		*/
 		public void Start()
 		{
-			Console.Write("게임을 시작합니다!\n주인공 이름을 입력하세요: ");
+			Console.Write("스파르타 던전에 오신 여러분 환영합니다.\n원하시는 이름을 설정해주세요.");
 			string? characterName = Console.ReadLine();
 
 			/*
@@ -28,11 +28,11 @@ namespace TextRpg_MonsterHunting
 			 */
 
 			Console.Write("주인공 직업을 선택하세요: ");
-			string? characterName = Console.ReadLine();
+			//직업 입력받기
 
 			//캐릭터 생성과 게임 시작
 			hero = new Character(1, characterName ?? "홍길동", 10, 5, 100, 1500);
-			StartScreen(character);
+			StartScreen(hero);
 		}
 
 		/*메인 게임 루프
@@ -53,12 +53,12 @@ namespace TextRpg_MonsterHunting
 				listOfChoices.Add("상태 보기");
 				listOfChoices.Add("전투 시작");
 
-				int userInput = /*UI.함수이름(topLineLetters, listOfChoices)*/;
+				int userInput = 0; /*UI.함수이름(topLineLetters, listOfChoices)*/
 
 				switch (userInput)
 				{
 					case 1:
-						hero.CharacterInfo();
+						//캐릭터 상태출력
 						break;
 					case 2:
 						break;
