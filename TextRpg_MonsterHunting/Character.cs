@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace TextRpg_MonsterHunting
 {
     // 직업
-    enum Chad
+    public enum GameClassType
     {
         Warrior = 1,
         Wizard,
         Archer
     }
 
-    internal class Character
+    public class Character
     {
         public const double MaxHealth = 100;
-        public Chad Chad { get; private set; }
+        public GameClassType GameClass { get; private set; }
         public int Level { get; private set; }
         public string Name { get; private set; }
         public double BaseAttackPower { get; private set; }
@@ -30,9 +32,9 @@ namespace TextRpg_MonsterHunting
         public bool IsDie { get; private set; }
 
 
-        public Character(Chad chad, int level, string name, double baseAttackPower, double baseDefensePower, int gold)
+        public Character(GameClassType gameClass, int level, string name, double baseAttackPower, double baseDefensePower, int gold)
         {
-            Chad = chad;
+            GameClass = gameClass;
             Level = level;
             Name = name;
             BaseAttackPower = baseAttackPower;
