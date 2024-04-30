@@ -21,17 +21,33 @@ namespace TextRpg_MonsterHunting
 		public void Start()
 		{
 			Console.Write("스파르타 던전에 오신 여러분 환영합니다.\n원하시는 이름을 설정해주세요.");
-			string? characterName = Console.ReadLine();
+			string? heroName = Console.ReadLine();
 
-			/*
-			 * 직업 출력 코드 필요
-			 */
-
-			Console.Write("주인공 직업을 선택하세요: ");
-			//직업 입력받기
+			string topLineLetter = "원하시는 직업을 선택하세요: ";
+			List<String> listOfChoices = new List<String>();
+			listOfChoices.Add("전사");
+			listOfChoices.Add("마법사");
+			listOfChoices.Add("궁수");
+			int inputForClass = 0; //UI에 직업 선택 함수 결과
+			GameClassType heroClass;
+			switch (inputForClass)
+			{
+				case 1:
+					heroClass = GameClassType.Warrior;
+					break;
+				case 2:
+					heroClass = GameClassType.Wizard;
+					break;
+				case 3:
+					heroClass = GameClassType.Archer;
+					break;
+				default:
+					heroClass = GameClassType.Warrior;
+					break;
+			}
 
 			//캐릭터 생성과 게임 시작
-			hero = new Character(1, characterName ?? "홍길동", 10, 5, 100, 1500);
+			hero = new Character(heroClass, heroName ?? "홍길동");
 			StartScreen(hero);
 		}
 
@@ -50,6 +66,7 @@ namespace TextRpg_MonsterHunting
 				"이제 전투를 시작할 수 있습니다.");
 
 				List<String> listOfChoices = new List<String>();
+				listOfChoices.Add("나가기");
 				listOfChoices.Add("상태 보기");
 				listOfChoices.Add("전투 시작");
 
@@ -57,8 +74,11 @@ namespace TextRpg_MonsterHunting
 
 				switch (userInput)
 				{
+					case 0:
+						leaveTown = true;
+						break;
 					case 1:
-						//캐릭터 상태출력
+						hero.PrintCharacterInfo();
 						break;
 					case 2:
 						break;
