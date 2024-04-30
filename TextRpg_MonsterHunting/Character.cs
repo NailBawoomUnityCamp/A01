@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace TextRpg_MonsterHunting
 {
     // 직업
-    enum Chad
+    public enum GameClassType
     {
         Warrior = 1,
         Wizard,
         Archer
     }
 
-    internal class Character
+    public class Character
     {
         public const double MaxHealth = 100;
-        public Chad Chad { get; private set; }
+        public GameClassType GameClass { get; private set; }
         public int Level { get; private set; }
         public string Name { get; private set; }
         public double BaseAttackPower { get; private set; }
@@ -30,20 +32,37 @@ namespace TextRpg_MonsterHunting
         public bool IsDie { get; private set; }
 
 
-        public Character(Chad chad, int level, string name, double baseAttackPower, double baseDefensePower, int gold)
+        public Character(GameClassType gameClass, string name)
         {
-            Chad = chad;
-            Level = level;
+            GameClass = gameClass;
             Name = name;
-            BaseAttackPower = baseAttackPower;
-            BaseDefensePower = baseDefensePower;
-            TotalAttackPower = gold;
 
+            Level = 1;
             CurrentHealth = 100;
+            Gold = 1500;         
+
+            switch (gameClass)
+            {
+                case GameClassType.Warrior:
+                    BaseAttackPower = 10;
+                    BaseDefensePower = 5;
+                    break;
+                case GameClassType.Wizard:
+                    BaseAttackPower = 15;
+                    BaseDefensePower = 1;
+                    break;
+                case GameClassType.Archer:
+                    BaseAttackPower = 18;
+                    BaseDefensePower = 3;
+                    break;
+            }
         }
 
         // 캐릭터의 정보 출력
-        public void PrintCharacterInfo() { }
+        public void PrintCharacterInfo() 
+        {
+
+        }
 
         // 총 방어력 합산/감산
         public void ChangeDefense(double changeDefense)
@@ -106,7 +125,7 @@ namespace TextRpg_MonsterHunting
         }
 
         // 공격 기능, 피해량 반환
-        public double Attack()
+        public void BasicAttack()
         {
             // 일치하는 몬스터를 선택하지 않음
 
@@ -123,7 +142,28 @@ namespace TextRpg_MonsterHunting
             double max = TotalAttackPower + errorRange;
             double attackDamage = min + random.NextDouble() * (max - min);
 
-            return attackDamage; // 피해량 반환
+            // 치명타 계산 및 
+            bool isCritical = random.NextDouble() < 0.15; // 15% 확률로 발생
+            if(isCritical)
+            {
+                attackDamage *= 1.6; // 160% 데미지
+            }
+
+            // 적중 실패 확률
+            bool isAttackMiss = random.NextDouble() < 0.10; // 10% 확률로 발생
+            if(isAttackMiss)
+            {
+
+            }
+            else // 적중 성공
+            {
+                // 적 체력 감소
+            }
+        }
+
+        public void UseSkill()
+        {
+
         }
     }
 }
