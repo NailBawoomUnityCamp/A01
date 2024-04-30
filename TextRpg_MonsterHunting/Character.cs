@@ -133,16 +133,12 @@ namespace TextRpg_MonsterHunting
             {
                 // 레벨업
                 case 10:
-                    Level = 2;
-                    break;
                 case 35:
-                    Level = 3;
-                    break;
                 case 65:
-                    Level = 4;
-                    break;
                 case 100:
-                    Level = 5;
+                    Level += 1;
+                    BaseAttackPower += 0.5;
+                    BaseDefensePower += 1.0;
                     break;
                 default:
                     // 경험치 증가
