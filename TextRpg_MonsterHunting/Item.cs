@@ -44,7 +44,7 @@ namespace TextRpg_MonsterHunting
 
 		public bool Equipped { get; set; }
 
-		//Json 저장용 생성자
+		//Json 불러오는용 생성자
 		[JsonConstructor]
 		public Equipment(string name, EquipmentType equipType, int stat, string discription,
 			 ItemType itemType, bool equipped)

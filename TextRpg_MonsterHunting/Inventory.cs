@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace TextRpg_MonsterHunting
 {
 	// 인벤토리 클래스
-	class Inventory
+	public class Inventory
 	{
 		// 장착템 목록
 		[JsonInclude]
@@ -21,7 +21,7 @@ namespace TextRpg_MonsterHunting
 		public Equipment? Body { get; set; }
 		public Equipment? RightHand { get; set; }
 
-		//Json 저장용 초기화 메소드
+		//Json 불러오는용 초기화 메소드
 		[JsonConstructor]
 		public Inventory(EquipmentList EquipmentsInBag, PotionList PotionsInBag, Equipment? Body, Equipment? RightHand)
 		{
@@ -90,8 +90,7 @@ namespace TextRpg_MonsterHunting
 			{
 				if (Body != null)
 				{
-					Body.Equipped = false;
-					Body = null;
+					UnEquipItem(Body);
 				}
 				Body = item;
 				item.Equipped = true;
@@ -100,12 +99,28 @@ namespace TextRpg_MonsterHunting
 			{
 				if (RightHand != null)
 				{
-					RightHand.Equipped = false;
-					RightHand = null;
+					UnEquipItem(RightHand);
 				}
 				RightHand = item;
 				item.Equipped = true;
 			}
+		}
+
+		//장착 해제
+		//해제된 아이템 반환
+		public Equipment UnEquipItem(Equipment item)
+		{
+			if (item.EquipType == EquipmentType.Body)
+			{
+				Body = null;
+				item.Equipped = false;
+			}
+			else if (item.EquipType == EquipmentType.OneHand)
+			{
+				RightHand = null;
+				item.Equipped = false;
+			}
+			return item;
 		}
 
 		//인벤토리 창
@@ -168,20 +183,14 @@ namespace TextRpg_MonsterHunting
 						exitManageEquipments = true;
 						break;
 					default:
-
 						Equipment item = EquipmentsInBag[input - 1];
 						if (item.Equipped)//장착된 아이템 해제
 						{
-							if (item.EquipType == EquipmentType.Body)
-							{
-								Body = null;
-								item.Equipped = false;
-							}
-							else if (item.EquipType == EquipmentType.OneHand)
-							{
-								RightHand = null;
-								item.Equipped = false;
-							}
+							UnEquipItem(item);
+						}
+						else//새로운 아이템은 장착
+						{
+							EquipItem(item);
 						}
 						break;
 				}
