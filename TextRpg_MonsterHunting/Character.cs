@@ -116,6 +116,7 @@ namespace TextRpg_MonsterHunting
             // 체력이 0 이하로 내려가는지 확인
             else if (CurrentHealth <= 0)
             {
+                CurrentHealth = 0;
                 IsDie = true;
             }
         }
