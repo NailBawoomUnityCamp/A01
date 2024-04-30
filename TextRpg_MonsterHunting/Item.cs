@@ -34,7 +34,7 @@ namespace TextRpg_MonsterHunting
 	}
 
 	//장비 아이템 클래스
-	public class EquipmentItem : Item
+	public class Equipment : Item
 	{
 		public string Name { get; private set; }
 		public EquipmentType EquipType { get; private set; }
@@ -46,7 +46,7 @@ namespace TextRpg_MonsterHunting
 
 		//Json 저장용 생성자
 		[JsonConstructor]
-		public EquipmentItem(string name, EquipmentType equipType, int stat, string discription,
+		public Equipment(string name, EquipmentType equipType, int stat, string discription,
 			 ItemType itemType, bool equipped)
 		{
 			this.Name = name;
@@ -57,7 +57,7 @@ namespace TextRpg_MonsterHunting
 			this.Equipped = equipped;
 		}
 
-		public EquipmentItem(string name, EquipmentType equipType, int stat, string discription,
+		public Equipment(string name, EquipmentType equipType, int stat, string discription,
 			 ItemType itemType)
 		{
 			Name = name;
