@@ -6,10 +6,18 @@ using System.Threading.Tasks;
 
 namespace TextRpg_MonsterHunting
 {
+    // 직업
+    enum Chad
+    {
+        Warrior = 1,
+        Wizard,
+        Archer
+    }
+
     internal class Character
     {
         public const double MaxHealth = 100;
-
+        public Chad Chad { get; private set; }
         public int Level { get; private set; }
         public string Name { get; private set; }
         public double BaseAttackPower { get; private set; }
@@ -22,8 +30,9 @@ namespace TextRpg_MonsterHunting
         public bool IsDie { get; private set; }
 
 
-        public Character(int level, string name, double baseAttackPower, double baseDefensePower, int gold)
+        public Character(Chad chad, int level, string name, double baseAttackPower, double baseDefensePower, int gold)
         {
+            Chad = chad;
             Level = level;
             Name = name;
             BaseAttackPower = baseAttackPower;
