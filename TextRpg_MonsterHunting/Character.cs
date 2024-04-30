@@ -32,16 +32,30 @@ namespace TextRpg_MonsterHunting
         public bool IsDie { get; private set; }
 
 
-        public Character(GameClassType gameClass, int level, string name, double baseAttackPower, double baseDefensePower, int gold)
+        public Character(GameClassType gameClass, string name)
         {
             GameClass = gameClass;
-            Level = level;
             Name = name;
-            BaseAttackPower = baseAttackPower;
-            BaseDefensePower = baseDefensePower;
-            TotalAttackPower = gold;
 
+            Level = 1;
             CurrentHealth = 100;
+            Gold = 1500;         
+
+            switch (gameClass)
+            {
+                case GameClassType.Warrior:
+                    BaseAttackPower = 10;
+                    BaseDefensePower = 5;
+                    break;
+                case GameClassType.Wizard:
+                    BaseAttackPower = 15;
+                    BaseDefensePower = 1;
+                    break;
+                case GameClassType.Archer:
+                    BaseAttackPower = 18;
+                    BaseDefensePower = 3;
+                    break;
+            }
         }
 
         // 캐릭터의 정보 출력
