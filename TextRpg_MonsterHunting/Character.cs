@@ -18,7 +18,7 @@ namespace TextRpg_MonsterHunting
 
     public class Character
     {
-        private List<Skill> skills;
+        private SkillList skills;
 
         public const double MaxHealth = 100;     
 
@@ -35,6 +35,7 @@ namespace TextRpg_MonsterHunting
         public int Experience { get; private set; }
         public int Gold { get; private set; }
         public bool IsDie { get; private set; }
+        public Inventory inventory { get; private set; }
 
 
         public Character(GameClassType gameClass, string name)
@@ -46,7 +47,7 @@ namespace TextRpg_MonsterHunting
             CurrentHealth = 100;
             Gold = 1500;
 
-            skills = new List<Skill>();
+            skills = new SkillList();
             switch (gameClass)
             {
                 case GameClassType.Warrior:
