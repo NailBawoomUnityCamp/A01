@@ -123,6 +123,8 @@ namespace TextRpg_MonsterHunting
 			Equipped = false;
 		}
 
+		//아이템 소비 기능
+		//소비된 아이템은 inventory에서 제거(주인공에 인벤토리 추가시 구현)
 		public void Use(Character hero)
 		{
 			switch (ItemType)
@@ -140,6 +142,7 @@ namespace TextRpg_MonsterHunting
 					//마나 수정 필요
 					break;
 			}
+			//hero.Inventory.Remove(this);
 		}
 
 		public void PrintData()
