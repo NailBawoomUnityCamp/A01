@@ -20,12 +20,13 @@ namespace TextRpg_MonsterHunting
 	{
 		[JsonInclude]
 		public List<Item> Data { get; private set; }
+
 		[JsonInclude]
-		public int Count { get; private set; }
+		public uint Count { get; private set; }
 
 		//Json 저장용 constructor
 		[JsonConstructor]
-		public ItemList(List<Item> data, int count)
+		public ItemList(List<Item> data, uint count)
 		{
 			this.Data = data;
 			this.Count = count;
@@ -55,6 +56,30 @@ namespace TextRpg_MonsterHunting
 		public bool Contains(Item item)
 		{
 			return Data.Contains(item);
+		}
+
+		// Sets or Gets the element at the given index.
+		// 리스트가 [index]로 가져오는 함수를 가져와서 따라함
+		public Item this[int index]
+		{
+			get
+			{
+				// Following trick can reduce the range check by one
+				if ((uint)index >= (uint)Count)
+				{
+					throw new IndexOutOfRangeException("Index 범위 초과!!");
+				}
+				return Data[index];
+			}
+
+			set
+			{
+				if ((uint)index >= (uint)Count)
+				{
+					throw new IndexOutOfRangeException("Index 범위 초과!!");
+				}
+				Data[index] = value;
+			}
 		}
 	}
 
@@ -95,6 +120,27 @@ namespace TextRpg_MonsterHunting
 		{
 			return Data.Contains(item);
 		}
+		public Equipment this[int index]
+		{
+			get
+			{
+				// Following trick can reduce the range check by one
+				if ((uint)index >= (uint)Count)
+				{
+					throw new IndexOutOfRangeException("Index 범위 초과!!");
+				}
+				return Data[index];
+			}
+
+			set
+			{
+				if ((uint)index >= (uint)Count)
+				{
+					throw new IndexOutOfRangeException("Index 범위 초과!!");
+				}
+				Data[index] = value;
+			}
+		}
 	}
 
 	//json 저장용 List<Potion> 대체 클래스
@@ -134,5 +180,94 @@ namespace TextRpg_MonsterHunting
 		{
 			return Data.Contains(item);
 		}
+		public Potion this[int index]
+		{
+			get
+			{
+				// Following trick can reduce the range check by one
+				if ((uint)index >= (uint)Count)
+				{
+					throw new IndexOutOfRangeException("Index 범위 초과!!");
+				}
+				return Data[index];
+			}
+
+			set
+			{
+				if ((uint)index >= (uint)Count)
+				{
+					throw new IndexOutOfRangeException("Index 범위 초과!!");
+				}
+				Data[index] = value;
+			}
+		}
 	}
+
+    //json 저장용 List<Skil> 대체 클래스
+    public class SkillList
+    {
+        [JsonInclude]
+        public List<Skill> Data { get; private set; }
+
+        [JsonInclude]
+        public uint Count { get; private set; }
+
+        //Json 저장용 constructor
+        [JsonConstructor]
+        public SkillList(List<Skill> data, uint count)
+        {
+            this.Data = data;
+            this.Count = count;
+        }
+
+        public SkillList()
+        {
+            this.Data = new List<Skill>();
+            this.Count = 0;
+        }
+
+        //기존 List의 Add 메소드를 이 클래스에 맞게 변환
+        public void Add(Skill skill)
+        {
+            Data.Add(skill);
+            Count++;
+        }
+
+        //기존 List의 Remove 메소드를 이 클래스에 맞게 변환
+        public void Remove(Skill skill)
+        {
+            Data.Remove(skill);
+            Count--;
+        }
+
+        //기존 List의 Contains 메소드를 이 클래스에 맞게 변환
+        public bool Contains(Skill skill)
+        {
+            return Data.Contains(skill);
+        }
+
+        // Sets or Gets the element at the given index.
+        // 리스트가 [index]로 가져오는 함수를 가져와서 따라함
+        public Skill this[int index]
+        {
+            get
+            {
+                // Following trick can reduce the range check by one
+                if ((uint)index >= (uint)Count)
+                {
+                    throw new IndexOutOfRangeException("Index 범위 초과!!");
+                }
+                return Data[index];
+            }
+
+            set
+            {
+                if ((uint)index >= (uint)Count)
+                {
+                    throw new IndexOutOfRangeException("Index 범위 초과!!");
+                }
+                Data[index] = value;
+            }
+        }
+    }
 }
