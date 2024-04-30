@@ -59,7 +59,10 @@ namespace TextRpg_MonsterHunting
         }
 
         // 캐릭터의 정보 출력
-        public void PrintCharacterInfo() { }
+        public void PrintCharacterInfo() 
+        {
+
+        }
 
         // 총 방어력 합산/감산
         public void ChangeDefense(double changeDefense)
@@ -122,7 +125,7 @@ namespace TextRpg_MonsterHunting
         }
 
         // 공격 기능, 피해량 반환
-        public double Attack()
+        public void BasicAttack()
         {
             // 일치하는 몬스터를 선택하지 않음
 
@@ -139,7 +142,28 @@ namespace TextRpg_MonsterHunting
             double max = TotalAttackPower + errorRange;
             double attackDamage = min + random.NextDouble() * (max - min);
 
-            return attackDamage; // 피해량 반환
+            // 치명타 계산 및 
+            bool isCritical = random.NextDouble() < 0.15; // 15% 확률로 발생
+            if(isCritical)
+            {
+                attackDamage *= 1.6; // 160% 데미지
+            }
+
+            // 적중 실패 확률
+            bool isAttackMiss = random.NextDouble() < 0.10; // 10% 확률로 발생
+            if(isAttackMiss)
+            {
+
+            }
+            else // 적중 성공
+            {
+                // 적 체력 감소
+            }
+        }
+
+        public void UseSkill()
+        {
+
         }
     }
 }
