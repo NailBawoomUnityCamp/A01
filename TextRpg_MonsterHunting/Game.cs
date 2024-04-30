@@ -69,6 +69,7 @@ namespace TextRpg_MonsterHunting
 				listOfChoices.Add("나가기");
 				listOfChoices.Add("상태 보기");
 				listOfChoices.Add("전투 시작");
+				listOfChoices.Add("인벤토리 관리");
 
 				int userInput = 0; /*UI.함수이름(topLineLetters, listOfChoices)*/
 
@@ -81,6 +82,7 @@ namespace TextRpg_MonsterHunting
 						hero.PrintCharacterInfo();
 						break;
 					case 2:
+						//hero.Inventory.Manage();
 						break;
 				}
 			}
