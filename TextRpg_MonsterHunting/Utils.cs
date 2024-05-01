@@ -203,7 +203,7 @@ namespace TextRpg_MonsterHunting
 		}
 	}
 
-    //json 저장용 List<Skil> 대체 클래스
+    //json 저장용 List<Skill> 대체 클래스
     public class SkillList
     {
         [JsonInclude]
