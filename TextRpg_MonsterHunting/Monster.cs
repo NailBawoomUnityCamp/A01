@@ -16,7 +16,7 @@
             Name = name;
             AttackPower = attackPower;
             Health = health;
-            IsDead = false; // 몬스터는 처음에는 죽지 않은 상태
+            IsDead = false; // 몬스터는 처음에는 죽지 않은 상태//
             EnemyExp = enemyExp;
         }
     }
