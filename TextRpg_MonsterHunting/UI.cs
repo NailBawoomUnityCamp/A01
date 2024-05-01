@@ -10,46 +10,43 @@ namespace TextRpg_MonsterHunting
 {
     public class UI
     {
-        //행동 선택 리스트 출력
-        public void PrintTitle(string topLineLetters, List<string> listOfChoices)
+        //행동 딕셔너리 생성
+        Dictionary<string, string> titleTexts = new Dictionary<string, string>();
+
+        //생성자를 통해 딕셔너리 초기화
+        public UI()
         {
-            if (topLineLetters == "상태 보기")
-            {
-                Console.Clear();
-                Console.WriteLine(topLineLetters);
-                Console.WriteLine("캐릭터의 정보가 표시됩니다.\n");
-            }
-            else if (topLineLetters == "전투 시작")
-            {
-                Console.Clear();
-                Console.WriteLine(topLineLetters);
-            }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine(topLineLetters);
-            }
+            //딕셔너리 초기화
+            titleTexts.Add("상태 보기", "캐릭터의 정보가 표시됩니다.");
+            titleTexts.Add("인벤토리 관리", "보유 중인 아이템을 관리할 수 있습니다.");
+            titleTexts.Add("전투 시작", "전투가 시작되었습니다.");
+        }
 
-            int userChoice = 1;
+        //타이틀 출력
+        //topLineLetters 값 변경
+        //string topLineLetters = "";
+        public void PrintTitle(string topLineLetters)
+        {
+            Console.Clear();
+            //Console.WriteLine(topLineLetters);
 
-            foreach (var item in listOfChoices)
+            foreach (KeyValuePair<string, string> pair in titleTexts)
             {
-                if (item != "나가기")
+                if(pair.Key == topLineLetters)
                 {
-                    Console.WriteLine($"{userChoice}. {item}");
-                    userChoice++;
+                    Console.WriteLine(pair.Key);
+                    Console.WriteLine(pair.Value);
                 }
             }
-            Console.WriteLine("\n0. 나가기");
         }
 
         //유저 선택 Input 받기
-        public int UserChoiceInput(int userInput, List<string> listOfChoices)
+        public int UserChoiceInput(int start, int end)
         {
             Console.Write("\n원하시는 행동을 입력해 주세요.\n>> ");
-            userInput = int.Parse(Console.ReadLine());
+            int userInput = int.Parse(Console.ReadLine());
 
-            while (userInput < 0 || userInput > listOfChoices.Count - 1)
+            while (userInput < start || userInput > end)
             {
                 Console.Write("잘못된 입력입니다. 다시 입력해 주세요. \n>> ");
                 userInput = int.Parse(Console.ReadLine());
