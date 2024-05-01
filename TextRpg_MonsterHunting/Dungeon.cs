@@ -7,36 +7,42 @@ using System.Threading.Tasks;
 
 namespace TextRpg_MonsterHunting
 {
-    internal class Dungeon
-    {        //던젼 로직 작성
-             //던젼클래스선언
+
+
+    internal class Dungeon 
+    {   //Class Dungeon에 변수를 선언, 몬스터리스트를 선언. 아래는 멤버변수     
         Character _hero;
         List<Monster> _monsterHouse;
-        public void InDungeon(Character hero) 
-        {       
-            _hero = hero;
-            List<Monster> monsterKind;
-            Console.WriteLine($"\n\"{_hero.Name}\"은(는) 던전에 입장했습니다.");
 
+        //InDungeon()의 매개변수(서로 종속인 변수들을 묶어주는 변수)를 chracacter 클래스에 대입
+        public void InDungeon(Character hero) //hero = new Character(heroClass, heroName ?? "홍길동")
+        {
+            _hero = hero; //hero = new Character(heroClass, heroName ?? "홍길동"); 이므로 선언된 값 불러오기.
+            List<Monster> monsterKind;
+            Console.WriteLine($"\n\"{_hero.Name}\"은(는) 던전에 입장했습니다."); //public string Name { get; private set; }
+
+            //지역변수 monsterkind와 멤버변수_monsterHouse를 new 사용, 리스트를 초기화
             monsterKind = new List<Monster>();
             _monsterHouse = new List<Monster>();
+            //선언한 _monsterKind new List<Monster>를 구성하기위해 public Monster 불러오기. ("strring", 공격력, HP, 레벨)
             monsterKind.Add(new Monster("미니언", 15, 5, 2));
             monsterKind.Add(new Monster("공허충", 10, 9, 3));
             monsterKind.Add(new Monster("대포미니언", 25, 8, 5));
             Console.WriteLine("준비된 3가지의 몬스터 중");
             Console.WriteLine("세 마리가 생성됩니다.");
-            Random random = new Random();
-            int howMany = random.Next(1, 5);
+            Random random = new Random(); // Visulal Stuido에 코딩된, Random 난수 생성기 선언..?
+            int howMany = random.Next(1, 5); // random.Next 를 사용해 1,2,3,4 총 4마리를 생성하기 위해 1~5를 입력.
             for (int i = 0; i < howMany; i++)
             {
-                int index = random.Next(0, 3);
-                _monsterHouse.Add(monsterKind[index]);              
+                int index = random.Next(0, 3); //index등장
+                _monsterHouse.Add(monsterKind[index]);
             }
         }
-#if         
+
+#if
         //파이트 초이스. 
         public void FightChoice()
-        { 
+        {
             // 사용자가 몬스터를 발견.
             Console.WriteLine($"\n{_hero.Name}은(는) {monster}를 발견했다!."); /*1.game.cs에서 선언된 heroName은 어떻게 재활용 할 수있을까?
                                                                              2.발견한 monster의 이름을 어떻게 랜덤으로 입력 할 수 있을까?/*
@@ -46,7 +52,7 @@ namespace TextRpg_MonsterHunting
             1.싸운다 2.도망친다 선택*/
             Console.WriteLine("1. 싸운다");
             Console.WriteLine("2. 도망친다");
-            string userInput = Console.ReadLine()
+            string userInput = Console.ReadLine();
 
             // 선택에 따라 행동 수행
             switch (userInput)
@@ -70,13 +76,15 @@ namespace TextRpg_MonsterHunting
         {
             Console.WriteLine($"{_hero.Name}은(는) 부리나케 도망쳤습니다."); // 도망가는 행동을 어떻게 작성해야 마을로 돌아가는지..
         }
+#ifend
 
 
-#endif
+
+
         // 전투를 시작하는 메서드 //2024.04.30 박재우
         public void BattleStart()
         {
-            
+
             bool isbattle = true; // 전투 진행 여부 변수
             while (isbattle) // 전투 진행 중 //2024.04.30 박재우
             {
@@ -206,7 +214,7 @@ namespace TextRpg_MonsterHunting
             Console.WriteLine("잡은 미니언 마릿수: " + minionCount); // 미니언 수 출력
             return minionCount; // 미니언 수 반환
         }
-11:20
+
 // 몬스터 리스트 / 랜덤생성
     Random random = new Random(); // 랜덤 객체 생성
         Monster[] monsters = { // 몬스터 배열 초기화
@@ -222,7 +230,7 @@ namespace TextRpg_MonsterHunting
         Monster selectedMonster = new Monster(monsters[index].Name, monsters[index].Health, monsters[index].AttackPower, monsters[index].EnemyExp); // 선택된 몬스터 추가
         selectedMonsters.Add(selectedMonster); // 선택된 몬스터 리스트에 추가
     }
-11:21
+
 // 모든 몬스터가 죽었는지 확인하는 메서드 //2024.04.30 박재우
 private bool AllMonstersDead()
     {
@@ -232,3 +240,4 @@ private bool AllMonstersDead()
         }
         return true; // 모든 몬스터가 죽었을 경우 true 반환
     }
+}
