@@ -8,20 +8,11 @@ using System.Xml.Linq;
 
 namespace TextRpg_MonsterHunting
 {
-    // 직업
-    public enum GameClassType
-    {
-        Warrior = 1, // 전사
-        Wizard,      // 마법사
-        Archer       // 궁수
-    }
-
     public class Character
     {
         public static Character instance;
         public const double MaxHealth = 100;     
 
-        public GameClassType GameClass { get; private set; }
         public int Level { get; private set; }
         public string Name { get; private set; }
         public double BaseAttackPower { get; protected set; }
@@ -39,12 +30,11 @@ namespace TextRpg_MonsterHunting
         protected SkillManager skillManager;
         
 
-        public Character(GameClassType gameClass, string name)
+        public Character(string name)
         {
             if (instance == null)
                 instance = this;
 
-            GameClass = gameClass;
             Name = name;
 
             Level = 1;
@@ -153,7 +143,7 @@ namespace TextRpg_MonsterHunting
 
     public class Warrior : Character
     {
-        public Warrior(GameClassType gameClass, string name):base(gameClass, name)
+        public Warrior(string name):base(name)
         {
             BaseAttackPower = 10;
             BaseDefensePower = 5;
@@ -168,7 +158,7 @@ namespace TextRpg_MonsterHunting
      
     public class Wizard : Character
     {
-        public Wizard(GameClassType gameClass, string name) : base(gameClass, name)
+        public Wizard(string name) : base(name)
         {
             BaseAttackPower = 15;
             BaseDefensePower = 1;
@@ -182,7 +172,7 @@ namespace TextRpg_MonsterHunting
 
     public class Archer : Character
     {
-        public Archer(GameClassType gameClass, string name) : base(gameClass, name)
+        public Archer(string name) : base(name)
         {
             BaseAttackPower = 18;
             BaseDefensePower = 3;
