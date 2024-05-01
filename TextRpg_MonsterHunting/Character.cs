@@ -150,13 +150,8 @@ namespace TextRpg_MonsterHunting
         }
 
         // 공격 기능, 피해량 반환
-        public void BasicAttack()
+        public double BasicAttack()
         {
-            // 일치하는 몬스터를 선택하지 않음
-
-            // 이미 죽은 몬스터 공격
-
-            // 일치하는 몬스터 선택
             // 공격력은 10%의 오차를 가짐
             double errorRange = TotalAttackPower * 0.1;
             errorRange = Math.Ceiling(errorRange); // 올림
@@ -167,7 +162,7 @@ namespace TextRpg_MonsterHunting
             double max = TotalAttackPower + errorRange;
             double attackDamage = min + random.NextDouble() * (max - min);
 
-            // 치명타 계산 및 
+            // 치명타 계산 
             bool isCritical = random.NextDouble() < 0.15; // 15% 확률로 발생
             if(isCritical)
             {
@@ -178,11 +173,11 @@ namespace TextRpg_MonsterHunting
             bool isAttackMiss = random.NextDouble() < 0.10; // 10% 확률로 발생
             if(isAttackMiss)
             {
-
+                return 0;
             }
-            else // 적중 성공
-            {
-                // 적 체력 감소
+            else // 적중 성공,적 체력 감소
+            {               
+                return attackDamage;
             }
         }
 
@@ -192,12 +187,13 @@ namespace TextRpg_MonsterHunting
             for (int i = 0; i < skills.Count; i++)
             {
                 Console.WriteLine($"{i + 1} {skills[i].Name} - MP {skills[i].MpCost}");
-                if(skills[i].TargetCount <= 2)
+                if(skills[i].TargetCount <= 2) // 광역스킬
                 {
                     Console.WriteLine($"  공격력 * {skills[i].DamageMultiplier}로 {skills[i].TargetCount}명의 적을 랜덤으로 공격합니다.");
                     // 몬스터 리스트 가져와서 랜덤 공격
+                    // 몬스터의 메소드(공격력, 몬스터수);
                 }
-                else
+                else // 단일스킬
                 {
                     Console.WriteLine($"  공격력 * {skills[i].DamageMultiplier}로 하나의 적을 공격합니다.");
                 }
