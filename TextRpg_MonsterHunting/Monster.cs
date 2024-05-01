@@ -1,17 +1,17 @@
-﻿namespace Main //2024.04.30 박재우
+﻿namespace TextRpg_MonsterHunting
 {
-    // 몬스터를 나타내는 클래스 정의 //2024.04.30 박재우
+    // 몬스터를 나타내는 클래스 정의 /2024.04.30 박재우
     public class Monster
     {
-        // 몬스터의 속성들 //2024.04.30 박재우
+        // 몬스터의 속성들 /2024.04.30 박재우
         public string Name { get; set; } // 몬스터 이름
         public float AttackPower { get; set; } // 몬스터의 공격력
-        public float Health { get; set; } // 몬스터의 체력
+        public double Health { get; set; } // 몬스터의 체력
         public bool IsDead { get; set; } // 몬스터가 죽었는지 여부를 나타내는 플래그
         public float EnemyExp { get; set; } // 몬스터를 처치했을 때 얻는 경험치
 
-        // 몬스터 객체를 초기화하는 생성자 //2024.04.30 박재우 //2024.04.30 박재우
-        public Monster(string name, float health, float attackPower, float enemyExp)
+        // 몬스터 객체를 초기화하는 생성자
+        public Monster(string name, double health, float attackPower, float enemyExp)
         {
             Name = name;
             AttackPower = attackPower;
@@ -24,8 +24,6 @@
     // 전투를 나타내는 클래스 정의 //2024.04.30 박재우
     public class MonsterFight
     {
-        // 캐릭터 객체 인스턴스화
-        Character character = new Character();
         // 전투에 선택된 몬스터를 담을 리스트
         List<Monster> selectedMonsters = new List<Monster>();
 
@@ -50,9 +48,11 @@
         }
 
 
-        // 전투를 시작하는 메서드
-        public void BattleStart() //2024.04.30 박재우
+        // 전투를 시작하는 메서드 //2024.04.30 박재우
+        public void BattleStart(Character character)
         {
+
+
             Random random = new Random(); // 랜덤 객체 생성
 
             Monster[] monsters = { // 몬스터 배열 초기화
@@ -85,7 +85,7 @@
                     continue;
                 }
 
-                if (character.Health <= 0) // 플레이어 체력이 0 이하인지 확인
+                if (character.CurrentHealth <= 0) // 플레이어 체력이 0 이하인지 확인
                 {
                     Console.WriteLine("Lose... 플레이어가 쓰러졌습니다."); // 패배 메시지 출력
                     isbattle = false; // 전투 종료
@@ -94,7 +94,7 @@
 
                 Console.WriteLine($"\n\n[내정보]"); // 내 정보 출력
                 Console.WriteLine($"Lv.{character.Level} 이름 (전사)"); // 캐릭터 레벨과 직업 출력
-                Console.WriteLine($"Hp {character.Health}/100"); // 현재 체력 출력
+                Console.WriteLine($"Hp {character.CurrentHealth}/100"); // 현재 체력 출력
                 Console.WriteLine("\n1. 공격"); // 공격 옵션 출력
                 Console.WriteLine("0. 취소"); // 취소 옵션 출력
 
@@ -102,7 +102,7 @@
 
                 string? input = Console.ReadLine(); // 사용자 입력 받기
 
-                switch (input) // 입력에 따른 처리 //2024.04.30 박재우
+                switch (input) // 입력에 따른 처리
                 {
                     case "1": // 공격 선택 시
                         Console.WriteLine("\n어떤 몬스터를 공격하시겠습니까? (1-4)"); // 공격할 몬스터 선택 안내
@@ -118,14 +118,9 @@
                             }
                             else
                             {
-                                double damageRange = Math.Ceiling(character.Attack * 0.1f); // 공격력 범위 계산
-                                int minDamage = (int)(character.Attack - damageRange); // 최소 데미지
-                                int maxDamage = (int)(character.Attack + damageRange) + 1; // 최대 데미지
-                                int damageDealt = random.Next(minDamage, maxDamage); // 랜덤으로 데미지 계산
-
-                                targetMonster.Health -= damageDealt; // 몬스터에게 데미지 입히기
+                                targetMonster.Health -= character.TotalAttackPower; ; // 몬스터에게 데미지 입히기
                                 Console.WriteLine($"이름 의 공격!"); // 캐릭터 공격 메시지 출력
-                                Console.WriteLine($"{targetMonster.Name} 을(를) 맞췄습니다. (데미지 :{damageDealt})"); // 몬스터에게 입힌 데미지 출력
+                                Console.WriteLine($"{targetMonster.Name} 을(를) 맞췄습니다. (데미지 :{character.TotalAttackPower})"); // 몬스터에게 입힌 데미지 출력
                                 Console.WriteLine($"{targetMonster.Name} 의 남은 체력: {targetMonster.Health}"); // 몬스터의 남은 체력 출력
 
                                 if (targetMonster.Health <= 0) // 몬스터가 죽었는지 확인
@@ -136,7 +131,7 @@
                                 }
                             }
 
-                            EnemyPhase(); // 적 턴으로 넘어가기
+                            EnemyPhase(character); // 적 턴으로 넘어가기
                         }
                         else
                         {
@@ -149,7 +144,7 @@
                         break;
 
                     case "0": // 취소 선택 시
-                        EnemyPhase(); // 적 턴으로 넘어가기
+                        EnemyPhase(character); // 적 턴으로 넘어가기
                         break;
 
                     default: // 유효하지 않은 입력 시
@@ -170,7 +165,7 @@
         }
 
         // 적의 턴을 처리하는 메서드 //2024.04.30 박재우
-        public void EnemyPhase()
+        public void EnemyPhase(Character character)
         {
             Console.WriteLine("\n적의 공격이 시작됩니다."); // 적의 공격 시작 메시지 출력
             foreach (var monster in selectedMonsters)
@@ -178,8 +173,8 @@
                 if (monster.IsDead == false) // 몬스터가 살아 있다면
                 {
                     Console.WriteLine($"{monster.Name}가 공격합니다! 공격력: {monster.AttackPower}"); // 몬스터가 공격하는 메시지 출력
-                    character.Health -= monster.AttackPower; // 플레이어 체력 감소
-                    if (character.Health <= 0) // 플레이어가 죽었다면
+                    character.CurrentHealth -= monster.AttackPower; // 플레이어 체력 감소
+                    if (character.CurrentHealth <= 0) // 플레이어가 죽었다면
                     {
                         Console.WriteLine("플레이어가 쓰러졌습니다!"); // 플레이어 죽음 메시지 출력
                         break; // 반복문 종료
@@ -191,7 +186,7 @@
                     Console.WriteLine($"{monster.Name}은(는) 쓰러진 상태입니다."); // 몬스터가 이미 죽었다는 메시지 출력
                 }
             }
-            Console.WriteLine($"플레이어의 현재 체력: {character.Health}"); // 현재 플레이어 체력 출력
+            Console.WriteLine($"플레이어의 현재 체력: {character.CurrentHealth}"); // 현재 플레이어 체력 출력
         }
 
         // 몬스터 처치 횟수를 업데이트하는 메서드 //2024.04.30 박재우
