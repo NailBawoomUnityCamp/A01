@@ -9,22 +9,36 @@ namespace TextRpg_MonsterHunting
 {
     internal class Dungeon
     {        //던젼 로직 작성
+             //던젼클래스선언
+        Character _hero;
+        List<Monster> _monsterHouse;
+        public void InDungeon(Character hero) 
+        {       
+            _hero = hero;
+            List<Monster> monsterKind;
+            Console.WriteLine($"\n\"{_hero.Name}\"은(는) 던전에 입장했습니다.");
 
-
-
-        //던젼 입장. 출력 할 문자열
-        public void InDungeon()
-        {       //
-            Console.WriteLine($"\n\"{heroName}\"은(는) 던전에 입장했습니다.");
-            Console.WriteLine("준비된 3마리의 몬스터 중");
-            Console.WriteLine("한 마리가 생성됩니다.");
+            monsterKind = new List<Monster>();
+            _monsterHouse = new List<Monster>();
+            monsterKind.Add(new Monster("미니언", 15, 5, 2));
+            monsterKind.Add(new Monster("공허충", 10, 9, 3));
+            monsterKind.Add(new Monster("대포미니언", 25, 8, 5));
+            Console.WriteLine("준비된 3가지의 몬스터 중");
+            Console.WriteLine("세 마리가 생성됩니다.");
+            Random random = new Random();
+            int howMany = random.Next(1, 5);
+            for (int i = 0; i < howMany; i++)
+            {
+                int index = random.Next(0, 3);
+                _monsterHouse.Add(monsterKind[index]);              
+            }
         }
-
+#if         
         //파이트 초이스. 
         public void FightChoice()
-        {
+        { 
             // 사용자가 몬스터를 발견.
-            Console.WriteLine($"\n{heroName}은(는) {monster}를 발견했다!."); /*1.game.cs에서 선언된 heroName은 어떻게 재활용 할 수있을까?
+            Console.WriteLine($"\n{_hero.Name}은(는) {monster}를 발견했다!."); /*1.game.cs에서 선언된 heroName은 어떻게 재활용 할 수있을까?
                                                                              2.발견한 monster의 이름을 어떻게 랜덤으로 입력 할 수 있을까?/*
             Console.WriteLine($"{heroName}은(는) 이제 싸워야합니다!.\n");
 
@@ -32,7 +46,7 @@ namespace TextRpg_MonsterHunting
             1.싸운다 2.도망친다 선택*/
             Console.WriteLine("1. 싸운다");
             Console.WriteLine("2. 도망친다");
-            string userInput = Console.ReadLine();
+            string userInput = Console.ReadLine()
 
             // 선택에 따라 행동 수행
             switch (userInput)
@@ -54,15 +68,15 @@ namespace TextRpg_MonsterHunting
         // 도망가는 행동을 처리하는 코드를 작성
         private void RunAway()
         {
-            Console.WriteLine($"{heroName}은(는) 부리나케 도망쳤습니다."); // 도망가는 행동을 어떻게 작성해야 마을로 돌아가는지..
+            Console.WriteLine($"{_hero.Name}은(는) 부리나케 도망쳤습니다."); // 도망가는 행동을 어떻게 작성해야 마을로 돌아가는지..
         }
 
 
-
+#endif
         // 전투를 시작하는 메서드 //2024.04.30 박재우
         public void BattleStart()
         {
-            MonsterList();
+            
             bool isbattle = true; // 전투 진행 여부 변수
             while (isbattle) // 전투 진행 중 //2024.04.30 박재우
             {
