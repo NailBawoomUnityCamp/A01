@@ -7,10 +7,18 @@ using System.Threading.Tasks;
 
 namespace TextRpg_MonsterHunting
 {
-	/*게임 동작에 필요한 기타 기능들
+    /*게임 동작에 필요한 기타 기능들
 	 * enum , method, List<class>대체 함수 등
 	*/
-	internal class Utils
+    // 직업
+    public enum GameClassType
+    {
+        Warrior = 1, // 전사
+        Wizard,      // 마법사
+        Archer       // 궁수
+    }
+
+    internal class Utils
 	{
 		
 	}
@@ -203,7 +211,7 @@ namespace TextRpg_MonsterHunting
 		}
 	}
 
-    //json 저장용 List<Skil> 대체 클래스
+    //json 저장용 List<Skill> 대체 클래스
     public class SkillList
     {
         [JsonInclude]

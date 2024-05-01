@@ -8,88 +8,47 @@ using System.Xml.Linq;
 
 namespace TextRpg_MonsterHunting
 {
-    // 직업
-    public enum GameClassType
-    {
-        Warrior = 1, // 전사
-        Wizard,      // 마법사
-        Archer       // 궁수
-    }
-
     public class Character
     {
-        private SkillList skills;
-
+        public static Character instance;
         public const double MaxHealth = 100;     
 
-        public GameClassType GameClass { get; private set; }
         public int Level { get; private set; }
         public string Name { get; private set; }
-        public double BaseAttackPower { get; private set; }
+        public double BaseAttackPower { get; protected set; }
         public double TotalAttackPower { get; private set; }
-        public double BaseDefensePower { get; private set; }
+        public double BaseDefensePower { get; protected set; }
         public double TotalDefensePower { get; private set; }
         public double CurrentHealth { get; private set; }
-        public double MaxMana { get; private set; }
-        public double CurrentMana { get; private set; }
+        public double MaxMana { get; protected set; }
+        public double CurrentMana { get; protected set; }
         public int Experience { get; private set; }
         public int Gold { get; private set; }
         public bool IsDie { get; private set; }
         public Inventory inventory { get; private set; }
 
+        protected SkillManager skillManager;
+        
 
-        public Character(GameClassType gameClass, string name)
+        public Character(string name)
         {
-            GameClass = gameClass;
+            if (instance == null)
+                instance = this;
+
             Name = name;
 
             Level = 1;
             CurrentHealth = 100;
             Gold = 1500;
 
-            skills = new SkillList();
-            switch (gameClass)
-            {
-                case GameClassType.Warrior:
-                    BaseAttackPower = 10;
-                    BaseDefensePower = 5;
-                    MaxMana = 50;
-                    CurrentMana = 50;
-
-                    AddSkill(new Skill("알파 스트라이크", 10, 2f, 1));
-                    AddSkill(new Skill("더블 스트라이크", 15, 1.5f, 2));
-                    break;
-                case GameClassType.Wizard:
-                    BaseAttackPower = 15;
-                    BaseDefensePower = 1;
-                    MaxMana = 150;
-                    CurrentMana = 150;
-
-                    AddSkill(new Skill("크리스탈 블레이드", 60, 5f, 1));
-                    AddSkill(new Skill("파이어 스톰", 30, 3f, 2));
-                    break;
-                case GameClassType.Archer:
-                    BaseAttackPower = 18;
-                    BaseDefensePower = 3;
-                    MaxMana = 100;
-                    CurrentMana = 100;
-
-                    AddSkill(new Skill("레드 스윙", 50, 3f, 2));
-                    AddSkill(new Skill("바이올렛 샷", 30, 2f, 3));
-                    break;
-            }
-        }
-
-        // 스킬 추가
-        public void AddSkill(Skill skill)
-        {
-            skills.Add(skill);
+            skillManager = new SkillManager();
         }
 
         // 캐릭터의 정보 출력
         public void PrintCharacterInfo() 
         {
-
+            Console.WriteLine($"Lv. {Level.ToString("N2")}");
+            Console.WriteLine();
         }
 
         // 총 방어력 합산/감산
@@ -150,13 +109,8 @@ namespace TextRpg_MonsterHunting
         }
 
         // 공격 기능, 피해량 반환
-        public void BasicAttack()
+        public double BasicAttack()
         {
-            // 일치하는 몬스터를 선택하지 않음
-
-            // 이미 죽은 몬스터 공격
-
-            // 일치하는 몬스터 선택
             // 공격력은 10%의 오차를 가짐
             double errorRange = TotalAttackPower * 0.1;
             errorRange = Math.Ceiling(errorRange); // 올림
@@ -167,7 +121,7 @@ namespace TextRpg_MonsterHunting
             double max = TotalAttackPower + errorRange;
             double attackDamage = min + random.NextDouble() * (max - min);
 
-            // 치명타 계산 및 
+            // 치명타 계산 
             bool isCritical = random.NextDouble() < 0.15; // 15% 확률로 발생
             if(isCritical)
             {
@@ -178,31 +132,55 @@ namespace TextRpg_MonsterHunting
             bool isAttackMiss = random.NextDouble() < 0.10; // 10% 확률로 발생
             if(isAttackMiss)
             {
-
+                return 0;
             }
-            else // 적중 성공
-            {
-                // 적 체력 감소
+            else // 적중 성공,적 체력 감소
+            {               
+                return attackDamage;
             }
         }
+    }
 
-        // 스킬 사용
-        public void UseSkill()
+    public class Warrior : Character
+    {
+        public Warrior(string name):base(name)
         {
-            for (int i = 0; i < skills.Count; i++)
-            {
-                Console.WriteLine($"{i + 1} {skills[i].Name} - MP {skills[i].MpCost}");
-                if(skills[i].TargetCount <= 2)
-                {
-                    Console.WriteLine($"  공격력 * {skills[i].DamageMultiplier}로 {skills[i].TargetCount}명의 적을 랜덤으로 공격합니다.");
-                    // 몬스터 리스트 가져와서 랜덤 공격
-                }
-                else
-                {
-                    Console.WriteLine($"  공격력 * {skills[i].DamageMultiplier}로 하나의 적을 공격합니다.");
-                }
-                
-            }
+            BaseAttackPower = 10;
+            BaseDefensePower = 5;
+            MaxMana = 50;
+            CurrentMana = 50;
+
+            // 스킬 추가
+            skillManager.AddSkill(new Skill("알파 스트라이크", 10, 2f, 1));
+            skillManager.AddSkill(new Skill("더블 스트라이크", 15, 1.5f, 2));
+        }
+    }
+     
+    public class Wizard : Character
+    {
+        public Wizard(string name) : base(name)
+        {
+            BaseAttackPower = 15;
+            BaseDefensePower = 1;
+            MaxMana = 150;
+            CurrentMana = 150;
+
+            skillManager.AddSkill(new Skill("크리스탈 블레이드", 60, 5f, 1));
+            skillManager.AddSkill(new Skill("파이어 스톰", 30, 3f, 2));
+        }
+    }
+
+    public class Archer : Character
+    {
+        public Archer(string name) : base(name)
+        {
+            BaseAttackPower = 18;
+            BaseDefensePower = 3;
+            MaxMana = 100;
+            CurrentMana = 100;
+
+            skillManager.AddSkill(new Skill("레드 스윙", 50, 3f, 2));
+            skillManager.AddSkill(new Skill("바이올렛 샷", 30, 2f, 3));
         }
     }
 }
