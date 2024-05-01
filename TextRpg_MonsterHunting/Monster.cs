@@ -21,8 +21,8 @@
         }
     }
 
-    // 전투를 나타내는 클래스 정의 //2024.04.30 박재우
-    public class MonsterFight
+// 전투를 나타내는 클래스 정의 //2024.04.30 박재우
+public class MonsterFight
     {
         // 전투에 선택된 몬스터를 담을 리스트
         List<Monster> selectedMonsters = new List<Monster>();
