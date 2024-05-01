@@ -25,6 +25,9 @@ namespace TextRpg_MonsterHunting
 
     public class QuestManager
     {
+        bool IsQuest1_ing = false;
+        bool IsQuest1_Clear = false;
+
         private List<QuestInfo> quests;
 
         public QuestManager()
@@ -40,6 +43,18 @@ namespace TextRpg_MonsterHunting
         public QuestInfo GetQuestById(int id)
         {
             return quests.Find(quest => quest.Id == id);
+        }
+
+        public void QuestId1()
+        {
+            if (IsQuest1_ing = false)
+            {
+
+            }
+            else
+            {
+                if (/* 잡은 미니언 마릿수가 5마리 이상일 경우 */)
+            }
         }
 
         // 필요에 따라 더 많은 메서드를 추가할 수 있습니다. 예) 모든 퀘스트 리스트 반환, 퀘스트 추가 등
