@@ -18,8 +18,7 @@ namespace TextRpg_MonsterHunting
 
     public class Character
     {
-        private SkillList skills;
-
+        public static Character instance;
         public const double MaxHealth = 100;     
 
         public GameClassType GameClass { get; private set; }
@@ -37,9 +36,14 @@ namespace TextRpg_MonsterHunting
         public bool IsDie { get; private set; }
         public Inventory inventory { get; private set; }
 
+        private SkillList skills;
+
 
         public Character(GameClassType gameClass, string name)
         {
+            if (instance == null)
+                instance = this;
+
             GameClass = gameClass;
             Name = name;
 
@@ -190,14 +194,13 @@ namespace TextRpg_MonsterHunting
                 if(skills[i].TargetCount <= 2) // 광역스킬
                 {
                     Console.WriteLine($"  공격력 * {skills[i].DamageMultiplier}로 {skills[i].TargetCount}명의 적을 랜덤으로 공격합니다.");
-                    // 몬스터 리스트 가져와서 랜덤 공격
-                    // 몬스터의 메소드(공격력, 몬스터수);
+                    // 몬스터 리스트 가져와서 랜덤 공격                   
                 }
                 else // 단일스킬
                 {
                     Console.WriteLine($"  공격력 * {skills[i].DamageMultiplier}로 하나의 적을 공격합니다.");
                 }
-                
+                // 몬스터의 메소드(공격력, 몬스터수);
             }
         }
     }
