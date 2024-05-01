@@ -143,11 +143,11 @@
             }
         }
 
-        public void MonsterDamage()
+        public void MonsterDamage(Character character)
         {
             if (BasicAttack > 0)
             {
-                targetMonster.Health -= character.BasicAttack; ; // 몬스터에게 데미지 입히기
+                targetMonster.Health -= character.BasicAttack; // 몬스터에게 데미지 입히기
                 Console.WriteLine($"이름 의 공격!"); // 캐릭터 공격 메시지 출력
                 Console.WriteLine($"{targetMonster.Name} 을(를) 맞췄습니다. (데미지 :{character.BasicAttack})"); // 몬스터에게 입힌 데미지 출력
                 Console.WriteLine($"{targetMonster.Name} 의 남은 체력: {targetMonster.Health}"); // 몬스터의 남은 체력 출력
