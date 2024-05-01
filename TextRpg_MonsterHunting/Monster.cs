@@ -52,7 +52,10 @@
         public void BattleStart(Character character)
         {
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> Development
             Random random = new Random(); // 랜덤 객체 생성
 
             Monster[] monsters = { // 몬스터 배열 초기화
@@ -118,6 +121,7 @@
                             }
                             else
                             {
+<<<<<<< HEAD
                                 targetMonster.Health -= character.TotalAttackPower; ; // 몬스터에게 데미지 입히기
                                 Console.WriteLine($"이름 의 공격!"); // 캐릭터 공격 메시지 출력
                                 Console.WriteLine($"{targetMonster.Name} 을(를) 맞췄습니다. (데미지 :{character.TotalAttackPower})"); // 몬스터에게 입힌 데미지 출력
@@ -129,6 +133,9 @@
                                     Console.WriteLine($"{targetMonster.Name} 이(가) 쓰러졌습니다!"); // 몬스터 사망 메시지 출력
                                     UpdateCountKillMonsters(targetMonster); // 몬스터 처치 카운트 업데이트
                                 }
+=======
+                                MonsterDamage();
+>>>>>>> Development
                             }
 
                             EnemyPhase(character); // 적 턴으로 넘어가기
@@ -154,6 +161,31 @@
             }
         }
 
+<<<<<<< HEAD
+=======
+        public void MonsterDamage(Character character)
+        {
+            if (BasicAttack > 0)
+            {
+                targetMonster.Health -= character.BasicAttack; // 몬스터에게 데미지 입히기
+                Console.WriteLine($"이름 의 공격!"); // 캐릭터 공격 메시지 출력
+                Console.WriteLine($"{targetMonster.Name} 을(를) 맞췄습니다. (데미지 :{character.BasicAttack})"); // 몬스터에게 입힌 데미지 출력
+                Console.WriteLine($"{targetMonster.Name} 의 남은 체력: {targetMonster.Health}"); // 몬스터의 남은 체력 출력
+
+                if (targetMonster.Health <= 0) // 몬스터가 죽었는지 확인
+                {
+                    targetMonster.IsDead = true; // 몬스터 상태를 죽은 상태로 변경
+                    Console.WriteLine($"{targetMonster.Name} 이(가) 쓰러졌습니다!"); // 몬스터 사망 메시지 출력
+                    UpdateCountKillMonsters(targetMonster); // 몬스터 처치 카운트 업데이트
+                }
+            }
+            else
+            {
+                Console.WriteLine("공격이 빗나갔습니다!");
+            }
+        }
+
+>>>>>>> Development
         // 모든 몬스터가 죽었는지 확인하는 메서드 //2024.04.30 박재우
         private bool AllMonstersDead()
         {
