@@ -8,8 +8,8 @@ using System.Xml.Linq;
 
 namespace TextRpg_MonsterHunting
 {
-    public class Character
-    {
+    public class Character : Humanoid
+	{
         public static Character instance;
         public const double MaxHealth = 100;     
 
