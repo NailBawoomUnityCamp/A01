@@ -148,18 +148,6 @@ namespace TextRpg_MonsterHunting
                 }
                 Console.WriteLine();
             }
-            /* PotionScene 생성 전 작업
-            Console.WriteLine("[소모 아이템 목록]");
-            //PotionList potionList = PotionsInBag;
-            foreach (var item in PotionsInBag.Data)
-            {
-                string name = item.Name;
-                int stat = item.Stat;
-                string discription = item.Discription;
-                ItemType itemType = item.ItemType;
-
-                Console.WriteLine($"- {name} | {itemType}+{stat} | {discription}");
-            } */
         }
 
         //장착 관리 창
@@ -207,6 +195,45 @@ namespace TextRpg_MonsterHunting
             }
         }
 
+        //회복 (포션 아이템) 출력 창
+        public void PrintPotionItems()
+        {
+            int healthPotionCount = 0;
+            int manaPotionCount = 0;
 
+            foreach (var item in PotionsInBag.Data)
+            {
+                if (item.ItemType == ItemType.Health)
+                {
+                    healthPotionCount++;
+                }
+                else if (item.ItemType == ItemType.Mana)
+                {
+                    manaPotionCount++;
+                }
+            }
+
+            for (int i = 1; i < PotionsInBag.Data.Count; i++)
+            {
+                Console.Write($"- {i}. ");
+
+                foreach (var item in PotionsInBag.Data)
+                {
+                    string name = item.Name;
+                    int stat = item.Stat;
+                    string discription = item.Discription;
+                    ItemType itemType = item.ItemType;
+
+                    if (item.ItemType == ItemType.Health)
+                    {
+                        Console.WriteLine($"- {name} | {itemType}+{stat} | {healthPotionCount}\n　　{discription}");
+                    }
+                    else if (item.ItemType == ItemType.Mana)
+                    {
+                        Console.WriteLine($"- {name} | {itemType}+{stat} | {manaPotionCount}\n　　{discription}");
+                    }
+                }
+            }
+        }
     }
 }
