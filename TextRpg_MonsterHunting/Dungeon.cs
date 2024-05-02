@@ -14,16 +14,14 @@ namespace TextRpg_MonsterHunting
         Character _hero;
         List<Monster> _monsterHouse;
 		UI _ui;
-		QuestManager _quesManager;
 		bool _stageClear;
 		int _stageNum;
 
 		//InDungeon()의 매개변수(서로 종속인 변수들을 묶어주는 변수)를 chracacter 클래스에 대입
-		public void InDungeon(Character hero, QuestManager questManager,UI ui) //hero = new Character(heroClass, heroName ?? "홍길동")
+		public void InDungeon(Character hero, UI ui) //hero = new Character(heroClass, heroName ?? "홍길동")
         {
 			_stageClear = false;
 			_ui = ui;
-			_quesManager = questManager;
 			_hero = hero; //hero = new Character(heroClass, heroName ?? "홍길동"); 이므로 선언된 값 불러오기.
             List<Monster> monsterKind;
             Console.WriteLine($"\n\"{_hero.Name}\"은(는) 던전에 입장했습니다."); //public string Name { get; private set; }
