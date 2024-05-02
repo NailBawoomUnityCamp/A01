@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using TextRpg_MonsterHunting.Scene;
 
 namespace TextRpg_MonsterHunting
 {
@@ -37,12 +36,15 @@ namespace TextRpg_MonsterHunting
                     {
                         case ItemType.Mana:
                             character.inventory.Add(Utils.ManaPotion);
+                            character.ChangeGold(5);
                             break;
                         case ItemType.Health:
                             character.inventory.Add(Utils.HealthPotion);
+                            character.ChangeGold(5);
                             break;
                         case ItemType.Attack:
                             character.inventory.Add(Utils.Sword);
+                            character.ChangeGold(5);
                             break;
                     }
                 }
