@@ -4,7 +4,6 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -30,7 +29,6 @@ namespace TextRpg_MonsterHunting
         public int CurrentStage { get; private set; }
         public Inventory inventory { get; private set; }
 
-        [JsonIgnore]
         protected SkillManager skillManager;
         
 
