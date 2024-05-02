@@ -50,8 +50,9 @@ namespace TextRpg_MonsterHunting
             Level = 1;
             CurrentHealth = 100;
             Gold = 1500;
+			CurrentStage = 0;
 
-            inventory = new Inventory();
+			inventory = new Inventory();
             skillManager = new SkillManager();
 
             //캐릭터 처음 생성시 체력 포션 3개 추가
