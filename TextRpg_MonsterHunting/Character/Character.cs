@@ -51,7 +51,14 @@ namespace TextRpg_MonsterHunting
             CurrentHealth = 100;
             Gold = 1500;
 
+            inventory = new Inventory();
             skillManager = new SkillManager();
+
+            //캐릭터 처음 생성시 체력 포션 3개 추가
+            for(int i = 0; i < 3; i++)
+            {
+                inventory.Add(Utils.HealthPotion);
+            }
         }
 
         // 캐릭터의 정보 출력
