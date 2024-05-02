@@ -63,8 +63,10 @@ namespace TextRpg_MonsterHunting
         {
             hero.inventory.Add(new Potion("마나포션", 30, "마나를 30회복합니다.", ItemType.Mana));
             hero.inventory.Add(new Potion("체력포션", 30, "체력을 30회복합니다.", ItemType.Health));
-            hero.inventory.Add(new Equipment("브로드소드", EquipmentType.OneHand, 2, "공격력이 2증가합니다.", ItemType.Attack));        
+            hero.inventory.Add(new Equipment("브로드소드", EquipmentType.OneHand, 2, "공격력이 2증가합니다.", ItemType.Attack));
         }
+    }
+}
         
         // 전투를 시작하는 메서드 //2024.04.30 박재우
 //        public void BattleStart()
