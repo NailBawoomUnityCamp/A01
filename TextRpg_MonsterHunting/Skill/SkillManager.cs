@@ -48,7 +48,11 @@ namespace TextRpg_MonsterHunting
 
                 // 해당 스킬이 공격하는 몬스터수만큼 랜덤값 발생
                 int targetCount = skillToUse.TargetCount;
-
+                // 스킬로 공격가능한 몬스터수보다 현재 몬스터수가 더 작은지 체크
+                if(targetCount > monsters.Count)
+                {
+                    targetCount = monsters.Count;
+                }
                 // 몬스터 목록의 몬스터 중에서 랜덤으로 공격
                 HashSet<int> generatedIndex = new HashSet<int>();
 
