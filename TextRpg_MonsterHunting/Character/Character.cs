@@ -12,7 +12,7 @@ namespace TextRpg_MonsterHunting
 {
     public class Character : Humanoid
 	{
-        public static Character instance;
+        public static Character Instance;
         public const double MaxHealth = 100;     
 
         public int Level { get; private set; }
@@ -36,8 +36,14 @@ namespace TextRpg_MonsterHunting
 
         public Character(string name)
         {
-            if (instance == null)
-                instance = this;
+            if (Instance == null)
+            {
+                Instance = new Character(name);
+            }
+            else
+            {
+                Instance = this;
+            }
 
             Name = name;
 
