@@ -8,25 +8,24 @@ using TextRpg_MonsterHunting.Scene;
 
 namespace TextRpg_MonsterHunting
 {
-    public class QuestInfo //2024.05.02 박재우
-    {
-        public int Id { get; set; }
-        public string Title { get; set; }  
-        public int RewardGold { get; set; }
-        public string RewardItem { get; set; }
-
-        public QuestInfo(int id, string title, int rewardGold, string rewardItem)
-        {
-            Id = id;
-            Title = title;
-            RewardGold = rewardGold;
-            RewardItem = rewardItem;
-        }
-    }
-
     public class QuestManager
     {
-        private List<QuestInfo> quests;
+        public static QuestManager Instance;
+        public List<Quest> Quests;
+        public QuestManager() 
+        {
+            if (Instance == null)
+                Instance = new QuestManager();
+            else
+                Instance = this;
+
+            Quests = new List<Quest>();
+            Quests.Add(new ManaPotionQuest("마을을 위협하는 미니언 처치", 5));
+            Quests.Add(new HealthPotionQuest("장비 장착해보자", 5));
+            Quests.Add(new AttackItemQuest("더욱 더 강해지기!", 5));
+        }
+
+        /*private List<QuestInfo> quests;
         bool Quest_1_ing = false;
         bool Quest_2_ing = false;
         bool Quest_3_ing = false;
@@ -42,7 +41,7 @@ namespace TextRpg_MonsterHunting
             quests = new List<QuestInfo>()
         {
             new QuestInfo(1, "마을을 위협하는 미니언 처치", 5, "(아이템) x1"),
-            
+
         };
         }
 
@@ -63,7 +62,7 @@ namespace TextRpg_MonsterHunting
                 {
                     case "1":
                         Quest_1_ing = true;
-                        MinionKillCount = 0;/* 미니언 처치수 0으로 초기화 */
+                        MinionKillCount = 0; // 미니언 처치수 0으로 초기화
                         break;
                     case "2":
                         break;
@@ -74,7 +73,7 @@ namespace TextRpg_MonsterHunting
             }
             else
             {
-                if (MinionKillCount < 5)/* 미니언 처치가 5마리 미만일 때 */
+                if (MinionKillCount < 5) // 미니언 처치가 5마리 미만일 때
                 {
                     quest.Quest1R();
 
@@ -196,7 +195,7 @@ namespace TextRpg_MonsterHunting
             }
             else
             {
-                if (/* 변수에 저장되있는 값과 현재 레벨값이 같을 때 */)
+                if (변수에 저장되있는 값과 현재 레벨값이 같을 때)
                 {
                     quest.Quest3R();
 
@@ -231,6 +230,6 @@ namespace TextRpg_MonsterHunting
                     }
                 }
             }
-        }
+        }*/
     }
 }

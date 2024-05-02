@@ -8,8 +8,11 @@ namespace TextRpg_MonsterHunting
 {
     public class HealthPotionQuest : Quest
     {
-        public HealthPotionQuest(string title, int rewardGold, string rewardItem) 
-            : base(title, rewardGold, rewardItem) { }
+        public HealthPotionQuest(string title, int rewardGold) 
+            : base(title, rewardGold) 
+        {
+            RewardItem = ItemType.Health;
+        }
 
         public override void QuestContent()
         {

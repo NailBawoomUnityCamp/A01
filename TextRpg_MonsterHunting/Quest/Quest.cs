@@ -12,13 +12,12 @@ namespace TextRpg_MonsterHunting
         //public int Id { get; set; }
         public string Title { get; set; }
         public int RewardGold { get; set; }
-        public string RewardItem { get; set; }
+        public ItemType RewardItem { get; set; }
 
-        public Quest(string title, int rewardGold, string rewardItem)
+        public Quest(string title, int rewardGold)
         {
             Title = title;
             RewardGold = rewardGold;
-            RewardItem = rewardItem;
         }
 
         public virtual void QuestContent() { }
@@ -42,7 +41,7 @@ namespace TextRpg_MonsterHunting
             Console.WriteLine("0. 돌아가기");
         }*/
 
-        public void Quest2S()
+        /*public void Quest2S()
         {
             Console.WriteLine("\n== 장비 장착해보자 ==");
             Console.WriteLine("자네, 이제 장비를 장착해볼 때가 되었네. 자네가 가진 장비들을 살펴보게.");
@@ -52,7 +51,7 @@ namespace TextRpg_MonsterHunting
             Console.WriteLine("2. 거절");
             //Console.WriteLine("\n1. 퀘스트 수락하기");
             //Console.WriteLine("0. 돌아가기");
-        }
+        }*/
 
         /*public void Quest2R()
         {
@@ -73,7 +72,7 @@ namespace TextRpg_MonsterHunting
             Console.WriteLine("0. 돌아가기");
         }*/
 
-        public void Quest3S()
+        /*public void Quest3S()
         {
             Console.WriteLine("\n== 더욱 더 강해지기! ==");
             Console.WriteLine("자네, 이제 더욱 강해질 때가 되었네. 경험치를 쌓아 레벨업을 해보게.");
@@ -83,7 +82,7 @@ namespace TextRpg_MonsterHunting
             Console.WriteLine("2. 거절");
             //Console.WriteLine("\n1. 경험치 획득하기");
             //Console.WriteLine("0. 돌아가기");
-        }
+        }*/
 
         /*public void Quest3R()
         {

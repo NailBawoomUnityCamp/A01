@@ -8,8 +8,11 @@ namespace TextRpg_MonsterHunting
 {
     public class AttackItemQuest : Quest
     {
-        public AttackItemQuest(string title, int rewardGold, string rewardItem) 
-            : base(title, rewardGold, rewardItem) { }
+        public AttackItemQuest(string title, int rewardGold) 
+            : base(title, rewardGold) 
+        {
+            RewardItem = ItemType.Attack;
+        }
 
         public override void QuestContent()
         {

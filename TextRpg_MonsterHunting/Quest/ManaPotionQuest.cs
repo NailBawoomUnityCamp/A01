@@ -8,8 +8,11 @@ namespace TextRpg_MonsterHunting
 {
     public class ManaPotionQuest : Quest
     {
-        public ManaPotionQuest(string title, int rewardGold, string rewardItem)
-            : base(title, rewardGold, rewardItem) { }
+        public ManaPotionQuest(string title, int rewardGold)
+            : base(title, rewardGold) 
+        {
+            RewardItem = ItemType.Mana;
+        }
 
         public override void QuestContent()
         {
