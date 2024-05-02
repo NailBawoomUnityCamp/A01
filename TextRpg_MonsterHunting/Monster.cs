@@ -51,7 +51,8 @@ namespace TextRpg_MonsterHunting
 			{
 				CurrentHealth = 0;
 				IsDie = true;
-				((IQuest)QuestManager.Instance.Quests).CheckQuestProgress();
+                if (QuestManager.Instance.Quests is ManaPotionQuest)
+                    ((IQuest)QuestManager.Instance.Quests).CheckQuestProgress();
             }
 		}
 
