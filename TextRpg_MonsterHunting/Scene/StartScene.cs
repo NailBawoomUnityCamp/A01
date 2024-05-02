@@ -43,7 +43,7 @@ namespace TextRpg_MonsterHunting
                     break;
                 case 4: //전투 시작(던전 입장)
                     Dungeon dungeon = new Dungeon();
-                    dungeon.InDungeon(character);
+                    dungeon.InDungeon(character, ui);
                     break;
             }
         }

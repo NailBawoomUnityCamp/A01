@@ -23,7 +23,8 @@ namespace TextRpg_MonsterHunting
 	{
 		public static Potion HealthPotion = new Potion("체력 포션", 30, "현재 체력을 30 회복합니다.", ItemType.Health);
 		public static Potion ManaPotion = new Potion("마나 포션", 30, "현재 마나를 30 회복합니다.", ItemType.Mana);
-	}
+		public static Equipment Sword = new Equipment("단검", EquipmentType.OneHand, 5, "추가 공격력이 5 증가합니다.", ItemType.Attack);
+    }
 
 	//캐릭터, 몬스터 용 인터페이스
 	public interface Humanoid

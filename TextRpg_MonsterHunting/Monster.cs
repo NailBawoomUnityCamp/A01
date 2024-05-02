@@ -51,7 +51,8 @@ namespace TextRpg_MonsterHunting
 			{
 				CurrentHealth = 0;
 				IsDie = true;
-			}
+				((IQuest)QuestManager.Instance.Quests).CheckQuestProgress();
+            }
 		}
 
 		// 공격 기능, 피해량 반환
