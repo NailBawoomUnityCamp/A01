@@ -39,17 +39,33 @@ namespace TextRpg_MonsterHunting
             }
         }
 
-
-        // 도망가는 행동을 처리하는 코드를 작성
-        private void RunAway()
+        // 몬스터를 공격하는 메서드
+        public bool AttackTarget(Humanoid attcker, Humanoid target)
         {
-            Console.WriteLine($"{_hero.Name}은(는) 부리나케 도망쳤습니다."); // 도망가는 행동을 어떻게 작성해야 마을로 돌아가는지..
+            double damage = attcker.BasicAttack();
+            double beforeHealth = target.CurrentHealth;
+            target.ChangeHealth(damage);
+            return beforeHealth - target.CurrentHealth > 0;
         }
 
+        // 모든 몬스터 사망 확인
+        public bool AllMonstersDead()
+        {
+            foreach (var monster in _monsterHouse)
+            {
+                if (!monster.IsDie) return false; // 하나라도 살아 있는 몬스터가 있다면 전투 계속 진행
+            }
+            return true; // 모든 몬스터가 죽었을 경우 true 반환
+        }
 
-
-
-
+        // 보상 획득
+        public void GetReward(Character hero)
+        {
+            hero.inventory.Add(new Potion("마나포션", 30, "마나를 30회복합니다.", ItemType.Mana));
+            hero.inventory.Add(new Potion("체력포션", 30, "체력을 30회복합니다.", ItemType.Health));
+            hero.inventory.Add(new Equipment("브로드소드", EquipmentType.OneHand, 2, "공격력이 2증가합니다.", ItemType.Attack));        
+        }
+        
         // 전투를 시작하는 메서드 //2024.04.30 박재우
         public void BattleStart()
         {
@@ -187,10 +203,10 @@ namespace TextRpg_MonsterHunting
 // 몬스터 리스트 / 랜덤생성
     Random random = new Random(); // 랜덤 객체 생성
         Monster[] monsters = { // 몬스터 배열 초기화
-    new Monster("LV.2 미니언", 15, 5, 2), // LV.2 미니언 생성 / 적힌 순서대로 '이름, 체력, 공격력, 경험치'
-    new Monster("Lv.5 대포미니언", 25, 8, 5), // Lv.5 대포미니언 생성
-    new Monster("Lv.3 공허충", 10, 9, 3) // Lv.3 공허충 생성
-    };
+            new Monster("LV.2 미니언", 15, 5, 2), // LV.2 미니언 생성 / 적힌 순서대로 '이름, 체력, 공격력, 경험치'
+            new Monster("Lv.5 대포미니언", 25, 8, 5), // Lv.5 대포미니언 생성
+            new Monster("Lv.3 공허충", 10, 9, 3) // Lv.3 공허충 생성
+        };
         Console.WriteLine("\n전투가 시작되었습니다!"); // 전투 시작 메시지 출력
     selectedMonsters.Clear(); // 선택된 몬스터 리스트 생성
     for (int i = 0; i< 4; i++) // 4마리의 몬스터 선택
@@ -200,13 +216,5 @@ namespace TextRpg_MonsterHunting
         selectedMonsters.Add(selectedMonster); // 선택된 몬스터 리스트에 추가
     }
 
-// 모든 몬스터가 죽었는지 확인하는 메서드 //2024.04.30 박재우
-private bool AllMonstersDead()
-    {
-        foreach (var monster in selectedMonsters)
-        {
-            if (!monster.IsDead) return false; // 하나라도 살아 있는 몬스터가 있다면 전투 계속 진행
-        }
-        return true; // 모든 몬스터가 죽었을 경우 true 반환
-    }
+
 
