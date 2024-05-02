@@ -38,7 +38,7 @@ namespace TextRpg_MonsterHunting
             }
         }
 
-        // 번호에 해당하는 스킬 사용(1번은 0번째 스킬)
+        // 번호에 해당하는 스킬 사용(1번은 0번 스킬)
         public void UseSkill(int skillIndex)
         {
             if (skillIndex >= 1 && skillIndex <= skills.Count)
