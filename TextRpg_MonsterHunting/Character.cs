@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
@@ -48,7 +49,30 @@ namespace TextRpg_MonsterHunting
         public void PrintCharacterInfo() 
         {
             Console.WriteLine($"Lv. {Level.ToString("N2")}");
-            Console.WriteLine();
+            Console.WriteLine($"직업 ( {ReturnGameClassName()} )");
+            Console.WriteLine($"공격력 : {BaseAttackPower}");
+            Console.WriteLine($"방어력 : {BaseDefensePower}");
+            Console.WriteLine($"체 력 : {CurrentHealth}");
+            Console.WriteLine($"골드 : {Gold}");
+        }
+        
+        // 직업명 한글로 변환
+        public string ReturnGameClassName()
+        {
+            string ClassName = "전사";
+            if (this.GetType() == typeof(Warrior))
+            {
+                ClassName = "전사";
+            }
+            else if(this.GetType() == typeof(Wizard)) 
+            {
+                ClassName = "마법사";
+            }
+            else if(this.GetType() == typeof(Archer))
+            {
+                ClassName = "궁수";
+            }
+            return ClassName;
         }
 
         // 총 방어력 합산/감산
