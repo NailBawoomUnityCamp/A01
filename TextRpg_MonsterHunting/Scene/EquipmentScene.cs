@@ -10,13 +10,20 @@ namespace TextRpg_MonsterHunting
     {
         public void loadScene(UI ui, Character character)
         {
-            ui.PrintTitle("인벤토리 - 장착 관리");
+            int userInput;
+            do
+            {
+                ui.PrintTitle("인벤토리 - 장착 관리");
 
-            character.inventory.PrintManageEquipments(); //장착 관리 목록 출력
+                character.inventory.PrintManageEquipments(); //장착 관리 목록 출력
+                Console.WriteLine("\n0. 나가기");
 
-            Console.WriteLine("\n0. 나가기");
+                int itemChoice = character.inventory.EquipmentsInBag.Data.Count;
+                userInput = ui.UserChoiceInput(0, itemChoice);
+                character.inventory.ManageEquipments(userInput);
+            } while (userInput != 0);
 
-            int userInput = ui.UserChoiceInput(0, 0);
+            SceneManager.Instance._startScene.loadScene(ui, character);
         }
     }
 }
