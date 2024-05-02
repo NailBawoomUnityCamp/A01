@@ -29,6 +29,10 @@ namespace TextRpg_MonsterHunting
         bool IsQuest1_Clear = false;
 
         private List<QuestInfo> quests;
+        bool Quest_1_ing = false;
+        bool Quest_1_Clear = false;
+        Quest quest = new Quest();
+        Character character;
 
         public QuestManager()
         {
@@ -47,6 +51,7 @@ namespace TextRpg_MonsterHunting
 
         public void QuestId1()
         {
+<<<<<<< Updated upstream
             if (IsQuest1_ing = false)
             {
 
@@ -58,44 +63,72 @@ namespace TextRpg_MonsterHunting
         }
 
         // 필요에 따라 더 많은 메서드를 추가할 수 있습니다. 예) 모든 퀘스트 리스트 반환, 퀘스트 추가 등
+=======
+            if (Quest_1_ing = false)
+            {
+                quest.Quest1S();
+>>>>>>> Stashed changes
 
-        /* 퀘스트를 받지않았다면, Quest1S() 호출
-         * string input < 여기서 값을 처리
-         * 퀘스트 bool = true 
-         * 일때 quest1R() 호출
-         * 퀘스트 조건 bool = true 일때
-         * Quest1C() 호출
-         * characr.Gold += 5;
-         * 
-         * 
-         * public void Num1Q()
-         * {
-         *      if (QuestOK = false) {
-         *      quest.Quest1S()
-         *      input
-         *      swich
-         *      case "1":
-         *      QuestOK = true;
-         *      }
-         *      
-         *      else
-         *      {
-         *          if (QuestClear = false)
-         *          {
-         *              quest.Quest1ing()
-         *              input
-         *              swich
-         *              
-         *          }
-         *          
-         *          else
-         *          {
-         *              quest.Quest1Clear()
-         *              보상 획득 관련 코드
-         *          }
-         *      }
-         * }
-         * 
-         */
+                string Input = Console.ReadLine();
+
+                switch (Input)
+                {
+                    case "1":
+                        Quest_1_Clear = true;
+                        break;
+                    case "2":
+                        break;
+                    default:
+                        Console.WriteLine("잘못된 입력입니다.");
+                        break;
+                }
+            }
+            else
+            {
+                if (/* 미니언 처치가 5마리 미만일 때 */)
+                {
+                    quest.Quest1R();
+
+                    string Input = Console.ReadLine();
+
+                    switch (Input)
+                    {
+                        case "0":
+                            break;
+                        default:
+                            Console.WriteLine("잘못된 입력입니다.");
+                            break;
+                    }
+                }
+
+                else // 미니언 처치가 5마리 이상일 때
+                {
+                    quest.Quest1C();
+
+                    string Input = Console.ReadLine();
+
+                    switch (Input)
+                    {
+                        case "1":
+                            QuestId1Clear();
+                            Console.WriteLine("보상을 수령하셨습니다.")
+                            break;
+                        case "0":
+                            break;
+                        default:
+                            Console.WriteLine("잘못된 입력입니다.");
+                            break;
+                    }
+                }
+            }
+        }
+
+        public void QuestId1Clear()
+        {
+            if (Quest_1_Clear = true)
+            {
+                character.Gold += 5; // 보상 추가
+            }
+        }
     }
 }
