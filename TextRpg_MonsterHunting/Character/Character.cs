@@ -26,6 +26,7 @@ namespace TextRpg_MonsterHunting
         public int Experience { get; private set; }
         public int Gold { get; private set; }
         public bool IsDie { get; private set; }
+        public int CurrentStage { get; private set; }
         public Inventory inventory { get; private set; }
 
         protected SkillManager skillManager;
@@ -109,6 +110,12 @@ namespace TextRpg_MonsterHunting
         public void ChangeGold(int changeGold)
         {
             Gold += changeGold;
+        }
+
+        // 스테이지 변화
+        public void ChangeStage(int changeStage)
+        {
+            CurrentStage = changeStage;
         }
 
         // 레벨 / 경험치 증가
