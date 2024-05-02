@@ -30,6 +30,7 @@ namespace TextRpg_MonsterHunting
 		public string Name { get; }
 		public double TotalAttackPower { get; }
 		public double CurrentHealth { get; }
+		public bool IsDie { get; }
 
 		//체력 감소 또는 증가
 		public void ChangeHealth(double changeHealth);
