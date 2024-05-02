@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -21,6 +22,21 @@ namespace TextRpg_MonsterHunting
     internal class Utils
 	{
 		
+	}
+
+	//캐릭터, 몬스터 용 인터페이스
+	public interface Humanoid
+	{
+		public string Name { get; }
+		public double TotalAttackPower { get; }
+		public double CurrentHealth { get; }
+		public bool IsDie { get; }
+
+		//체력 감소 또는 증가
+		public void ChangeHealth(double changeHealth);
+
+		// 공격 기능, 피해량 반환
+		public double BasicAttack();
 	}
 
 	//json 저장용 List<Item> 대체 클래스

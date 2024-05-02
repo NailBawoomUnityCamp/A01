@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace TextRpg_MonsterHunting
 {
-    public class Character
-    {
-        public static Character instance;
+    public class Character : Humanoid
+	{
+        public static Character Instance;
         public const double MaxHealth = 100;     
 
         public int Level { get; private set; }
@@ -25,15 +27,23 @@ namespace TextRpg_MonsterHunting
         public int Experience { get; private set; }
         public int Gold { get; private set; }
         public bool IsDie { get; private set; }
+        public int CurrentStage { get; private set; }
         public Inventory inventory { get; private set; }
 
+        [JsonIgnore]
         protected SkillManager skillManager;
         
 
         public Character(string name)
         {
-            if (instance == null)
-                instance = this;
+            if (Instance == null)
+            {
+                Instance = new Character(name);
+            }
+            else
+            {
+                Instance = this;
+            }
 
             Name = name;
 
@@ -48,7 +58,30 @@ namespace TextRpg_MonsterHunting
         public void PrintCharacterInfo() 
         {
             Console.WriteLine($"Lv. {Level.ToString("N2")}");
-            Console.WriteLine();
+            Console.WriteLine($"직업 ( {ReturnGameClassName()} )");
+            Console.WriteLine($"공격력 : {BaseAttackPower}");
+            Console.WriteLine($"방어력 : {BaseDefensePower}");
+            Console.WriteLine($"체 력 : {CurrentHealth}");
+            Console.WriteLine($"골드 : {Gold}");
+        }
+        
+        // 직업명 한글로 변환
+        public string ReturnGameClassName()
+        {
+            string ClassName = "전사";
+            if (this.GetType() == typeof(Warrior))
+            {
+                ClassName = "전사";
+            }
+            else if(this.GetType() == typeof(Wizard)) 
+            {
+                ClassName = "마법사";
+            }
+            else if(this.GetType() == typeof(Archer))
+            {
+                ClassName = "궁수";
+            }
+            return ClassName;
         }
 
         // 총 방어력 합산/감산
@@ -85,6 +118,12 @@ namespace TextRpg_MonsterHunting
         public void ChangeGold(int changeGold)
         {
             Gold += changeGold;
+        }
+
+        // 스테이지 변화
+        public void ChangeStage(int changeStage)
+        {
+            CurrentStage = changeStage;
         }
 
         // 레벨 / 경험치 증가
@@ -138,49 +177,6 @@ namespace TextRpg_MonsterHunting
             {               
                 return attackDamage;
             }
-        }
-    }
-
-    public class Warrior : Character
-    {
-        public Warrior(string name):base(name)
-        {
-            BaseAttackPower = 10;
-            BaseDefensePower = 5;
-            MaxMana = 50;
-            CurrentMana = 50;
-
-            // 스킬 추가
-            skillManager.AddSkill(new Skill("알파 스트라이크", 10, 2f, 1));
-            skillManager.AddSkill(new Skill("더블 스트라이크", 15, 1.5f, 2));
-        }
-    }
-     
-    public class Wizard : Character
-    {
-        public Wizard(string name) : base(name)
-        {
-            BaseAttackPower = 15;
-            BaseDefensePower = 1;
-            MaxMana = 150;
-            CurrentMana = 150;
-
-            skillManager.AddSkill(new Skill("크리스탈 블레이드", 60, 5f, 1));
-            skillManager.AddSkill(new Skill("파이어 스톰", 30, 3f, 2));
-        }
-    }
-
-    public class Archer : Character
-    {
-        public Archer(string name) : base(name)
-        {
-            BaseAttackPower = 18;
-            BaseDefensePower = 3;
-            MaxMana = 100;
-            CurrentMana = 100;
-
-            skillManager.AddSkill(new Skill("레드 스윙", 50, 3f, 2));
-            skillManager.AddSkill(new Skill("바이올렛 샷", 30, 2f, 3));
         }
     }
 }
