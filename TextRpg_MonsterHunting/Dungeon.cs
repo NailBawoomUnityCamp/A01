@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 
 namespace TextRpg_MonsterHunting
 {
-
-
     internal class Dungeon
     {   //Class Dungeon에 변수를 선언, 몬스터리스트를 선언. 아래는 멤버변수     
         Character _hero;

@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace TextRpg_MonsterHunting
 {
-    public class QuestInfo
+    public class QuestInfo //2024.05.02 박재우
+    {
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -30,13 +31,14 @@ namespace TextRpg_MonsterHunting
         Quest quest = new Quest();
         Character character;
 
+        public int MinionKillCount { get; set; };
+
         public QuestManager()
         {
             quests = new List<QuestInfo>()
         {
             new QuestInfo(1, "마을을 위협하는 미니언 처치", 5, "(아이템) x1"),
             
-            // 여기에 더 많은 퀘스트를 추가할 수 있습니다.
         };
         }
 
@@ -57,7 +59,7 @@ namespace TextRpg_MonsterHunting
                 {
                     case "1":
                         Quest_1_ing = true;
-                        /* 미니언 처치수 0으로 초기화 */
+                        MinionKillCount = 0;/* 미니언 처치수 0으로 초기화 */
                         break;
                     case "2":
                         break;
@@ -68,7 +70,7 @@ namespace TextRpg_MonsterHunting
             }
             else
             {
-                if (/* 미니언 처치가 5마리 미만일 때 */)
+                if (MinionKillCount < 5)/* 미니언 처치가 5마리 미만일 때 */
                 {
                     quest.Quest1R();
 
@@ -89,6 +91,7 @@ namespace TextRpg_MonsterHunting
                     quest.Quest1C();
 
                     string Input = Console.ReadLine();
+
 
                     switch (Input)
                     {

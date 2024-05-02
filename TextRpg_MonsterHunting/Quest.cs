@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace TextRpg_MonsterHunting
 {
-    public class Quest
+    public class Quest //2024.05.02 박재우
     {
+    {
+        QuestManager questManager = new QuestManager();
+
         public void Quest1S()
         {
             Console.WriteLine("\n== 마을을 위협하는 미니언 처치 ==");
@@ -23,7 +26,7 @@ namespace TextRpg_MonsterHunting
         public void Quest1R()
         {
             Console.WriteLine("\n== 마을을 위협하는 미니언 처치 ==");
-            Console.WriteLine($"미니언을 잡는데에 문제는 없는가? \n지금 당신이 잡은 미니언은 {/* 미니언 카운트 */} / 5 마리네.");
+            Console.WriteLine($"미니언을 잡는데에 문제는 없는가? \n지금 당신이 잡은 미니언은 {questManager.MinionKillCount} / 5 마리네.");
             Console.WriteLine("\n보상");
             Console.WriteLine("(아이템) x 1 , 5G");
             Console.WriteLine("0. 돌아가기");
