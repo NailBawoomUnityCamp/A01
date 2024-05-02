@@ -39,18 +39,18 @@ namespace TextRpg_MonsterHunting
             }
         }
     }
+}
 
-#if
+    /*
         //파이트 초이스. 
         public void FightChoice()
         {
             // 사용자가 몬스터를 발견.
-            Console.WriteLine($"\n{_hero.Name}은(는) {monster}를 발견했다!."); /*1.game.cs에서 선언된 heroName은 어떻게 재활용 할 수있을까?
-                                                                             2.발견한 monster의 이름을 어떻게 랜덤으로 입력 할 수 있을까?/*
+            Console.WriteLine($"\n{_hero.Name}은(는) {monster}를 발견했다!."); //1.game.cs에서 선언된 heroName은 어떻게 재활용 할 수있을까?
+                                                                               //2.발견한 monster의 이름을 어떻게 랜덤으로 입력 할 수 있을까?
             Console.WriteLine($"{heroName}은(는) 이제 싸워야합니다!.\n");
 
-            /* 사용자의 선택을 요구하는 코드를 작성
-            1.싸운다 2.도망친다 선택*/
+            // 사용자의 선택을 요구하는 코드를 1.싸운다 2.도망친다 선택
             Console.WriteLine("1. 싸운다");
             Console.WriteLine("2. 도망친다");
             string userInput = Console.ReadLine();
@@ -77,7 +77,7 @@ namespace TextRpg_MonsterHunting
         {
             Console.WriteLine($"{_hero.Name}은(는) 부리나케 도망쳤습니다."); // 도망가는 행동을 어떻게 작성해야 마을로 돌아가는지..
         }
-#ifend
+
 
 
 
@@ -241,4 +241,6 @@ private bool AllMonstersDead()
         }
         return true; // 모든 몬스터가 죽었을 경우 true 반환
     }
-}
+
+
+*/
