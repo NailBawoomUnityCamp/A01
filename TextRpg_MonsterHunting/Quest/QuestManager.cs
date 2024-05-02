@@ -10,7 +10,6 @@ namespace TextRpg_MonsterHunting
 {
     public class QuestInfo //2024.05.02 박재우
     {
-    {
         public int Id { get; set; }
         public string Title { get; set; }  
         public int RewardGold { get; set; }
