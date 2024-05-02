@@ -20,17 +20,10 @@ namespace TextRpg_MonsterHunting
 
                 int itemChoice = character.inventory.PotionsInBag.Data.Count;
                 userInput = ui.UserChoiceInput(0, itemChoice);
-                
-
+                character.inventory.ManagePotions(userInput, character);
             } while (userInput != 0);
 
             SceneManager.Instance._startScene.loadScene(ui, character);
-
-
-
-
-
-
         }
     }
 }
