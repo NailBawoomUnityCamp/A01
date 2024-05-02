@@ -21,7 +21,8 @@ namespace TextRpg_MonsterHunting
 
     internal class Utils
 	{
-		
+		public static Potion HealthPotion = new Potion("체력 포션", 30, "현재 체력을 30 회복합니다.", ItemType.Health);
+		public static Potion ManaPotion = new Potion("마나 포션", 30, "현재 마나를 30 회복합니다.", ItemType.Mana);
 	}
 
 	//캐릭터, 몬스터 용 인터페이스
