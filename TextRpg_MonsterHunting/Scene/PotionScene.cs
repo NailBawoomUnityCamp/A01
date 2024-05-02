@@ -4,18 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TextRpg_MonsterHunting.Scene
+namespace TextRpg_MonsterHunting
 {
     internal class PotionScene : Scene
     {
         public void loadScene(UI ui, Character character)
         {
-            ui.PrintTitle("회복");
+            int userInput;
+            do
+            {
+                ui.PrintTitle("회복");
 
+                character.inventory.PrintPotionItems();
+                Console.WriteLine("\n0. 나가기");
 
+                int itemChoice = character.inventory.PotionsInBag.Data.Count;
+                userInput = ui.UserChoiceInput(0, itemChoice);
+                character.inventory.ManagePotions(userInput, character);
+            } while (userInput != 0);
 
-
-
+            SceneManager.Instance._startScene.loadScene(ui, character);
         }
     }
 }
