@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TextRpg_MonsterHunting
 {
-
+    
 
     internal class Dungeon
     {   //Class Dungeon에 변수를 선언, 몬스터리스트를 선언. 아래는 멤버변수     
@@ -15,7 +15,7 @@ namespace TextRpg_MonsterHunting
         List<Monster> _monsterHouse;
 
         //InDungeon()의 매개변수(서로 종속인 변수들을 묶어주는 변수)를 chracacter 클래스에 대입
-        public void InDungeon(Character hero) //hero = new Character(heroClass, heroName ?? "홍길동")
+        public void InDungeon(Character hero, QuestManager questManager) //hero = new Character(heroClass, heroName ?? "홍길동")
         {
             _hero = hero; //hero = new Character(heroClass, heroName ?? "홍길동"); 이므로 선언된 값 불러오기.
             List<Monster> monsterKind;
@@ -24,23 +24,141 @@ namespace TextRpg_MonsterHunting
             //지역변수 monsterkind와 멤버변수_monsterHouse를 new 사용, 리스트를 초기화
             monsterKind = new List<Monster>();
             _monsterHouse = new List<Monster>();
-            //선언한 _monsterKind new List<Monster>를 구성하기위해 public Monster 불러오기. ("strring", 공격력, HP, 레벨)
+            
+			//선언한 _monsterKind new List<Monster>를 구성하기위해 public Monster 불러오기. ("string", 공격력, HP, 레벨)
             monsterKind.Add(new Monster("미니언", 15, 5, 2));
             monsterKind.Add(new Monster("공허충", 10, 9, 3));
             monsterKind.Add(new Monster("대포미니언", 25, 8, 5));
-            Console.WriteLine("준비된 3가지의 몬스터 중");
-            Console.WriteLine("세 마리가 생성됩니다.");
-            Random random = new Random(); // Visulal Stuido에 코딩된, Random 난수 생성기 선언..?
-            int howMany = random.Next(1, 5); // random.Next 를 사용해 1,2,3,4 총 4마리를 생성하기 위해 1~5를 입력.
+
+			//스테이지 생성 작업
+			//몬스터 생성
+			int stageNum = 1;
+			Random random = new Random();
+
+			int howMany = random.Next(1+stageNum, 5+stageNum);
+
             for (int i = 0; i < howMany; i++)
-            {
-                int index = random.Next(0, 3); //index등장
-                _monsterHouse.Add(monsterKind[index]);
+			{
+				int index = random.Next(0, 3);
+				_monsterHouse.Add(monsterKind[index]);
+			}
+
+			if(stageNum % 5 == 0)
+			{
+				//보스 몬스터를 stageNum / 5 만큼의 마릿수 만큼 추가
+				int x = stageNum / 5; 
+
+                _monsterHouse.Add(new Monster("yulogJean", 120, 10, 20));
             }
+		}
+
+        //영웅 행동 선택
+        public void PlayerChoice()
+		{
+			Console.WriteLine("Battle!!\n");
+            for (int i = 0; i < _monsterHouse.Count; i++)
+            {
+				Console.WriteLine(_monsterHouse[i]);
+            }
+            /*
+			 * Battle!!
+
+				Lv.2 미니언  HP 15
+				Lv.5 대포미니언 HP 25
+				LV.3 공허충 HP 10
+
+
+				[내정보]
+				Lv.1  Chad (전사) 
+				HP 100/100 
+
+				1. 공격
+
+				원하시는 행동을 입력해주세요.
+				>>
+			 */
         }
 
-        // 몬스터를 공격하는 메서드
-        public bool AttackTarget(Humanoid attcker, Humanoid target)
+
+		string? targetName = Console.ReadLine();
+			for (int i = 0; i < monsters.Count; i++)
+			{
+				if (monsters[i].Name == targetName)
+				{
+					monsters[i].TakeDamage(warrior.Attack);
+				}
+			}
+
+			//몬스터 행동
+			for (int i = 0; i < monsters.Count; i++)
+			{
+				if (!monsters[i].IsDead)
+					warrior.TakeDamage(monsters[i].Attack);
+			}
+
+			//영웅, 몬스터 상태 출력
+			PrintCharacters();
+
+			//만약 영웅 사망 또는 몬스터 리스트 전멸시 끝 (clear 값 설정)
+			if (warrior.IsDead)
+			{
+				stageEnd = true;
+			}
+			else
+			{
+				stageEnd = true;
+				foreach (Monster monster in monsters)
+				{
+					if (!monster.IsDead)
+					{
+						stageEnd = false;
+					}
+				}
+				if (stageEnd) clear = true;
+			}
+			Thread.Sleep(100);
+		}
+
+		//클리어 함수콜
+		Clear(clear);
+			return clear;
+
+
+		/*Battle!!
+
+		1 Lv.2 미니언  HP 15
+		2 Lv.5 대포미니언 HP 25
+		3 LV.3 공허충 Dead
+
+		[내정보]
+		Lv.1  Chad (전사) 
+		HP 100/100 
+
+		0. 취소
+
+		대상을 선택해주세요.
+		>>
+		 */
+
+		/*
+		Battle!!
+
+		Chad 의 공격!
+		Lv.3 공허충 을(를) 맞췄습니다. [데미지 : 10]
+
+		Lv.3 공허충
+		HP 10 -> Dead
+
+		0. 다음
+
+		>>
+		 */
+
+
+
+
+		// 몬스터를 공격하는 메서드
+		public bool AttackTarget(Humanoid attcker, Humanoid target)
         {
             double damage = attcker.BasicAttack();
             double beforeHealth = target.CurrentHealth;
