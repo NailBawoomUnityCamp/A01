@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+
 namespace TextRpg_MonsterHunting
 {
     public class Character : Humanoid
