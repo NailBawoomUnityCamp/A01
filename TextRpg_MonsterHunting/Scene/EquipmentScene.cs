@@ -21,6 +21,7 @@ namespace TextRpg_MonsterHunting
                 int itemChoice = character.inventory.EquipmentsInBag.Data.Count;
                 userInput = ui.UserChoiceInput(0, itemChoice);
                 character.inventory.ManageEquipments(userInput);
+                QuestManager.Instance.CheckQuestCompletion(character);
             } while (userInput != 0);
 
             SceneManager.Instance._startScene.loadScene(ui, character);
