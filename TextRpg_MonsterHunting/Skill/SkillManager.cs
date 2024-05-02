@@ -39,12 +39,33 @@ namespace TextRpg_MonsterHunting
         }
 
         // 번호에 해당하는 스킬 사용(1번은 0번 스킬)
-        public void UseSkill(int skillIndex)
+        public void UseSkill(int skillIndex, List<Monster> monsters, Character character)
         {
             if (skillIndex >= 1 && skillIndex <= skills.Count)
             {
                 Skill skillToUse = skills[skillIndex - 1];
                 Console.WriteLine($"스킬 '{skillToUse.Name}'을(를) 사용했습니다.");
+
+                // 해당 스킬이 공격하는 몬스터수만큼 랜덤값 발생
+                int targetCount = skillToUse.TargetCount;
+
+                // 몬스터 목록의 몬스터 중에서 랜덤으로 공격
+                HashSet<int> generatedIndex = new HashSet<int>();
+
+                for (int i = 0; i < targetCount; i++)
+                {
+                    int randomIndex;
+                    do
+                    {
+                        randomIndex = new Random().Next(monsters.Count);
+                    } while (!generatedIndex.Add(randomIndex)); // 이미 생성된 값이면 다시 생성
+
+                    // 랜덤 지정된 몬스터 공격( 공격력 * 배수 )
+                    double attackDamage = character.TotalAttackPower * skillToUse.DamageMultiplier;
+                    monsters[randomIndex].ChangeHealth(-attackDamage);
+                    // 마나 감소
+                    character.ChangeMana(skillToUse.MpCost);
+                }
             }
             else
             {
