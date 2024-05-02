@@ -166,6 +166,7 @@ namespace TextRpg_MonsterHunting
                     BaseDefensePower += 1.0;
                     if(QuestManager.Instance.Quests is AttackItemQuest)
                         ((IQuest)QuestManager.Instance.Quests).CheckQuestProgress();
+                    QuestManager.Instance.CheckQuestCompletion(this);
                     break;
                 default:
                     // 경험치 증가

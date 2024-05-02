@@ -93,7 +93,6 @@ namespace TextRpg_MonsterHunting
                     UnEquipItem(Body);
                 }
                 Body = item;
-                item.Equipped = true;
             }
             else if (item.EquipType == EquipmentType.OneHand)
             {
@@ -101,9 +100,11 @@ namespace TextRpg_MonsterHunting
                 {
                     UnEquipItem(RightHand);
                 }
-                RightHand = item;
-                item.Equipped = true;
+                RightHand = item;              
             }
+            item.Equipped = true;
+            if (QuestManager.Instance.Quests is HealthPotionQuest)
+                ((IQuest)QuestManager.Instance.Quests).CheckQuestProgress();           
         }
 
         //장착 해제
