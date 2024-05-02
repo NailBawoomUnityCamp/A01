@@ -114,6 +114,23 @@ namespace TextRpg_MonsterHunting
             }
         }
 
+        // 마나 합산/감산
+        public void ChangeMana(double changeMana)
+        {
+            CurrentMana += changeMana;
+
+            // 마나가 최대 마나를 넘어가는지 확인
+            if (CurrentMana > MaxMana)
+            {
+                CurrentMana = MaxMana;
+            }
+            // 마나가 0 이하로 내려가는지 확인
+            else if (CurrentMana <= 0)
+            {
+                CurrentMana = 0;
+            }
+        }
+
         // 골드 증가/감소
         public void ChangeGold(int changeGold)
         {
