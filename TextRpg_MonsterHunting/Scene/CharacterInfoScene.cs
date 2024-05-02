@@ -17,6 +17,8 @@ namespace TextRpg_MonsterHunting
             Console.WriteLine("\n0. 나가기");
 
             int userInput = ui.UserChoiceInput(0, 0);
+
+            SceneManager.Instance._startScene.loadScene(ui, character);
         }
     }
 }

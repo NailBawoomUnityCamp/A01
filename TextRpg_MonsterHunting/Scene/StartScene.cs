@@ -15,10 +15,11 @@ namespace TextRpg_MonsterHunting
 
             Console.WriteLine("1. 상태 보기");
             Console.WriteLine("2. 인벤토리 관리");
-            Console.WriteLine("3. 전투 시작");
+            Console.WriteLine("3. 회복 아이템 사용");
+            Console.WriteLine("4. 전투 시작");
             Console.WriteLine("\n0. 나가기");
 
-            int userInput = ui.UserChoiceInput(0, 3);
+            int userInput = ui.UserChoiceInput(0, 4);
 
             switch(userInput)
             {
@@ -37,7 +38,10 @@ namespace TextRpg_MonsterHunting
                 case 2: //인벤토리 관리
                     SceneManager.Instance._inventoryScene.loadScene(ui, character);
                     break;
-                case 3: //전투 시작(던전 입장)
+                case 3: //회복 아이템 사용
+                    SceneManager.Instance._potionScene.loadScene(ui, character);
+                    break;
+                case 4: //전투 시작(던전 입장)
                     Dungeon dungeon = new Dungeon();
                     dungeon.InDungeon(character);
                     break;

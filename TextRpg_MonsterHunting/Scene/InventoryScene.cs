@@ -23,6 +23,10 @@ namespace TextRpg_MonsterHunting
             {
                 SceneManager.Instance._equipmentScene.loadScene(ui, character);
             }
+            else
+            {
+                SceneManager.Instance._startScene.loadScene(ui,character);
+            }
         }
     }
 }
