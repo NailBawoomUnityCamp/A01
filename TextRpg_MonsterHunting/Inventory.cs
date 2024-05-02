@@ -239,37 +239,28 @@ namespace TextRpg_MonsterHunting
         //포션 아이템 사용 시 아이템 개수 감소 및 체력/마나 증가
         public void ManagePotions(int userInput, Character character)
         {
-            ItemType potionType;
             double UseHealthPotion = 30;
             double UseManaPotion = 30;
 
-            if (userInput == 1 && character.inventory.PotionsInBag.Data.Count > 0) //체력 포션 사용
+            if (userInput == 1 && PotionsInBag.Contains(Utils.HealthPotion)) //체력 포션 사용
             {
-                potionType = ItemType.Health;
-
                 //소지 중인 체력 포션 1개 감소
-                //character.inventory.PotionsInBag.Data.Remove();
-                Potion potionToRemove = character.inventory.PotionsInBag.Data.Find(p => p.ItemType == potionType);
-                if (potionToRemove != null)
-                {
-                    character.inventory.PotionsInBag.Data.Remove(potionToRemove);
-                }
+                PotionsInBag.Remove(Utils.HealthPotion);
 
                 //현재 체력 30 증가
                 character.ChangeHealth(UseHealthPotion);
             }
-            else if (userInput == 2) //마나 포션 사용
+            else if (userInput == 2 && PotionsInBag.Contains(Utils.ManaPotion)) //마나 포션 사용
             {
-                potionType = ItemType.Mana;
                 //소지 중인 마나 포션 1개 감소
-                Potion potionToRemove = character.inventory.PotionsInBag.Data.Find(p => p.ItemType == potionType);
-                if (potionToRemove != null)
-                {
-                    character.inventory.PotionsInBag.Data.Remove(potionToRemove);
-                }
+                PotionsInBag.Remove(Utils.ManaPotion);
 
                 //현재 마나 30 증가
                 character.ChangeMana(UseManaPotion);
+            }
+            else
+            {
+                Console.WriteLine("포션이 부족합니다.");
             }
         }
     }
