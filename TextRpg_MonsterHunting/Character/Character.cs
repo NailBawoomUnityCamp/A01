@@ -4,6 +4,7 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -29,6 +30,7 @@ namespace TextRpg_MonsterHunting
         public int CurrentStage { get; private set; }
         public Inventory inventory { get; private set; }
 
+        [JsonIgnore]
         protected SkillManager skillManager;
         
 
@@ -48,8 +50,16 @@ namespace TextRpg_MonsterHunting
             Level = 1;
             CurrentHealth = 100;
             Gold = 1500;
+			CurrentStage = 0;
 
+			inventory = new Inventory();
             skillManager = new SkillManager();
+
+            //캐릭터 처음 생성시 체력 포션 3개 추가
+            for(int i = 0; i < 3; i++)
+            {
+                inventory.Add(Utils.HealthPotion);
+            }
         }
 
         // 캐릭터의 정보 출력
@@ -109,6 +119,23 @@ namespace TextRpg_MonsterHunting
             {
                 CurrentHealth = 0;
                 IsDie = true;
+            }
+        }
+
+        // 마나 합산/감산
+        public void ChangeMana(double changeMana)
+        {
+            CurrentMana += changeMana;
+
+            // 마나가 최대 마나를 넘어가는지 확인
+            if (CurrentMana > MaxMana)
+            {
+                CurrentMana = MaxMana;
+            }
+            // 마나가 0 이하로 내려가는지 확인
+            else if (CurrentMana <= 0)
+            {
+                CurrentMana = 0;
             }
         }
 

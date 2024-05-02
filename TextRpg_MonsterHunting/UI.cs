@@ -17,18 +17,18 @@ namespace TextRpg_MonsterHunting
         public UI()
         {
             //딕셔너리 초기화
-            titleTexts.Add("상태 보기", "캐릭터의 정보가 표시됩니다.");
-            titleTexts.Add("인벤토리 관리", "보유 중인 아이템을 관리할 수 있습니다.");
-            titleTexts.Add("전투 시작", "전투가 시작되었습니다.");
+            titleTexts.Add("상태 보기", "캐릭터의 정보가 표시됩니다.\n");
+            titleTexts.Add("인벤토리 관리", "보유 중인 아이템을 관리할 수 있습니다.\n");
+            titleTexts.Add("인벤토리 - 장착 관리", "보유 중인 아이템을 관리할 수 있습니다.\n");
+            titleTexts.Add("회복", "포션을 사용하면 체력, 마나를 30 회복할 수 있습니다.\n");
+            titleTexts.Add("전투 시작", "전투가 시작되었습니다.\n");
         }
 
         //타이틀 출력
         //topLineLetters 값 변경
-        //string topLineLetters = "";
         public void PrintTitle(string topLineLetters)
         {
             Console.Clear();
-            //Console.WriteLine(topLineLetters);
 
             foreach (KeyValuePair<string, string> pair in titleTexts)
             {
@@ -52,6 +52,15 @@ namespace TextRpg_MonsterHunting
                 userInput = int.Parse(Console.ReadLine());
             }
             return userInput;
+        }
+
+        public void CountdownComment(int time, string comment)
+        {
+            for (int i = time; i > 0; i--)
+            {
+                Console.WriteLine($"{i}초 후 {comment}");
+                Thread.Sleep(1000);
+            }
         }
     }
 }
