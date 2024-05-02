@@ -31,7 +31,7 @@ namespace TextRpg_MonsterHunting
         public Inventory inventory { get; private set; }
 
         [JsonIgnore]
-        protected SkillManager skillManager;
+        public SkillManager skillManager;
         
 
         public Character(string name)
