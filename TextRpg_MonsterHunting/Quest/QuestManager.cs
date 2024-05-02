@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using TextRpg_MonsterHunting.Scene;
 
 namespace TextRpg_MonsterHunting
 {
@@ -43,8 +42,10 @@ namespace TextRpg_MonsterHunting
                             break;
                         case ItemType.Attack:
                             character.inventory.Add(Utils.Sword);
+                            
                             break;
                     }
+                    character.ChangeGold(quest.RewardGold);
                 }
             }
         }
