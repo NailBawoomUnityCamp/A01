@@ -189,7 +189,9 @@ namespace TextRpg_MonsterHunting
 				}
 				_stageClear = fightEnd;
 			}
-			return fightEnd;
+            QuestManager.Instance.CheckQuestCompletion(_hero);
+
+            return fightEnd;
 		}
 
 		// 몬스터를 공격하는 메서드
