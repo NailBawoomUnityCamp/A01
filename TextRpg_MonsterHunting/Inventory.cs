@@ -148,7 +148,7 @@ namespace TextRpg_MonsterHunting
                 }
                 Console.WriteLine();
             }
-
+            /* PotionScene 생성 전 작업
             Console.WriteLine("[소모 아이템 목록]");
             //PotionList potionList = PotionsInBag;
             foreach (var item in PotionsInBag.Data)
@@ -159,7 +159,7 @@ namespace TextRpg_MonsterHunting
                 ItemType itemType = item.ItemType;
 
                 Console.WriteLine($"- {name} | {itemType}+{stat} | {discription}");
-            }
+            } */
         }
 
         //장착 관리 창
@@ -176,8 +176,7 @@ namespace TextRpg_MonsterHunting
                 ItemType itemType = item.ItemType;            //아이템이 올려주는 능력치 타입
                 bool equipped = item.Equipped;                //장착 상태
 
-                int i;
-                for (i = 1; i < EquipmentsInBag.Data.Count; i++)
+                for (int i = 1; i < EquipmentsInBag.Data.Count; i++)
                 {
                     Console.Write($"- {i}. ");
 
@@ -191,52 +190,23 @@ namespace TextRpg_MonsterHunting
                     }
                 }
                 Console.WriteLine();
-
-                for (int j = i+1; j < PotionsInBag.Data.Count; j++)
-                {
-                    Console.WriteLine($"- {j}. ");
-                }
-
-            }
-
-
-
-
-
-            bool exitManageEquipments = false;
-            while (!exitManageEquipments)
-            {
-                string topLineLetter = ("인벤토리\n" +
-                "보유 중인 아이템을 관리할 수 있습니다.\n" +
-                "장착 관리창 입니다.");
-
-                string firstListTitle = ("[장착 아이템 목록]");
-                EquipmentList equipmentList = EquipmentsInBag;
-
-                List<string> choices = new List<string>();
-                choices.Add("나가기");
-
-                int input = 0;
-                //UI로 출력 및 값 가져오기
-
-                switch (input)
-                {
-                    case 0:
-                        exitManageEquipments = true;
-                        break;
-                    default:
-                        Equipment item = EquipmentsInBag[input - 1];
-                        if (item.Equipped)//장착된 아이템 해제
-                        {
-                            UnEquipItem(item);
-                        }
-                        else//새로운 아이템은 장착
-                        {
-                            EquipItem(item);
-                        }
-                        break;
-                }
             }
         }
+
+        public void ManageEquipments(int userInput)
+        {
+            Equipment item = EquipmentsInBag[userInput - 1];
+
+            if (item.Equipped)//장착된 아이템 해제
+            {
+                UnEquipItem(item);
+            }
+            else//새로운 아이템은 장착
+            {
+                EquipItem(item);
+            }
+        }
+
+
     }
 }
