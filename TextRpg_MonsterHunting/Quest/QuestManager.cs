@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,8 @@ namespace TextRpg_MonsterHunting
     {
         public static QuestManager Instance;
         public List<Quest> Quests;
-        public QuestManager() 
+
+        public QuestManager()
         {
             if (Instance == null)
                 Instance = new QuestManager();
@@ -23,6 +25,28 @@ namespace TextRpg_MonsterHunting
             Quests.Add(new ManaPotionQuest("마을을 위협하는 미니언 처치", 5));
             Quests.Add(new HealthPotionQuest("장비 장착해보자", 5));
             Quests.Add(new AttackItemQuest("더욱 더 강해지기!", 5));
+        }
+
+        public void CheckQuestCompletion(Character character)
+        {
+            foreach (Quest quest in Quests)
+            {
+                if (quest.IsAccept && quest.IsClear)
+                {
+                    switch (quest.RewardItem)
+                    {
+                        case ItemType.Mana:
+                            character.inventory.Add(Utils.ManaPotion);
+                            break;
+                        case ItemType.Health:
+                            character.inventory.Add(Utils.HealthPotion);
+                            break;
+                        case ItemType.Attack:
+                            character.inventory.Add(Utils.Sword);
+                            break;
+                    }
+                }
+            }
         }
 
         /*private List<QuestInfo> quests;

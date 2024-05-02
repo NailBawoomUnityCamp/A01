@@ -10,9 +10,11 @@ namespace TextRpg_MonsterHunting
     public class Quest //2024.05.02 박재우
     {
         //public int Id { get; set; }
-        public string Title { get; set; }
-        public int RewardGold { get; set; }
-        public ItemType RewardItem { get; set; }
+        public string Title { get; private set; }
+        public int RewardGold { get; private set; }
+        public ItemType RewardItem { get; protected set; }
+        public bool IsAccept { get; private set; }
+        public bool IsClear { get; protected set; }
 
         public Quest(string title, int rewardGold)
         {
@@ -20,7 +22,6 @@ namespace TextRpg_MonsterHunting
             RewardGold = rewardGold;
         }
 
-        public virtual void QuestContent() { }
 
         /*public void Quest1R()
         {
