@@ -164,47 +164,4 @@ namespace TextRpg_MonsterHunting
             }
         }
     }
-
-    public class Warrior : Character
-    {
-        public Warrior(string name):base(name)
-        {
-            BaseAttackPower = 10;
-            BaseDefensePower = 5;
-            MaxMana = 50;
-            CurrentMana = 50;
-
-            // 스킬 추가
-            skillManager.AddSkill(new Skill("알파 스트라이크", 10, 2f, 1));
-            skillManager.AddSkill(new Skill("더블 스트라이크", 15, 1.5f, 2));
-        }
-    }
-     
-    public class Wizard : Character
-    {
-        public Wizard(string name) : base(name)
-        {
-            BaseAttackPower = 15;
-            BaseDefensePower = 1;
-            MaxMana = 150;
-            CurrentMana = 150;
-
-            skillManager.AddSkill(new Skill("크리스탈 블레이드", 60, 5f, 1));
-            skillManager.AddSkill(new Skill("파이어 스톰", 30, 3f, 2));
-        }
-    }
-
-    public class Archer : Character
-    {
-        public Archer(string name) : base(name)
-        {
-            BaseAttackPower = 18;
-            BaseDefensePower = 3;
-            MaxMana = 100;
-            CurrentMana = 100;
-
-            skillManager.AddSkill(new Skill("레드 스윙", 50, 3f, 2));
-            skillManager.AddSkill(new Skill("바이올렛 샷", 30, 2f, 3));
-        }
-    }
 }
