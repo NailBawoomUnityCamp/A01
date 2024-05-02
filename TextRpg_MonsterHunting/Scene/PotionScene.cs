@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TextRpg_MonsterHunting.Scene
+namespace TextRpg_MonsterHunting
 {
     internal class PotionScene : Scene
     {
