@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace TextRpg_MonsterHunting
 {
-    public class CharacterInfoScene : Scene
+    internal class EquipmentScene : Scene
     {
         public void loadScene(UI ui, Character character)
         {
-            ui.PrintTitle("상태 보기");
+            ui.PrintTitle("인벤토리 - 장착 관리");
 
-            character.PrintCharacterInfo(); //캐릭터 정보 출력
+            character.inventory.PrintManageEquipments(); //장착 관리 목록 출력
 
             Console.WriteLine("\n0. 나가기");
 
