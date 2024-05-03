@@ -26,27 +26,29 @@ namespace TextRpg_MonsterHunting
             Quests.Add(new AttackItemQuest("더욱 더 강해지기!", 5));
         }
 
-        public void CheckQuestCompletion(Character character)
+        public void CheckQuestCompletion(Character character, Quest quest)
         {
-            foreach (Quest quest in Quests)
+            if (quest.IsAccept && quest.IsClear)
             {
-                if (quest.IsAccept && quest.IsClear)
+                switch (quest.RewardItem)
                 {
-                    switch (quest.RewardItem)
-                    {
-                        case ItemType.Mana:
-                            character.inventory.Add(Utils.ManaPotion);
-                            break;
-                        case ItemType.Health:
-                            character.inventory.Add(Utils.HealthPotion);
-                            break;
-                        case ItemType.Attack:
-                            character.inventory.Add(Utils.Sword);
-                            
-                            break;
-                    }
-                    character.ChangeGold(quest.RewardGold);
+                    case ItemType.Mana:
+                        character.inventory.Add(Utils.ManaPotion);
+                        break;
+                    case ItemType.Health:
+                        character.inventory.Add(Utils.HealthPotion);
+                        break;
+                    case ItemType.Attack:
+                        character.inventory.Add(Utils.Sword);
+
+                        break;
                 }
+                character.ChangeGold(quest.RewardGold);
+                Console.WriteLine("보상이 지급됐습니다!\n");
+            }
+            else
+            {
+                Console.WriteLine("아직 퀘스트가 진행중입니다!\n");
             }
         }
 
