@@ -41,12 +41,19 @@ namespace TextRpg_MonsterHunting
         }
         public override void CheckQuestProgress()
         {          
-            if (this.IsAccept)
+            if (this.IsAccept) // 수락후
             {
                 monstersKilledCount++;
                 if(monstersKilledCount == 5)
+                {
                     this.IsClear = true;
+                }          
             }
+        }
+        public void ClearMonsterCount()
+        {
+            Console.WriteLine("몬스터수초기화");
+            this.monstersKilledCount = 0;          
         }
     }
 }

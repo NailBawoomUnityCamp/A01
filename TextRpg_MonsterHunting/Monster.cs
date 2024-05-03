@@ -60,6 +60,7 @@ namespace TextRpg_MonsterHunting
 			{
 				CurrentHealth = 0;
 				IsDie = true;
+				QuestManager.Instance.Quests[0].CheckQuestProgress();
             }
 		}
 

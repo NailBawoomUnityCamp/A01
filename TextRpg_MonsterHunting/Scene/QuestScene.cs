@@ -22,6 +22,7 @@ namespace TextRpg_MonsterHunting
                     Console.WriteLine($"{i + 1}. {QuestList[i].Title}");
                 }
 
+                Console.WriteLine("0. 나가기");
                 userInput = ui.UserChoiceInput(0, QuestList.Count + 1);
 
                 //
@@ -34,28 +35,24 @@ namespace TextRpg_MonsterHunting
                         QuestList[0].PrintQuestStatus();
                         userInput = ui.UserChoiceInput(1, 2);
 
-                        if (userInput == 1)
+                        if (userInput == 1) // 보상받기 or 수락  
                         {
-                            if (QuestList[0].IsAccept == true)
+                            if (QuestList[0].IsAccept == true) // 보상받기
                             {
                                 QuestManager.Instance.CheckQuestCompletion(character, QuestList[0]);
                             }
-                            else
+                            else // 수락
                             {
                                 QuestList[0].IsAccept = true;
                             }
-                        }
-                        else
-                        {
-                            SceneManager.Instance._questScene.loadScene(ui, character);
                         }
                         break;
                     case 2:
                         QuestList[1].QuestContent();
                         QuestList[1].PrintQuestStatus();
-                        userInput = ui.UserChoiceInput(1, 3);
+                        userInput = ui.UserChoiceInput(1, 2);
 
-                        if (userInput == 2)
+                        if (userInput == 1)
                         {
                             if (QuestList[1].IsAccept == true)
                             {
@@ -66,17 +63,13 @@ namespace TextRpg_MonsterHunting
                                 QuestList[1].IsAccept = true;
                             }
                         }
-                        else
-                        {
-                            SceneManager.Instance._questScene.loadScene(ui, character);
-                        }
                         break;
                     case 3:
                         QuestList[2].QuestContent();
                         QuestList[2].PrintQuestStatus();
-                        userInput = ui.UserChoiceInput(1, 3);
+                        userInput = ui.UserChoiceInput(1, 2);
 
-                        if (userInput == 3)
+                        if (userInput == 1)
                         {
                             if (QuestList[2].IsAccept == true)
                             {
@@ -87,13 +80,10 @@ namespace TextRpg_MonsterHunting
                                 QuestList[2].IsAccept = true;
                             }
                         }
-                        else
-                        {
-                            SceneManager.Instance._questScene.loadScene(ui, character);
-                        }
                         break;
                 }
             } while (userInput != 0);
+            SceneManager.Instance._startScene.loadScene(ui, character);
         }
     }
 }

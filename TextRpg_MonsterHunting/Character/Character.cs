@@ -256,6 +256,7 @@ namespace TextRpg_MonsterHunting
         // 레벨 / 경험치 증가
         public void Leveling(int monsterLevel)
         {
+            int currentLevel = this.Level;
 			Experience += monsterLevel;
 			if (Experience >= 10 && Level==1)
             {
@@ -288,6 +289,10 @@ namespace TextRpg_MonsterHunting
 				BaseDefensePower += 1.0;
 			}
 
+            if(currentLevel != this.Level)
+            {
+                QuestManager.Instance.Quests[2].CheckQuestProgress();
+            }
 		}
 
         // 공격 기능, 피해량 반환
