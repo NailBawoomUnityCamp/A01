@@ -103,7 +103,8 @@ namespace TextRpg_MonsterHunting
                 }
                 RightHand = item;              
             }
-            item.Equipped = true;          
+            item.Equipped = true;
+            QuestManager.Instance.Quests[1].CheckQuestProgress();
         }
 
         //장착 해제

@@ -11,6 +11,7 @@
     <Compile Remove="Character\Archer.cs" />
     <Compile Remove="Character\Warrior.cs" />
     <Compile Remove="Character\Wizard.cs" />
+    <Compile Remove="Scene\QuestAcceptanceScene.cs" />
   </ItemGroup>
 
 </Project>
