@@ -137,6 +137,8 @@ namespace TextRpg_MonsterHunting
 								_customer.ChangeGold(-item.Price);
 								_customer.inventory.Add(item);
 								soldItems.Remove(item);
+								Utils.SaveHero(_customer);
+								Utils.SaveShopItems(this.soldItems);//구매 시 세이브
 							}
 							else
 							{
@@ -149,6 +151,8 @@ namespace TextRpg_MonsterHunting
 							_customer.ChangeGold((int)(item.Price*0.85f));
 							_customer.inventory.Remove(item);
 							Add(item);
+							Utils.SaveHero(_customer);
+							Utils.SaveShopItems(this.soldItems);//판매 시 세이브
 						}
 						break;
 				}
