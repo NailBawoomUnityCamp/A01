@@ -19,10 +19,14 @@ namespace TextRpg_MonsterHunting
                 character.inventory.PrintPotionItems();
                 Console.WriteLine("\n0. 나가기");
 
-                int itemChoice = character.inventory.PotionsInBag.Data.Count;
-                userInput = ui.UserChoiceInput(0, itemChoice);
-                character.inventory.ManagePotions(userInput, character);
-            } while (userInput != 0);
+				userInput = ui.UserChoiceInput(0, 2);
+                bool skipEnter = character.inventory.ManagePotions(userInput, character);
+                if (!skipEnter)
+                {
+					Console.WriteLine("0. 다음");
+					ui.UserChoiceInput(0, 0);
+				}
+			} while (userInput != 0);
 
             SceneManager.Instance._startScene.loadScene(ui, character);
         }

@@ -23,7 +23,7 @@ namespace TextRpg_MonsterHunting
         public double CurrentMana { get; protected set; }
         public int Experience { get; private set; }
         public int Gold { get; private set; }
-        public bool IsDie { get; private set; }
+        public bool IsDie { get; set; }
         public int CurrentStage { get; private set; }
         public Inventory inventory { get; private set; }
 
@@ -35,26 +35,27 @@ namespace TextRpg_MonsterHunting
 		public const double MaxHealth = 100;
 
 		[JsonConstructor]
-        public Character(int level, string name, double baseAttackPower, double totalAttackPower, double baseDefensePower, double totalDefensePower,
-			double currentHealth, double maxMana, double currentMana, int experience, int gold, bool isDie, int currentStage, Inventory _inventory)
-        {
-            Level = level;
-            Name = name;
-            BaseAttackPower = baseAttackPower;
-            TotalAttackPower = totalAttackPower;
-            BaseDefensePower = baseDefensePower;
-            TotalDefensePower = totalDefensePower;
-            CurrentHealth = currentHealth;
-            MaxMana = maxMana;
-            CurrentMana = currentMana;
-            Experience = experience;
-            Gold = gold;
-            IsDie = isDie;
-            CurrentStage = currentStage;
-            inventory = _inventory;
-        }
+		public Character(int Level, string Name, double BaseAttackPower, double TotalAttackPower, double BaseDefensePower, double TotalDefensePower,
+	double CurrentHealth, double MaxMana, double CurrentMana, int Experience, int Gold, bool IsDie, int CurrentStage, Inventory inventory)
+		{
+			this.Level = Level;
+			this.Name = Name;
+			this.BaseAttackPower = BaseAttackPower;
+			this.TotalAttackPower = TotalAttackPower;
+			this.BaseDefensePower = BaseDefensePower;
+			this.TotalDefensePower = TotalDefensePower;
+			this.CurrentHealth = CurrentHealth;
+			this.MaxMana = MaxMana;
+			this.CurrentMana = CurrentMana;
+			this.Experience = Experience;
+			this.Gold = Gold;
+			this.IsDie = IsDie;
+			this.CurrentStage = CurrentStage;
+			this.inventory = inventory;
+		}
 
-        public Character(string name)
+
+		public Character(string name)
         {
             if (Instance == null)
             {
@@ -82,35 +83,33 @@ namespace TextRpg_MonsterHunting
         public void PrintCharacterInfo() 
         {
             Console.Write($"Lv.");
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine($"{Level.ToString("00")}");
-            Console.ResetColor();
 
             Console.Write($"직업 (");
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.Write($"{ReturnGameClassName()} ");
-            Console.ResetColor();
+            Console.Write($"{ReturnGameClassName()}");
             Console.WriteLine(")");
 
             Console.Write($"공격력 : ");
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine($"{BaseAttackPower}");
-            Console.ResetColor();
+            Console.Write($"{BaseAttackPower} ");
+			Console.ForegroundColor = ConsoleColor.DarkGreen;
+            if(inventory.RightHand != null)
+			    Console.Write($"(+ {inventory.RightHand.Stat})");
+			Console.WriteLine();
+			Console.ResetColor();
 
             Console.Write($"방어력 : ");
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine($"{BaseDefensePower}");
-            Console.ResetColor();
+            Console.Write($"{BaseDefensePower} ");
+			Console.ForegroundColor = ConsoleColor.DarkGreen;
+			if (inventory.Body != null)
+				Console.Write($"(+ {inventory.Body.Stat})");
+            Console.WriteLine();
+			Console.ResetColor();
 
             Console.Write($"체 력 : ");
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine($"{CurrentHealth}");
-            Console.ResetColor();
 
             Console.Write($"골드 : ");
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine($"{Gold}");
-            Console.ResetColor();
         }
         
         // 직업명 한글로 변환
@@ -194,23 +193,39 @@ namespace TextRpg_MonsterHunting
         // 레벨 / 경험치 증가
         public void Leveling(int monsterLevel)
         {
-            switch (Experience)
+			Experience += monsterLevel;
+			if (Experience >= 10 && Level==1)
             {
-                // 레벨업
-                case 10:
-                case 35:
-                case 65:
-                case 100:
-                    Level += 1;
-                    BaseAttackPower += 0.5;
-                    BaseDefensePower += 1.0;
-                    break;
-                default:
-                    // 경험치 증가
-                    Experience += monsterLevel;
-                    break;
-            }
-        }
+				Level += 1;
+				BaseAttackPower += 0.5;
+				BaseDefensePower += 1.0;
+			}
+			if (Experience >= 35 && Level == 2)
+			{
+				Level += 1;
+				BaseAttackPower += 0.5;
+				BaseDefensePower += 1.0;
+			}
+			if (Experience >= 65 && Level == 3)
+			{
+				Level += 1;
+				BaseAttackPower += 0.5;
+				BaseDefensePower += 1.0;
+			}
+			if (Experience >= 100 && Level == 4)
+			{
+				Level += 1;
+				BaseAttackPower += 0.5;
+				BaseDefensePower += 1.0;
+			}
+            if(Experience > 100 && Experience >= Level * 20)
+            {
+				Level += 1;
+				BaseAttackPower += 0.5;
+				BaseDefensePower += 1.0;
+			}
+
+		}
 
         // 공격 기능, 피해량 반환
         public double BasicAttack()

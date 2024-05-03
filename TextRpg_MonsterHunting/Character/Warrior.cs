@@ -14,6 +14,8 @@ namespace TextRpg_MonsterHunting
             BaseDefensePower = 5;
             MaxMana = 50;
             CurrentMana = 50;
+            ChangeAttack(0);
+            ChangeDefense(0);
 
             // 스킬 추가
             skillManager.AddSkill(new Skill("알파 스트라이크", 10, 2f, 1));

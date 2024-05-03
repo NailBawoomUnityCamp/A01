@@ -10,6 +10,9 @@ namespace TextRpg_MonsterHunting
     {
         public void loadScene(UI ui, Character character)
         {
+            Shop shop = new Shop(character, ui);
+            character.IsDie = false;
+            character.ChangeHealth(Character.MaxHealth * 0.01);
             Console.Clear();
             Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.");
             Console.WriteLine("이제 전투를 시작할 수 있습니다.\n");
@@ -23,7 +26,7 @@ namespace TextRpg_MonsterHunting
 			Console.WriteLine("6. 저장 초기화");
             Console.WriteLine("\n0. 나가기");
 
-            int userInput = ui.UserChoiceInput(0, 4);
+            int userInput = ui.UserChoiceInput(0, 6);
 
             switch(userInput)
             {
@@ -50,11 +53,12 @@ namespace TextRpg_MonsterHunting
                     dungeon.InDungeon(character, ui);
                     break;
                 case 5: //상점 입장
-
-                    break;
+                    shop.ShowItems();
+					break;
                 case 6: //저장 초기화
 					Utils.SaveDestory();
-                    break;
+					Environment.Exit(0); //정상 종료 코드 0, 음수값이 들어가면 비정상 종료
+					break;
             }
         }
     }

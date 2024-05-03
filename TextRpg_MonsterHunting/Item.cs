@@ -49,6 +49,20 @@ namespace TextRpg_MonsterHunting
 
 		public bool Equipped { get; set; }
 
+		// Json 불러오는용 생성자
+		[JsonConstructor]
+		public Equipment(string Name, EquipmentType EquipType, int Stat, string Discription, int Price,
+			ItemType ItemType, bool Equipped)
+		{
+			this.Name = Name;
+			this.EquipType = EquipType;
+			this.Stat = Stat;
+			this.Discription = Discription;
+			this.ItemType = ItemType;
+			this.Equipped = Equipped;
+			this.Price = Price;
+		}
+
 		public Equipment(string name, EquipmentType equipType, int stat, string discription,
 			 ItemType itemType, int price)
 		{
@@ -58,20 +72,6 @@ namespace TextRpg_MonsterHunting
 			Discription = discription;
 			ItemType = itemType;
 			Equipped = false;
-			Price = price;
-		}
-
-		//Json 불러오는용 생성자
-		[JsonConstructor]
-		public Equipment(string name, EquipmentType equipType, int stat, string discription, int price,
-			 ItemType itemType, bool equipped)
-		{
-			this.Name = name;
-			this.EquipType = equipType;
-			this.Stat = stat;
-			this.Discription = discription;
-			this.ItemType = itemType;
-			this.Equipped = equipped;
 			Price = price;
 		}
 
@@ -107,15 +107,15 @@ namespace TextRpg_MonsterHunting
 		public ItemType ItemType { get; private set; }
 		public int Price { get; private set; }
 
+		// Json 불러오는용 생성자
 		[JsonConstructor]
-		public Potion(string name, int stat, string discription,
-			 ItemType itemType, int price)
+		public Potion(string Name, int Stat, string Discription, ItemType ItemType, int Price)
 		{
-			this.Name = name;
-			this.Stat = stat;
-			this.Discription = discription;
-			this.ItemType = itemType;
-			Price = price;
+			this.Name = Name;
+			this.Stat = Stat;
+			this.Discription = Discription;
+			this.ItemType = ItemType;
+			this.Price = Price;
 		}
 
 		//아이템 소비 기능

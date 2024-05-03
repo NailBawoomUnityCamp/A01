@@ -44,7 +44,7 @@ namespace TextRpg_MonsterHunting
 
             //스테이지 생성 작업
             //몬스터 생성
-            int _stageNum = hero.CurrentStage;
+            _stageNum = hero.CurrentStage;
             Random random = new Random();
 
             int howMany = random.Next(1 + _stageNum, 5 + _stageNum);
@@ -52,7 +52,7 @@ namespace TextRpg_MonsterHunting
             for (int i = 0; i < howMany; i++)
             {
                 int index = random.Next(0, 3);
-                _monsterHouse.Add(monsterKind[index]);
+                _monsterHouse.Add(new Monster(monsterKind[index]));
             }
 
             if (_stageNum % 5 == 0)
@@ -74,14 +74,23 @@ namespace TextRpg_MonsterHunting
             while (!fightEnd)
             {
                 Console.Clear();
-                Console.Write($"Stage{_stageNum}");
+                Console.Write($"Stage {_stageNum}");
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.WriteLine(" Battle!!\n");
                 Console.ResetColor();
                 for (int i = 0; i < _monsterHouse.Count; i++)
                 {
                     Monster monster = _monsterHouse[i];
-                    Console.WriteLine($"Lv.{monster.EnemyExp} {monster.Name} HP {monster.CurrentHealth}");
+                    if (monster.IsDie)
+                    {
+						Console.ForegroundColor = ConsoleColor.Gray;
+						Console.WriteLine($"Lv.{monster.EnemyExp} {monster.Name} Dead");
+                        Console.ResetColor();
+					}
+                    else
+                    {
+						Console.WriteLine($"Lv.{monster.EnemyExp} {monster.Name} HP {monster.CurrentHealth}");
+					}
                 }
                 PrintCharacterInfo();
                 Console.WriteLine("\n1. 공격");
@@ -123,16 +132,25 @@ namespace TextRpg_MonsterHunting
         {
             bool didAttack = false;
             Console.Clear();
-            Console.Write($"Stage{_stageNum}");
+            Console.Write($"Stage {_stageNum}");
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine(" Battle!!\n");
             Console.ResetColor();
 
             for (int i = 0; i < _monsterHouse.Count; i++)
             {
-                Monster monster = _monsterHouse[i];
-                Console.WriteLine($"Lv.{monster.EnemyExp} {monster.Name} HP {monster.CurrentHealth}");
-            }
+				Monster monster = _monsterHouse[i];
+				if (monster.IsDie)
+				{
+					Console.ForegroundColor = ConsoleColor.Gray;
+					Console.WriteLine($"Lv.{monster.EnemyExp} {monster.Name} Dead");
+					Console.ResetColor();
+				}
+				else
+				{
+					Console.WriteLine($"Lv.{monster.EnemyExp} {monster.Name} HP {monster.CurrentHealth}");
+				}
+			}
             PrintCharacterInfo();
             //스킬 목록 출력
             _hero.skillManager.PrintSkills();
@@ -143,9 +161,10 @@ namespace TextRpg_MonsterHunting
             if (input != 0)
             {
                 //스킬 사용
-                _hero.skillManager.UseSkill(input, _monsterHouse, _hero);
-                didAttack = true;
-            }
+                didAttack = _hero.skillManager.UseSkill(input, _monsterHouse, _hero);
+				Console.WriteLine("0. 다음");
+				_ui.UserChoiceInput(0, 0);
+			}
             return didAttack;
         }
 
@@ -155,7 +174,7 @@ namespace TextRpg_MonsterHunting
             bool didAttack = false;
 
             Console.Clear();
-            Console.Write($"Stage{_stageNum}");
+            Console.Write($"Stage {_stageNum}");
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine(" Battle!!\n");
             Console.ResetColor();
@@ -168,7 +187,7 @@ namespace TextRpg_MonsterHunting
 
             PrintCharacterInfo();
             Console.WriteLine("0. 취소\n");
-            Console.WriteLine("공격할 대상을 선택해주세요. \n>> ");
+            Console.Write("공격할 대상을 선택해주세요. \n>> ");
 
             int input = int.Parse(Console.ReadLine());
             while (input < 0 || input > _monsterHouse.Count || (input > 0 && _monsterHouse[input - 1].IsDie))
@@ -218,7 +237,7 @@ namespace TextRpg_MonsterHunting
         public void AttackTarget(Humanoid attacker, Humanoid target)
         {
             Console.Clear();
-            Console.Write($"Stage{_stageNum}");
+            Console.Write($"Stage {_stageNum}");
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.Write(" Battle!!\n");
             Console.ResetColor();
@@ -226,7 +245,7 @@ namespace TextRpg_MonsterHunting
             {
                 Monster monster = attacker as Monster;
                 Console.Write($"Lv. ");
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.Write($"{monster.EnemyExp} {monster.Name} ");
                 Console.ResetColor();
                 Console.WriteLine("의 공격!");
@@ -263,17 +282,16 @@ namespace TextRpg_MonsterHunting
                     Monster monster = (Monster)target;
                     Console.Write($"Lv.");
 
-                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.Write($"{monster.EnemyExp} {monster.Name}");
                     Console.ResetColor();
+					Console.Write("을(를) 맞췄습니다.");
 
-                    Console.Write("을(를) 맞췄습니다. [데미지 : ");
-
-                    Console.ForegroundColor = ConsoleColor.DarkGreen;
-                    Console.Write($"{totalDamage}");
-                    Console.ResetColor();
-
-                    Console.Write("]");
+					Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("[데미지 : ");
+					Console.Write($"{totalDamage}");
+					Console.Write("]");
+					Console.ResetColor();
 
                     if (totalDamage > attacker.TotalAttackPower * 1.1) // 치명타시 추가 출력
                     {
@@ -284,8 +302,18 @@ namespace TextRpg_MonsterHunting
                 else if (target is Character)
                 {
                     Character human = (Character)target;
-                    Console.Write($"{human.Name} 을(를) 맞췄습니다. [데미지 : {totalDamage}]");
-                    if (totalDamage > attacker.TotalAttackPower * 1.1) // 치명타시 추가 출력
+					Console.ForegroundColor = ConsoleColor.DarkGreen;
+					Console.Write($"{human.Name}");
+					Console.ResetColor();
+					Console.Write("을(를) 맞췄습니다.");
+
+					Console.ForegroundColor = ConsoleColor.Red;
+					Console.Write("[데미지 : ");
+					Console.Write($"{totalDamage}");
+					Console.Write("]");
+					Console.ResetColor();
+
+					if (totalDamage > attacker.TotalAttackPower * 1.1) // 치명타시 추가 출력
                     {
                         Console.Write(" - 치명타 공격!!");
                     }
@@ -331,7 +359,8 @@ namespace TextRpg_MonsterHunting
         //전투 끝나고 마무리 작업
         void AfterFight(double heroHealthBeforeFight)
         {
-            Console.WriteLine($"Stage{_stageNum} Battle!! - Result\n");
+            Console.Clear();
+            Console.WriteLine($"Stage {_stageNum} Battle!! - Result\n");
             if (_stageClear)
             {
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -356,35 +385,44 @@ namespace TextRpg_MonsterHunting
         //던전 보상 추가
         void Reward()
         {
+            Console.Clear();
             Random random = new Random();
-            Console.WriteLine("보상 획득!!");
+            Console.WriteLine("보상 획득!!\n");
 
-            //마나 물약 1개
+            //마나 물약
             int manaAmount = random.Next(1, 2);
-            Console.WriteLine($"마나 물약 {manaAmount}개");
+            Console.WriteLine($"마나 물약 {manaAmount}개\n");
             for (int i = 0; i < manaAmount; i++)
             {
                 _hero.inventory.Add(Utils.ManaPotion);
             }
 
-            //체력 물약 1*_stageNum개
-            int healAmount = random.Next(_stageNum - 1, _stageNum + 1);
-            Console.WriteLine($"체력 물약 {healAmount}개");
+            //체력 물약
+            int healAmount = random.Next(_stageNum, _stageNum + 1);
+            Console.WriteLine($"체력 물약 {healAmount}개\n");
             for (int i = 0; i < healAmount; i++)
             {
-                _hero.inventory.Add(Utils.ManaPotion);
+                _hero.inventory.Add(Utils.HealthPotion);
             }
-            //무기 공격력  random.Next(_stageNum/2, _stageNum+1);
-            int weaponAttack = random.Next(_stageNum / 2, _stageNum + 1);
-            Equipment dungeonSword = new Equipment("던전의 잔혹함", EquipmentType.OneHand, weaponAttack, "매서운 던전에서만 벼려진다는 날카로운 칼입니다.", ItemType.Attack, _stageNum * 3);
-            _hero.inventory.Add(dungeonSword);
-            Console.WriteLine($"무기 : {dungeonSword.Name} | 공격력 + {dungeonSword.Stat} | {dungeonSword.Discription}");
 
-            //방어구 방어력 random.Next(_stageNum / 10, _stageNum - 1);
-            int armorDefence = random.Next(_stageNum / 10, _stageNum - 1);
-            Equipment dungeonArmor = new Equipment("던전의 고요함", EquipmentType.Body, armorDefence, "던전의 깊은 어둠을 담아낸 갑옷입니다.", ItemType.Defence, _stageNum * 3);
+            //무기 공격력  random.Next(1, _stageNum + 1);
+            int weaponAttack = random.Next(1, _stageNum+3);
+            Equipment dungeonSword = new Equipment($"던전의 잔혹함{_stageNum}", EquipmentType.OneHand, weaponAttack, "매서운 던전에서만 벼려진다는 날카로운 칼입니다.", ItemType.Attack, _stageNum * 3);
+            _hero.inventory.Add(dungeonSword);
+            Console.WriteLine($"무기 : {dungeonSword.Name} | 공격력 + {dungeonSword.Stat} | {dungeonSword.Discription}\n");
+
+            //방어구 방어력 random.Next(1, _stageNum + 1);
+            int armorDefence = random.Next(1, _stageNum+3);
+            Equipment dungeonArmor = new Equipment($"던전의 고요함{_stageNum}", EquipmentType.Body, armorDefence, "던전의 깊은 어둠을 담아낸 갑옷입니다.", ItemType.Defence, _stageNum * 3);
             _hero.inventory.Add(dungeonArmor);
-            Console.WriteLine($"무기 : {dungeonArmor.Name} | 방어력 + {dungeonArmor.Stat} | {dungeonArmor.Discription}");
+            Console.WriteLine($"방어구 : {dungeonArmor.Name} | 방어력 + {dungeonArmor.Stat} | {dungeonArmor.Discription}\n");
+        
+            //경험치 계산
+            foreach(Monster monster in _monsterHouse)
+            {
+                _hero.Leveling(monster.EnemyExp);
+            }
+            _hero.ChangeStage(_hero.CurrentStage + 1);
         }
     }
 }
