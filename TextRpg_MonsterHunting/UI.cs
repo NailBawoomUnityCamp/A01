@@ -20,7 +20,8 @@ namespace TextRpg_MonsterHunting
             titleTexts.Add("상태 보기", "캐릭터의 정보가 표시됩니다.\n");
             titleTexts.Add("인벤토리 관리", "보유 중인 아이템을 관리할 수 있습니다.\n");
             titleTexts.Add("인벤토리 - 장착 관리", "보유 중인 아이템을 관리할 수 있습니다.\n");
-            titleTexts.Add("회복", "포션을 사용하면 체력, 마나를 30 회복할 수 있습니다.\n");
+            titleTexts.Add("회복", "포션을 사용하면 체력/마나를 30 회복할 수 있습니다.\n");
+            titleTexts.Add("퀘스트", "");
             titleTexts.Add("전투 시작", "전투가 시작되었습니다.\n");
         }
 
@@ -43,12 +44,18 @@ namespace TextRpg_MonsterHunting
         //유저 선택 Input 받기
         public int UserChoiceInput(int start, int end)
         {
-            Console.Write("\n원하시는 행동을 입력해 주세요.\n>> ");
+            Console.WriteLine("\n원하시는 행동을 입력해 주세요.");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.Write(">> ");
+            Console.ResetColor();
             int userInput = int.Parse(Console.ReadLine());
 
             while (userInput < start || userInput > end)
             {
-                Console.Write("잘못된 입력입니다. 다시 입력해 주세요. \n>> ");
+                Console.WriteLine("잘못된 입력입니다. 다시 입력해 주세요.");
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.Write(">> ");
+                Console.ResetColor();
                 userInput = int.Parse(Console.ReadLine());
             }
             return userInput;

@@ -12,9 +12,7 @@ namespace TextRpg_MonsterHunting
 {
     public class Character : Humanoid
 	{
-        public static Character Instance;
-        public const double MaxHealth = 100;     
-
+        public GameClassType ClassType { get; private set; }
         public int Level { get; private set; }
         public string Name { get; private set; }
         public double BaseAttackPower { get; protected set; }
@@ -26,31 +24,78 @@ namespace TextRpg_MonsterHunting
         public double CurrentMana { get; protected set; }
         public int Experience { get; private set; }
         public int Gold { get; private set; }
-        public bool IsDie { get; private set; }
+        public bool IsDie { get; set; }
         public int CurrentStage { get; private set; }
         public Inventory inventory { get; private set; }
 
         [JsonIgnore]
-        protected SkillManager skillManager;
-        
+        public SkillManager skillManager;
+        [JsonIgnore]
+		public static Character Instance;
+        [JsonIgnore]
+		public const double MaxHealth = 100;
 
-        public Character(string name)
+		[JsonConstructor]
+		public Character(GameClassType ClassType, int Level, string Name, double BaseAttackPower, double TotalAttackPower, double BaseDefensePower, double TotalDefensePower,
+	double CurrentHealth, double MaxMana, double CurrentMana, int Experience, int Gold, bool IsDie, int CurrentStage, Inventory inventory)
+		{
+            this.ClassType = ClassType;
+			this.Level = Level;
+			this.Name = Name;
+			this.BaseAttackPower = BaseAttackPower;
+			this.TotalAttackPower = TotalAttackPower;
+			this.BaseDefensePower = BaseDefensePower;
+			this.TotalDefensePower = TotalDefensePower;
+			this.CurrentHealth = CurrentHealth;
+			this.MaxMana = MaxMana;
+			this.CurrentMana = CurrentMana;
+			this.Experience = Experience;
+			this.Gold = Gold;
+			this.IsDie = IsDie;
+			this.CurrentStage = CurrentStage;
+			this.inventory = inventory;
+
+			if (Instance == null)
+			{
+				Instance = this;
+			}
+            skillManager = new SkillManager();
+			switch (this.ClassType)
+			{
+				case GameClassType.Warrior:
+
+					// 스킬 추가
+					skillManager.AddSkill(new Skill("알파 스트라이크", 10, 2f, 1));
+					skillManager.AddSkill(new Skill("더블 스트라이크", 15, 1.5f, 2));
+					break;
+				case GameClassType.Wizard:
+
+					skillManager.AddSkill(new Skill("크리스탈 블레이드", 60, 5f, 1));
+					skillManager.AddSkill(new Skill("파이어 스톰", 30, 3f, 2));
+					break;
+				case GameClassType.Archer:
+
+					skillManager.AddSkill(new Skill("레드 스윙", 50, 3f, 2));
+					skillManager.AddSkill(new Skill("바이올렛 샷", 30, 2f, 3));
+					break;
+			}
+		}
+
+
+		public Character(GameClassType ClassType, string name)
         {
             if (Instance == null)
-            {
-                Instance = new Character(name);
-            }
-            else
             {
                 Instance = this;
             }
 
+            this.ClassType = ClassType;
             Name = name;
 
             Level = 1;
             CurrentHealth = 100;
             Gold = 1500;
-			CurrentStage = 0;
+            CurrentStage = 0;          
 
 			inventory = new Inventory();
             skillManager = new SkillManager();
@@ -60,36 +105,93 @@ namespace TextRpg_MonsterHunting
             {
                 inventory.Add(Utils.HealthPotion);
             }
-        }
+
+            switch (ClassType)
+            {
+                case GameClassType.Warrior:
+                    BaseAttackPower = 10;
+                    BaseDefensePower = 5;
+                    MaxMana = 50;
+                    CurrentMana = 50;
+
+                    // 스킬 추가
+                    skillManager.AddSkill(new Skill("알파 스트라이크", 10, 2f, 1));
+                    skillManager.AddSkill(new Skill("더블 스트라이크", 15, 1.5f, 2));
+                    break;
+                case GameClassType.Wizard:
+                    BaseAttackPower = 15;
+                    BaseDefensePower = 1;
+                    MaxMana = 150;
+                    CurrentMana = 150;
+
+                    skillManager.AddSkill(new Skill("크리스탈 블레이드", 60, 5f, 1));
+                    skillManager.AddSkill(new Skill("파이어 스톰", 30, 3f, 2));
+                    break;
+                case GameClassType.Archer:
+                    BaseAttackPower = 18;
+                    BaseDefensePower = 3;
+                    MaxMana = 100;
+                    CurrentMana = 100;
+
+                    skillManager.AddSkill(new Skill("레드 스윙", 50, 3f, 2));
+                    skillManager.AddSkill(new Skill("바이올렛 샷", 30, 2f, 3));
+                    break;
+            }
+
+			ChangeAttack(0);
+			ChangeDefense(0);
+		}
 
         // 캐릭터의 정보 출력
         public void PrintCharacterInfo() 
         {
-            Console.WriteLine($"Lv. {Level.ToString("N2")}");
-            Console.WriteLine($"직업 ( {ReturnGameClassName()} )");
-            Console.WriteLine($"공격력 : {BaseAttackPower}");
-            Console.WriteLine($"방어력 : {BaseDefensePower}");
-            Console.WriteLine($"체 력 : {CurrentHealth}");
-            Console.WriteLine($"골드 : {Gold}");
+            Console.Write($"Lv.");
+            Console.WriteLine($"{Level.ToString("00")}");
+
+            Console.Write($"직업 (");
+            Console.Write($"{ReturnGameClassName()}");
+            Console.WriteLine(")");
+
+            Console.Write($"공격력 : ");
+            Console.Write($"{BaseAttackPower} ");
+			Console.ForegroundColor = ConsoleColor.DarkGreen;
+            if(inventory.RightHand != null)
+			    Console.Write($"(+ {inventory.RightHand.Stat})");
+			Console.WriteLine();
+			Console.ResetColor();
+
+            Console.Write($"방어력 : ");
+            Console.Write($"{BaseDefensePower} ");
+			Console.ForegroundColor = ConsoleColor.DarkGreen;
+			if (inventory.Body != null)
+				Console.Write($"(+ {inventory.Body.Stat})");
+            Console.WriteLine();
+			Console.ResetColor();
+
+            Console.Write($"체 력 : ");
+            Console.WriteLine($"{CurrentHealth}");
+
+			Console.Write($"마 나 : ");
+			Console.WriteLine($"{CurrentMana}");
+
+			Console.Write($"골드 : ");
+            Console.WriteLine($"{Gold}");
         }
         
         // 직업명 한글로 변환
         public string ReturnGameClassName()
         {
-            string ClassName = "전사";
-            if (this.GetType() == typeof(Warrior))
+            switch (ClassType)
             {
-                ClassName = "전사";
+                case GameClassType.Warrior:
+                    return "전사";
+                case GameClassType.Wizard:
+                    return "마법사";
+                case GameClassType.Archer:
+                    return "궁수";
+                default:
+                    return "전사";
             }
-            else if(this.GetType() == typeof(Wizard)) 
-            {
-                ClassName = "마법사";
-            }
-            else if(this.GetType() == typeof(Archer))
-            {
-                ClassName = "궁수";
-            }
-            return ClassName;
         }
 
         // 총 방어력 합산/감산
@@ -154,23 +256,44 @@ namespace TextRpg_MonsterHunting
         // 레벨 / 경험치 증가
         public void Leveling(int monsterLevel)
         {
-            switch (Experience)
+            int currentLevel = this.Level;
+			Experience += monsterLevel;
+			if (Experience >= 10 && Level==1)
             {
-                // 레벨업
-                case 10:
-                case 35:
-                case 65:
-                case 100:
-                    Level += 1;
-                    BaseAttackPower += 0.5;
-                    BaseDefensePower += 1.0;
-                    break;
-                default:
-                    // 경험치 증가
-                    Experience += monsterLevel;
-                    break;
+				Level += 1;
+				BaseAttackPower += 0.5;
+				BaseDefensePower += 1.0;
+			}
+			if (Experience >= 35 && Level == 2)
+			{
+				Level += 1;
+				BaseAttackPower += 0.5;
+				BaseDefensePower += 1.0;
+			}
+			if (Experience >= 65 && Level == 3)
+			{
+				Level += 1;
+				BaseAttackPower += 0.5;
+				BaseDefensePower += 1.0;
+			}
+			if (Experience >= 100 && Level == 4)
+			{
+				Level += 1;
+				BaseAttackPower += 0.5;
+				BaseDefensePower += 1.0;
+			}
+            if(Experience > 100 && Experience >= Level * 20)
+            {
+				Level += 1;
+				BaseAttackPower += 0.5;
+				BaseDefensePower += 1.0;
+			}
+
+            if(currentLevel != this.Level)
+            {
+                QuestManager.Instance.Quests[2].CheckQuestProgress();
             }
-        }
+		}
 
         // 공격 기능, 피해량 반환
         public double BasicAttack()
@@ -199,7 +322,7 @@ namespace TextRpg_MonsterHunting
                 return 0;
             }
             else // 적중 성공,적 체력 감소
-            {               
+            {
                 return attackDamage;
             }
         }

@@ -12,7 +12,7 @@ namespace TextRpg_MonsterHunting
         {
             ui.PrintTitle("인벤토리 관리");
 
-            character.inventory.PrintItems(); //인벤토리 목록 출력
+            character.inventory.PrintItems(false); //인벤토리 목록 출력
 
             Console.WriteLine("\n1. 장착 관리");
             Console.WriteLine("0. 나가기");

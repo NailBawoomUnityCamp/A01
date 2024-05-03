@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -30,7 +31,10 @@ namespace TextRpg_MonsterHunting
 	{
 		public string Name { get; }
 		public string Discription { get; }
-		public void PrintData();
+		public int Price { get; }
+		public ItemType ItemType { get; }
+		public int Stat { get; }
+		public string GetType();
 	}
 
 	//장비 아이템 클래스
@@ -40,25 +44,27 @@ namespace TextRpg_MonsterHunting
 		public EquipmentType EquipType { get; private set; }
 		public int Stat { get; private set; }
 		public string Discription { get; private set; }
+		public int Price { get; private set; }
 		public ItemType ItemType { get; private set; }
 
 		public bool Equipped { get; set; }
 
-		//Json 불러오는용 생성자
+		// Json 불러오는용 생성자
 		[JsonConstructor]
-		public Equipment(string name, EquipmentType equipType, int stat, string discription,
-			 ItemType itemType, bool equipped)
+		public Equipment(string Name, EquipmentType EquipType, int Stat, string Discription, int Price,
+			ItemType ItemType, bool Equipped)
 		{
-			this.Name = name;
-			this.EquipType = equipType;
-			this.Stat = stat;
-			this.Discription = discription;
-			this.ItemType = itemType;
-			this.Equipped = equipped;
+			this.Name = Name;
+			this.EquipType = EquipType;
+			this.Stat = Stat;
+			this.Discription = Discription;
+			this.ItemType = ItemType;
+			this.Equipped = Equipped;
+			this.Price = Price;
 		}
 
 		public Equipment(string name, EquipmentType equipType, int stat, string discription,
-			 ItemType itemType)
+			 ItemType itemType, int price)
 		{
 			Name = name;
 			EquipType = equipType;
@@ -66,31 +72,30 @@ namespace TextRpg_MonsterHunting
 			Discription = discription;
 			ItemType = itemType;
 			Equipped = false;
+			Price = price;
 		}
 
-		//장비 아이템 정보 출력
-		public void PrintData()
+		//장비 아이템 스탯 정보 출력
+		public string GetType()
 		{
-			//if (equipped && isShop == false)
-			//{
-			//	Console.Write($"[E]{Name}\t|");
-			//}
-			//else
-			//{
-			//	Console.Write($"{Name}  \t|");
-			//}
-			//switch (itemType)
-			//{
-			//	case ITEMTYPE.DEFENCE:
-			//		Console.Write($"방어력 +{stat} | {discription}");
-			//		break;
-			//	case ITEMTYPE.ATTACK:
-			//		Console.Write($"공격력 +{stat} | {discription}");
-			//		break;
-			//	case ITEMTYPE.HEALTH:
-			//		Console.Write($"체력회복 +{stat} | {discription}");
-			//		break;
-			//}
+			switch(ItemType)
+			{
+				case ItemType.Mana:
+					return "마나";
+					break;
+				case ItemType.Attack:
+					return "공격력";
+					break;
+				case ItemType.Health:
+					return "체력";
+					break;
+				case ItemType.Defence:
+					return "방어력";
+					break;
+				default:
+					return "";
+					break;
+			}
 		}
 	}
 
@@ -100,27 +105,17 @@ namespace TextRpg_MonsterHunting
 		public int Stat { get; private set; }
 		public string Discription { get; private set; }
 		public ItemType ItemType { get; private set; }
-		public bool Equipped { get; set; }
+		public int Price { get; private set; }
 
+		// Json 불러오는용 생성자
 		[JsonConstructor]
-		public Potion(string name, int stat, string discription,
-			 ItemType itemType, int id, bool equipped)
+		public Potion(string Name, int Stat, string Discription, ItemType ItemType, int Price)
 		{
-			this.Name = name;
-			this.Stat = stat;
-			this.Discription = discription;
-			this.ItemType = itemType;
-			this.Equipped = equipped;
-		}
-
-		public Potion(string name, int stat, string discription,
-			 ItemType itemType)
-		{
-			Name = name;
-			Stat = stat;
-			Discription = discription;
-			ItemType = itemType;
-			Equipped = false;
+			this.Name = Name;
+			this.Stat = Stat;
+			this.Discription = Discription;
+			this.ItemType = ItemType;
+			this.Price = Price;
 		}
 
 		//아이템 소비 기능
@@ -145,28 +140,27 @@ namespace TextRpg_MonsterHunting
 			//hero.Inventory.Remove(this);
 		}
 
-		public void PrintData()
+		//장비 아이템 스탯 정보 출력
+		public string GetType()
 		{
-			//if (equipped && isShop == false)
-			//{
-			//	Console.Write($"[E]{Name}\t|");
-			//}
-			//else
-			//{
-			//	Console.Write($"{Name}  \t|");
-			//}
-			//switch (itemType)
-			//{
-			//	case ITEMTYPE.DEFENCE:
-			//		Console.Write($"방어력 +{stat} | {discription}");
-			//		break;
-			//	case ITEMTYPE.ATTACK:
-			//		Console.Write($"공격력 +{stat} | {discription}");
-			//		break;
-			//	case ITEMTYPE.HEALTH:
-			//		Console.Write($"체력회복 +{stat} | {discription}");
-			//		break;
-			//}
+			switch (ItemType)
+			{
+				case ItemType.Mana:
+					return "마나";
+					break;
+				case ItemType.Attack:
+					return "공격력";
+					break;
+				case ItemType.Health:
+					return "체력";
+					break;
+				case ItemType.Defence:
+					return "방어력";
+					break;
+				default:
+					return "";
+					break;
+			}
 		}
 	}
 

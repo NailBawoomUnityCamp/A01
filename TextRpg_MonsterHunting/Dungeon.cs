@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.ConstrainedExecution;
@@ -12,366 +13,424 @@ namespace TextRpg_MonsterHunting
     {   //Class Dungeon에 변수를 선언, 몬스터리스트를 선언. 아래는 멤버변수     
         Character _hero;
         List<Monster> _monsterHouse;
-		UI _ui;
-		QuestManager _quesManager;
-		bool _stageClear;
+        UI _ui;
+        bool _stageClear;
+        int _stageNum;
 
         //InDungeon()의 매개변수(서로 종속인 변수들을 묶어주는 변수)를 chracacter 클래스에 대입
-        public void InDungeon(Character hero, QuestManager questManager,UI ui) //hero = new Character(heroClass, heroName ?? "홍길동")
+        public void InDungeon(Character hero, UI ui) //hero = new Character(heroClass, heroName ?? "홍길동")
         {
-			_stageClear = false;
-			_ui = ui;
-			_quesManager = questManager;
-			_hero = hero; //hero = new Character(heroClass, heroName ?? "홍길동"); 이므로 선언된 값 불러오기.
+            Console.Clear();
+            _stageClear = false;
+            _ui = ui;
+            _hero = hero; //hero = new Character(heroClass, heroName ?? "홍길동"); 이므로 선언된 값 불러오기.
             List<Monster> monsterKind;
-            Console.WriteLine($"\n\"{_hero.Name}\"은(는) 던전에 입장했습니다."); //public string Name { get; private set; }
+            Console.Write($"\n"); //public string Name { get; private set; }
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.Write($"\"{_hero.Name}\"");
+            Console.ResetColor();
+            Console.WriteLine("은(는) 던전에 입장했습니다.\n");
+
+
 
             //지역변수 monsterkind와 멤버변수_monsterHouse를 new 사용, 리스트를 초기화
             monsterKind = new List<Monster>();
             _monsterHouse = new List<Monster>();
-            
-			//선언한 _monsterKind new List<Monster>를 구성하기위해 public Monster 불러오기. ("string", 공격력, HP, 레벨)
+
+            //선언한 _monsterKind new List<Monster>를 구성하기위해 public Monster 불러오기. ("string", 공격력, HP, 레벨)
             monsterKind.Add(new Monster("미니언", 15, 5, 2));
             monsterKind.Add(new Monster("공허충", 10, 9, 3));
             monsterKind.Add(new Monster("대포미니언", 25, 8, 5));
 
-			//스테이지 생성 작업
-			//몬스터 생성
-			int stageNum = hero.CurrentStage;
-			Random random = new Random();
+            //스테이지 생성 작업
+            //몬스터 생성
+            _stageNum = hero.CurrentStage;
+            Random random = new Random();
 
-			int howMany = random.Next(1+stageNum, 5+stageNum);
+            int howMany = random.Next(1 + _stageNum, 5 + _stageNum);
 
             for (int i = 0; i < howMany; i++)
-			{
-				int index = random.Next(0, 3);
-				_monsterHouse.Add(monsterKind[index]);
-			}
-
-			if(stageNum % 5 == 0)
-			{
-				//보스 몬스터를 stageNum / 5 만큼의 마릿수 만큼 추가
-				for(int i =0;i< stageNum / 5; i++)
-				{
-					_monsterHouse.Add(new Monster("yulogJean", 120, 10, 20));
-				}
+            {
+                int index = random.Next(0, 3);
+                _monsterHouse.Add(new Monster(monsterKind[index]));
             }
-			PlayerChoice();
-		}
 
-        //영웅 행동 선택
-        public void PlayerChoice()
-		{
-			bool fightEnd = false;
-			while (!fightEnd)
-			{
-				Console.WriteLine("Stage{0} Battle!!\n");
-				for (int i = 0; i < _monsterHouse.Count; i++)
-				{
-					Monster monster = _monsterHouse[i];
-					Console.WriteLine($"Lv.{monster.EnemyExp} {monster.Name} HP {monster.CurrentHealth}");
-				}
-				Console.WriteLine("[내정보]");
-				Console.Write($"Lv.{_hero.Level} {_hero.Name}");
-				if (_hero is Warrior)
-				{
-					Console.Write($"(전사)\n");
-				}
-				else if (_hero is Archer)
-				{
-					Console.Write($"(궁수)\n");
-				}
-				else if (_hero is Wizard)
-				{
-					Console.Write($"(마법사)\n");
-				}
-				Console.WriteLine("HP {0}/{1}\n", _hero.CurrentHealth, Character.MaxHealth);
-				Console.WriteLine("1. 공격");
-				Console.WriteLine("2. 스킬\n");
-
-				int input = _ui.UserChoiceInput(1, 2);
-				switch (input)
-				{
-					case 1:
-						ChooseMonsterToAttack();
-						break;
-					case 2:
-						break;
-				}
-				//전투 끝 확인
-				fightEnd = CheckFightEnd();
-			}
-		}
-
-		//플레이어가 공격 상대 선택
-		void ChooseMonsterToAttack()
-		{
-			Console.WriteLine("Stage{0} Battle!!\n");
-			for (int i = 0; i < _monsterHouse.Count; i++)
-			{
-				Monster monster = _monsterHouse[i];
-				Console.Write($"{i} ");
-				Console.Write($"Lv.{monster.EnemyExp} {monster.Name} HP {monster.CurrentHealth}\n");
-			}
-
-			Console.WriteLine("[내정보]");
-			Console.Write($"Lv.{_hero.Level} {_hero.Name}");
-			if (_hero is Warrior)
-			{
-				Console.Write($"(전사)\n");
-			}
-			else if (_hero is Archer)
-			{
-				Console.Write($"(궁수)\n");
-			}
-			else if (_hero is Wizard)
-			{
-				Console.Write($"(마법사)\n");
-			}
-			Console.WriteLine($"HP {_hero.CurrentHealth}/{Character.MaxHealth}\n");
-			Console.WriteLine("0. 취소\n");
-
-			int input = _ui.UserChoiceInput(0, _monsterHouse.Count - 1);
-			switch (input)
-			{
-				case 0:
-					break;
-				default:
-					AttackTarget(_hero, _monsterHouse[input - 1]);
-					break;
-			}
-		}
-
-		/*
-		Battle!!
-
-		Chad 의 공격!
-		Lv.3 공허충 을(를) 맞췄습니다. [데미지 : 10]
-
-		Lv.3 공허충
-		HP 10 -> Dead
-
-		0. 다음
-
-		>>
-		 */
-
-		//게임 끝 체크
-		bool CheckFightEnd()
-		{
-			bool fightEnd = false;
-			if (_hero.IsDie)
-			{
-				fightEnd = true;
-			}
-			else
-			{
-				fightEnd = true;
-				foreach (Monster monster in _monsterHouse)
-				{
-					if (!monster.IsDie)
-					{
-						fightEnd = false;
-						break;
-					}
-				}
-				_stageClear = fightEnd;
-			}
-			return fightEnd;
-		}
-
-		// 몬스터를 공격하는 메서드
-		public void AttackTarget(Humanoid attacker, Humanoid target)
-        {
-			Console.WriteLine("Stage{0} Battle!!\n");
-			Console.WriteLine($"{attacker.Name} 의 공격!");
-			
-			//데미지 계산
-			double totalDamage = attacker.BasicAttack();
-            double beforeHealth = target.CurrentHealth;
-			double totalDefence = 0;
-			if(attacker is Monster)
-			{
-
-			}
-			totalDamage -= totalDefence;
-			if(totalDamage < 0)
-			{
-				totalDamage = 0;
-			}
-
-			target.ChangeHealth(totalDamage);
-
-			//데미지 받은 경우
-            if(beforeHealth - target.CurrentHealth > 0)
-			{
-				if (target is Monster)
-				{
-					Monster monster = (Monster)target;
-					Console.WriteLine($"Lv.{monster.EnemyExp} {monster.Name} 을(를) 맞췄습니다. [데미지 : ");
-				}
-			}
+            if (_stageNum % 5 == 0)
+            {
+                //보스 몬스터를 _stageNum / 5 만큼의 마릿수 만큼 추가
+                for (int i = 0; i < _stageNum / 5; i++)
+                {
+                    _monsterHouse.Add(new Monster("유르기어", 120, 10, 20));
+                }
+            }
+            Battle();
         }
 
-        // 보상 획득
-        public void GetReward(Character hero)
+        //영웅 행동 선택
+        public void Battle()
         {
-            hero.inventory.Add(new Potion("마나포션", 30, "마나를 30회복합니다.", ItemType.Mana));
-            hero.inventory.Add(new Potion("체력포션", 30, "체력을 30회복합니다.", ItemType.Health));
-            hero.inventory.Add(new Equipment("브로드소드", EquipmentType.OneHand, 2, "공격력이 2증가합니다.", ItemType.Attack));
+            bool fightEnd = false;
+            double heroHealthBeforeFight = _hero.CurrentHealth;
+            while (!fightEnd)
+            {
+                Console.Clear();
+                Console.Write($"Stage {_stageNum}");
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine(" Battle!!\n");
+                Console.ResetColor();
+                for (int i = 0; i < _monsterHouse.Count; i++)
+                {
+                    Monster monster = _monsterHouse[i];
+                    if (monster.IsDie)
+                    {
+						Console.ForegroundColor = ConsoleColor.Gray;
+						Console.WriteLine($"Lv.{monster.EnemyExp} {monster.Name} Dead");
+                        Console.ResetColor();
+					}
+                    else
+                    {
+						Console.WriteLine($"Lv.{monster.EnemyExp} {monster.Name} HP {monster.CurrentHealth}");
+					}
+                }
+                PrintCharacterInfo();
+                Console.WriteLine("\n1. 공격");
+                Console.WriteLine("2. 스킬\n");
+
+                int input = _ui.UserChoiceInput(1, 2);
+                bool didAttack = false;//플레이어가 공격을 취소하지 않았는지
+                switch (input)
+                {
+                    case 1:
+                        didAttack = ChooseMonsterToAttack();
+                        break;
+                    case 2:
+                        didAttack = UseSkill();
+                        break;
+                }
+
+                if (didAttack)
+                {
+                    //몬스터들의 공격 차례
+                    foreach (Monster monster in _monsterHouse)
+                    {
+                        if (!monster.IsDie)
+                        {
+                            AttackTarget(monster, _hero);
+                        }
+                    }
+                    //전투 끝 확인
+                    fightEnd = CheckFightEnd();
+                }
+            }
+
+            //전투 끝나고 마무리 작업
+            AfterFight(heroHealthBeforeFight);
+        }
+
+        //플레이어가 스킬 사용
+        bool UseSkill()
+        {
+            bool didAttack = false;
+            Console.Clear();
+            Console.Write($"Stage {_stageNum}");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine(" Battle!!\n");
+            Console.ResetColor();
+
+            for (int i = 0; i < _monsterHouse.Count; i++)
+            {
+				Monster monster = _monsterHouse[i];
+				if (monster.IsDie)
+				{
+					Console.ForegroundColor = ConsoleColor.Gray;
+					Console.WriteLine($"Lv.{monster.EnemyExp} {monster.Name} Dead");
+					Console.ResetColor();
+				}
+				else
+				{
+					Console.WriteLine($"Lv.{monster.EnemyExp} {monster.Name} HP {monster.CurrentHealth}");
+				}
+			}
+            PrintCharacterInfo();
+            //스킬 목록 출력
+            _hero.skillManager.PrintSkills();
+
+            Console.WriteLine("0. 취소\n");
+
+            int input = _ui.UserChoiceInput(0, 2);
+            if (input != 0)
+            {
+                //스킬 사용
+                didAttack = _hero.skillManager.UseSkill(input, _monsterHouse, _hero);
+				Console.WriteLine("0. 다음");
+				_ui.UserChoiceInput(0, 0);
+			}
+            return didAttack;
+        }
+
+        //플레이어가 공격 상대 선택
+        bool ChooseMonsterToAttack()
+        {
+            bool didAttack = false;
+
+            Console.Clear();
+            Console.Write($"Stage {_stageNum}");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine(" Battle!!\n");
+            Console.ResetColor();
+            for (int i = 0; i < _monsterHouse.Count; i++)
+            {
+                Monster monster = _monsterHouse[i];
+                Console.Write($"- {i + 1}. ");
+                if (monster.IsDie)
+                {
+                    Console.Write($"Lv.{monster.EnemyExp} {monster.Name} Dead\n");
+                }
+                else
+                {
+                    Console.Write($"Lv.{monster.EnemyExp} {monster.Name} HP {monster.CurrentHealth}\n");
+                }              
+            }
+
+            PrintCharacterInfo();
+            Console.WriteLine("0. 취소\n");
+            Console.Write("공격할 대상을 선택해주세요. \n>> ");
+
+            int input = int.Parse(Console.ReadLine());
+            while (input < 0 || input > _monsterHouse.Count || (input > 0 && _monsterHouse[input - 1].IsDie))
+            {
+                Console.Write("잘못된 입력입니다. 다시 입력해 주세요. \n>> ");
+                input = int.Parse(Console.ReadLine());
+            }
+
+            switch (input)
+            {
+                case 0:
+                    didAttack = false;
+                    break;
+                default:
+                    AttackTarget(_hero, _monsterHouse[input - 1]);
+                    didAttack = true;
+                    break;
+            }
+            return didAttack;
+        }
+
+        //게임 끝 체크
+        bool CheckFightEnd()
+        {
+            bool fightEnd = false;
+            if (_hero.IsDie)
+            {
+                fightEnd = true;
+            }
+            else
+            {
+                fightEnd = true;
+                foreach (Monster monster in _monsterHouse)
+                {
+                    if (!monster.IsDie)
+                    {
+                        fightEnd = false;
+                        break;
+                    }
+                }
+                _stageClear = fightEnd;
+            }
+            return fightEnd;
+        }
+
+        // 몬스터를 공격하는 메서드
+        public void AttackTarget(Humanoid attacker, Humanoid target)
+        {
+            Console.Clear();
+            Console.Write($"Stage {_stageNum}");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.Write(" Battle!!\n");
+            Console.ResetColor();
+            if (attacker is Monster)
+            {
+                Monster monster = attacker as Monster;
+                Console.Write($"Lv. ");
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.Write($"{monster.EnemyExp} {monster.Name} ");
+                Console.ResetColor();
+                Console.WriteLine("의 공격!");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.Write($"{attacker.Name} ");
+                Console.ResetColor();
+                Console.WriteLine("의 공격!");
+            }
+
+            //데미지 계산
+            double totalDamage = attacker.BasicAttack();
+            double beforeHealth = target.CurrentHealth;
+            double totalDefence = 0;
+            if (attacker is Monster)
+            {
+                totalDefence = _hero.TotalDefensePower;
+            }
+            totalDamage -= totalDefence;
+            if (totalDamage < 0)
+            {
+                totalDamage = 0;
+            }
+            totalDamage = Math.Round(totalDamage);
+            target.ChangeHealth(-totalDamage);
+
+            //데미지 받은 경우 받은 후 상태 출력
+            if (beforeHealth - target.CurrentHealth > 0)
+            {
+                if (target is Monster)
+                {
+                    Monster monster = (Monster)target;
+                    Console.Write($"Lv.");
+
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.Write($"{monster.EnemyExp} {monster.Name}");
+                    Console.ResetColor();
+					Console.Write("을(를) 맞췄습니다.");
+
+					Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("[데미지 : ");
+					Console.Write($"{totalDamage}");
+					Console.Write("]");
+					Console.ResetColor();
+
+                    if (totalDamage > attacker.TotalAttackPower * 1.1) // 치명타시 추가 출력
+                    {
+                        Console.Write(" - 치명타 공격!!");
+                    }
+                    Console.WriteLine($"\n\nLv.{monster.EnemyExp} {monster.Name}");
+                }
+                else if (target is Character)
+                {
+                    Character human = (Character)target;
+					Console.ForegroundColor = ConsoleColor.DarkGreen;
+					Console.Write($"{human.Name}");
+					Console.ResetColor();
+					Console.Write("을(를) 맞췄습니다.");
+
+					Console.ForegroundColor = ConsoleColor.Red;
+					Console.Write("[데미지 : ");
+					Console.Write($"{totalDamage}");
+					Console.Write("]");
+					Console.ResetColor();
+
+					if (totalDamage > attacker.TotalAttackPower * 1.1) // 치명타시 추가 출력
+                    {
+                        Console.Write(" - 치명타 공격!!");
+                    }
+                    Console.WriteLine($"\n\nLv.{human.Level} {human.Name}");
+                }
+
+                if (target.IsDie)
+                {
+                    Console.WriteLine($"HP {beforeHealth} -> Dead");
+                }
+                else
+                {
+                    Console.WriteLine($"HP {beforeHealth} -> {target.CurrentHealth}");
+                }
+            }
+            else //회피한 경우
+            {
+                if (target is Monster)
+                {
+                    Monster monster = (Monster)target;
+                    Console.WriteLine($"Lv.{monster.EnemyExp} {monster.Name} 을(를) 공격했지만 아무일도 일어나지 않았습니다.\n");
+                }
+                else if (target is Character)
+                {
+                    Character human = (Character)target;
+                    Console.WriteLine($"{human.Name} 을(를) 공격했지만 아무일도 일어나지 않았습니다.\n");
+                }
+            }
+
+            Console.WriteLine("0. 다음");
+            _ui.UserChoiceInput(0, 0);
+        }
+
+        //캐릭터 상태 출력
+        void PrintCharacterInfo()
+        {
+            Console.WriteLine("\n[내정보]");
+            Console.WriteLine($"Lv.{_hero.Level} {_hero.Name} ({_hero.ReturnGameClassName()})");
+            Console.WriteLine("HP {0}/{1}", _hero.CurrentHealth, Character.MaxHealth);
+            Console.WriteLine("MP {0}/{1}\n", _hero.CurrentMana, _hero.MaxMana);
+        }
+
+        //전투 끝나고 마무리 작업
+        void AfterFight(double heroHealthBeforeFight)
+        {
+            Console.Clear();
+            Console.WriteLine($"Stage {_stageNum} Battle!! - Result\n");
+            if (_stageClear)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine("Victory\n");
+                Console.ResetColor();
+
+                Console.WriteLine($"던전에서 몬스터 {_monsterHouse.Count}마리를 잡았습니다.");
+                Reward();
+            }
+            else
+            {
+                Console.WriteLine("You Lose\n");
+            }
+
+            Console.WriteLine($"Lv.{_hero.Level} {_hero.Name}");
+            Console.WriteLine($"HP {heroHealthBeforeFight} -> {_hero.CurrentHealth}\n");
+            Console.WriteLine("0. 다음");
+            int userInput = _ui.UserChoiceInput(0, 0);
+            SceneManager.Instance._startScene.loadScene(_ui, _hero);
+        }
+
+        //던전 보상 추가
+        void Reward()
+        {
+            Console.Clear();
+            Random random = new Random();
+            Console.WriteLine("보상 획득!!\n");
+
+            //마나 물약
+            int manaAmount = random.Next(1, 2);
+            Console.WriteLine($"마나 물약 {manaAmount}개\n");
+            for (int i = 0; i < manaAmount; i++)
+            {
+                _hero.inventory.Add(Utils.ManaPotion);
+            }
+
+            //체력 물약
+            int healAmount = random.Next(_stageNum, _stageNum + 1);
+            Console.WriteLine($"체력 물약 {healAmount}개\n");
+            for (int i = 0; i < healAmount; i++)
+            {
+                _hero.inventory.Add(Utils.HealthPotion);
+            }
+
+            //무기 공격력  random.Next(1, _stageNum + 1);
+            int weaponAttack = random.Next(1, _stageNum+3);
+            Equipment dungeonSword = new Equipment($"던전의 잔혹함{_stageNum}", EquipmentType.OneHand, weaponAttack, "매서운 던전에서만 벼려진다는 날카로운 칼입니다.", ItemType.Attack, _stageNum*200);
+            _hero.inventory.Add(dungeonSword);
+            Console.WriteLine($"무기 : {dungeonSword.Name} | 공격력 + {dungeonSword.Stat} | {dungeonSword.Discription}\n");
+
+            //방어구 방어력 random.Next(1, _stageNum + 1);
+            int armorDefence = random.Next(1, _stageNum+3);
+            Equipment dungeonArmor = new Equipment($"던전의 고요함{_stageNum}", EquipmentType.Body, armorDefence, "던전의 깊은 어둠을 담아낸 갑옷입니다.", ItemType.Defence, _stageNum*200);
+            _hero.inventory.Add(dungeonArmor);
+            Console.WriteLine($"방어구 : {dungeonArmor.Name} | 방어력 + {dungeonArmor.Stat} | {dungeonArmor.Discription}\n");
+        
+            //경험치 계산
+            foreach(Monster monster in _monsterHouse)
+            {
+                _hero.Leveling(monster.EnemyExp);
+            }
+            _hero.ChangeStage(_hero.CurrentStage + 1);
         }
     }
 }
-        
-        // 전투를 시작하는 메서드 //2024.04.30 박재우
-//        public void BattleStart()
-//        {
-
-//            bool isbattle = true; // 전투 진행 여부 변수
-//            while (isbattle) // 전투 진행 중 //2024.04.30 박재우
-//            {
-//                PrintMonstersInfo(selectedMonsters); // 선택된 몬스터 정보 출력
-//                if (AllMonstersDead()) // 모든 몬스터가 죽었는지 확인
-//                {
-//                    Console.WriteLine("Victory! 모든 몬스터를 처치했습니다."); // 승리 메시지 출력
-//                    isbattle = false; // 전투 종료
-//                    continue;
-//                }
-//                if (character.CurrentHealth <= 0) // 플레이어 체력이 0 이하인지 확인
-//                {
-//                    Console.WriteLine("Lose... 플레이어가 쓰러졌습니다."); // 패배 메시지 출력
-//                    isbattle = false; // 전투 종료
-//                    continue;
-//                }
-//                Console.WriteLine($"\n\n[내정보]"); // 내 정보 출력
-//                Console.WriteLine($"Lv.{character.Level} 이름 (전사)"); // 캐릭터 레벨과 직업 출력
-//                Console.WriteLine($"Hp {character.CurrentHealth}/100"); // 현재 체력 출력
-//                Console.WriteLine("\n1. 공격"); // 공격 옵션 출력
-//                Console.WriteLine("0. 취소"); // 취소 옵션 출력
-//                Console.WriteLine("\n 원하시는 행동을 입력해 주세요."); // 사용자 입력 안내
-//                string? input = Console.ReadLine(); // 사용자 입력 받기
-//                switch (input) // 입력에 따른 처리
-//                {
-//                    case "1": // 공격 선택 시
-//                        Console.WriteLine("\n어떤 몬스터를 공격하시겠습니까? (1-4)"); // 공격할 몬스터 선택 안내
-//                        string? monsterInput = Console.ReadLine(); // 사용자가 선택한 몬스터
-//                        int selectedNumber;
-//                        if (int.TryParse(monsterInput, out selectedNumber) && selectedNumber >= 1 && selectedNumber <= selectedMonsters.Count) // 유효한 입력 확인
-//                        {
-//                            Monster targetMonster = selectedMonsters[selectedNumber - 1]; // 선택한 몬스터
-//                            if (targetMonster.IsDead) // 이미 죽은 몬스터인지 확인
-//                            {
-//                                Console.WriteLine("이미 죽은 몬스터입니다."); // 이미 죽은 몬스터 안내
-//                            }
-//                            else
-//                            {
-//                                MonsterDamage();
-//                            }
-//                            EnemyPhase(character); // 적 턴으로 넘어가기
-//                        }
-//                        else
-//                        {
-//                            Console.WriteLine("잘못된 입력입니다."); // 유효하지 않은 입력 안내
-//                        }
-//                        break;
-//                    case "9": // 몬스터 리롤 돌리기 위해서 넣어둠
-//                        isbattle = false; // 전투 종료
-//                        break;
-//                    case "0": // 취소 선택 시
-//                        EnemyPhase(character); // 적 턴으로 넘어가기
-//                        break;
-//                    default: // 유효하지 않은 입력 시
-//                        Console.WriteLine("\n잘못된 입력입니다."); // 잘못된 입력 안내
-//                        break;
-//                }
-//            }
-//        }
-//        public void MonsterDamage()
-//        {
-//            if (BasicAttack > 0)
-//            {
-//                targetMonster.Health -= character.BasicAttack; // 몬스터에게 데미지 입히기
-//                Console.WriteLine($"이름 의 공격!"); // 캐릭터 공격 메시지 출력
-//                Console.WriteLine($"{targetMonster.Name} 을(를) 맞췄습니다. (데미지 :{character.BasicAttack})"); // 몬스터에게 입힌 데미지 출력
-//                Console.WriteLine($"{targetMonster.Name} 의 남은 체력: {targetMonster.Health}"); // 몬스터의 남은 체력 출력
-//                if (targetMonster.Health <= 0) // 몬스터가 죽었는지 확인
-//                {
-//                    targetMonster.IsDead = true; // 몬스터 상태를 죽은 상태로 변경
-//                    Console.WriteLine($"{targetMonster.Name} 이(가) 쓰러졌습니다!"); // 몬스터 사망 메시지 출력
-//                    UpdateCountKillMonsters(targetMonster); // 몬스터 처치 카운트 업데이트
-//                }
-//            }
-//            else
-//            {
-//                Console.WriteLine("공격이 빗나갔습니다!");
-//            }
-//        }
-//        // 적의 턴을 처리하는 메서드 //2024.04.30 박재우
-//        public void EnemyPhase()
-//        {
-//            Character character = new Character();
-//            Console.WriteLine("\n적의 공격이 시작됩니다."); // 적의 공격 시작 메시지 출력
-//            foreach (var monster in selectedMonsters)
-//            {
-//                if (monster.IsDead == false) // 몬스터가 살아 있다면
-//                {
-//                    Console.WriteLine($"{monster.Name}가 공격합니다! 공격력: {monster.AttackPower}"); // 몬스터가 공격하는 메시지 출력
-//                    character.CurrentHealth -= monster.AttackPower; // 플레이어 체력 감소
-//                    if (character.CurrentHealth <= 0) // 플레이어가 죽었다면
-//                    {
-//                        Console.WriteLine("플레이어가 쓰러졌습니다!"); // 플레이어 죽음 메시지 출력
-//                        break; // 반복문 종료
-//                    }
-//                }
-//                if (monster.IsDead == true) // 몬스터가 이미 죽었다면
-//                {
-//                    Console.WriteLine($"{monster.Name}은(는) 쓰러진 상태입니다."); // 몬스터가 이미 죽었다는 메시지 출력
-//                }
-//            }
-//            Console.WriteLine($"플레이어의 현재 체력: {character.CurrentHealth}"); // 현재 플레이어 체력 출력
-//        }
-//        // 몬스터 처치 횟수를 업데이트하는 메서드 //2024.04.30 박재우
-//        public void UpdateCountKillMonsters(Monster monster)
-//        {
-//            if (monster.IsDead) // 몬스터가 죽었다면
-//            {
-//                if (defeatedMonsters.ContainsKey(monster.Name)) // 이미 해당 몬스터가 딕셔너리에 있는지 확인
-//                {
-//                    defeatedMonsters[monster.Name]++; // 딕셔너리에 해당 몬스터 카운트 업데이트
-//                }
-//                else
-//                {
-//                    defeatedMonsters.Add(monster.Name, 1); // 딕셔너리에 해당 몬스터 추가 및 카운트 초기화
-//                }
-//            }
-//        }
-//        // 미니언 수를 계산하는 메서드 //2024.04.30 박재우
-//        public int MinionCount()
-//        {
-//            int minionCount = 0; // 미니언 수 초기화
-//            if (defeatedMonsters.ContainsKey("LV.2 미니언")) // LV.2 미니언이 딕셔너리에 있는지 확인
-//            {
-//                minionCount = defeatedMonsters["LV.2 미니언"]; // 미니언 수 업데이트
-//            }
-//            Console.WriteLine("잡은 미니언 마릿수: " + minionCount); // 미니언 수 출력
-//            return minionCount; // 미니언 수 반환
-//        }
-
-//// 몬스터 리스트 / 랜덤생성
-//    Random random = new Random(); // 랜덤 객체 생성
-//        Monster[] monsters = { // 몬스터 배열 초기화
-//            new Monster("LV.2 미니언", 15, 5, 2), // LV.2 미니언 생성 / 적힌 순서대로 '이름, 체력, 공격력, 경험치'
-//            new Monster("Lv.5 대포미니언", 25, 8, 5), // Lv.5 대포미니언 생성
-//            new Monster("Lv.3 공허충", 10, 9, 3) // Lv.3 공허충 생성
-//        };
-//        Console.WriteLine("\n전투가 시작되었습니다!"); // 전투 시작 메시지 출력
-//    selectedMonsters.Clear(); // 선택된 몬스터 리스트 생성
-//    for (int i = 0; i< 4; i++) // 4마리의 몬스터 선택
-//    {
-//        int index = random.Next(monsters.Length); // 랜덤한 인덱스 선택
-//        Monster selectedMonster = new Monster(monsters[index].Name, monsters[index].Health, monsters[index].AttackPower, monsters[index].EnemyExp); // 선택된 몬스터 추가
-//        selectedMonsters.Add(selectedMonster); // 선택된 몬스터 리스트에 추가
-//    }
-
-
 

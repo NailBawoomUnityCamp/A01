@@ -10,10 +10,10 @@ namespace TextRpg_MonsterHunting
         public double TotalAttackPower { get; set; } // 몬스터의 공격력
         public double CurrentHealth { get; set; } // 몬스터의 체력
         public bool IsDie { get; set; } // 몬스터가 죽었는지 여부를 나타내는 플래그
-        public float EnemyExp { get; set; } // 몬스터를 처치했을 때 얻는 경험치
+        public int EnemyExp { get; set; } // 몬스터를 처치했을 때 얻는 경험치
 
         // 몬스터 객체를 초기화하는 생성자
-        public Monster(string name, double health, float attackPower, float enemyExp)
+        public Monster(string name, double health, float attackPower, int enemyExp)
         {
             Name = name;
             TotalAttackPower = attackPower;
@@ -21,6 +21,15 @@ namespace TextRpg_MonsterHunting
 			IsDie = false; // 몬스터는 처음에는 죽지 않은 상태///
             EnemyExp = enemyExp;
         }
+
+		public Monster(Monster monster)
+		{
+			Name = monster.Name;
+			TotalAttackPower = monster.TotalAttackPower;
+			CurrentHealth = monster.CurrentHealth;
+			IsDie = false;
+			EnemyExp = monster.EnemyExp;
+		}
 
         // 몬스터 정보를 출력하는 메서드
         private void PrintMonstersInfo(List<Monster> monsters)
@@ -51,7 +60,8 @@ namespace TextRpg_MonsterHunting
 			{
 				CurrentHealth = 0;
 				IsDie = true;
-			}
+				QuestManager.Instance.Quests[0].CheckQuestProgress();
+            }
 		}
 
 		// 공격 기능, 피해량 반환

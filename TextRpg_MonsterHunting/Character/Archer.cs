@@ -14,8 +14,10 @@ namespace TextRpg_MonsterHunting
             BaseDefensePower = 3;
             MaxMana = 100;
             CurrentMana = 100;
+			ChangeAttack(0);
+			ChangeDefense(0);
 
-            skillManager.AddSkill(new Skill("레드 스윙", 50, 3f, 2));
+			skillManager.AddSkill(new Skill("레드 스윙", 50, 3f, 2));
             skillManager.AddSkill(new Skill("바이올렛 샷", 30, 2f, 3));
         }
     }
