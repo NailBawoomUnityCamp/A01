@@ -49,6 +49,7 @@ namespace TextRpg_MonsterHunting
 			bool buyFromCustomer = false;
 			while (!exitShop)
 			{
+				Console.Clear();
 				Console.Write("상점");
 				if (buyFromCustomer)
 				{
