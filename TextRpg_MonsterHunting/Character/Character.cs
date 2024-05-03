@@ -65,12 +65,36 @@ namespace TextRpg_MonsterHunting
         // 캐릭터의 정보 출력
         public void PrintCharacterInfo() 
         {
-            Console.WriteLine($"Lv. {Level.ToString("N2")}");
-            Console.WriteLine($"직업 ( {ReturnGameClassName()} )");
-            Console.WriteLine($"공격력 : {BaseAttackPower}");
-            Console.WriteLine($"방어력 : {BaseDefensePower}");
-            Console.WriteLine($"체 력 : {CurrentHealth}");
-            Console.WriteLine($"골드 : {Gold}");
+            Console.Write($"Lv.");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine($"{Level.ToString("N2")}");
+            Console.ResetColor();
+
+            Console.Write($"직업 (");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.Write($"{ReturnGameClassName()} ");
+            Console.ResetColor();
+            Console.WriteLine(")");
+
+            Console.Write($"공격력 : ");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine($"{BaseAttackPower}");
+            Console.ResetColor();
+
+            Console.Write($"방어력 : ");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine($"{BaseDefensePower}");
+            Console.ResetColor();
+
+            Console.Write($"체 력 : ");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine($"{CurrentHealth}");
+            Console.ResetColor();
+
+            Console.Write($"골드 : ");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine($"{Gold}");
+            Console.ResetColor();
         }
         
         // 직업명 한글로 변환
