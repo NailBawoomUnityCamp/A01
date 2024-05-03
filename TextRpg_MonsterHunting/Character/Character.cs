@@ -12,9 +12,6 @@ namespace TextRpg_MonsterHunting
 {
     public class Character : Humanoid
 	{
-        public static Character Instance;
-        public const double MaxHealth = 100;     
-
         public int Level { get; private set; }
         public string Name { get; private set; }
         public double BaseAttackPower { get; protected set; }
@@ -32,7 +29,30 @@ namespace TextRpg_MonsterHunting
 
         [JsonIgnore]
         public SkillManager skillManager;
-        
+        [JsonIgnore]
+		public static Character Instance;
+        [JsonIgnore]
+		public const double MaxHealth = 100;
+
+		[JsonConstructor]
+        public Character(int level, string name, double baseAttackPower, double totalAttackPower, double baseDefensePower, double totalDefensePower,
+			double currentHealth, double maxMana, double currentMana, int experience, int gold, bool isDie, int currentStage, Inventory _inventory)
+        {
+            Level = level;
+            Name = name;
+            BaseAttackPower = baseAttackPower;
+            TotalAttackPower = totalAttackPower;
+            BaseDefensePower = baseDefensePower;
+            TotalDefensePower = totalDefensePower;
+            CurrentHealth = currentHealth;
+            MaxMana = maxMana;
+            CurrentMana = currentMana;
+            Experience = experience;
+            Gold = gold;
+            IsDie = isDie;
+            CurrentStage = currentStage;
+            inventory = _inventory;
+        }
 
         public Character(string name)
         {

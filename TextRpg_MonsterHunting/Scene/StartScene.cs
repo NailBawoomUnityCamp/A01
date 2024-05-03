@@ -19,7 +19,8 @@ namespace TextRpg_MonsterHunting
             Console.WriteLine("2. 인벤토리 관리");
             Console.WriteLine("3. 회복 아이템 사용");
             Console.WriteLine("4. 전투 시작");
-            Console.WriteLine("5. 저장 초기화");
+			Console.WriteLine("5. 상점 입장");
+			Console.WriteLine("6. 저장 초기화");
             Console.WriteLine("\n0. 나가기");
 
             int userInput = ui.UserChoiceInput(0, 4);
@@ -48,8 +49,11 @@ namespace TextRpg_MonsterHunting
                     Dungeon dungeon = new Dungeon();
                     dungeon.InDungeon(character, ui);
                     break;
-                case 5:
-                    Utils.SaveDestory();
+                case 5: //상점 입장
+
+                    break;
+                case 6: //저장 초기화
+					Utils.SaveDestory();
                     break;
             }
         }
