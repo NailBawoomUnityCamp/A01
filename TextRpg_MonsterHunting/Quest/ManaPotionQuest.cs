@@ -52,7 +52,6 @@ namespace TextRpg_MonsterHunting
         }
         public void ClearMonsterCount()
         {
-            Console.WriteLine("몬스터수초기화");
             this.monstersKilledCount = 0;          
         }
     }

@@ -37,6 +37,7 @@ namespace TextRpg_MonsterHunting
                     case ItemType.Mana:
                         character.inventory.Add(Utils.ManaPotion);
                         Console.WriteLine("마나 포션 x1");
+                        ((ManaPotionQuest)quest).ClearMonsterCount();
                         break;
                     case ItemType.Health:
                         character.inventory.Add(Utils.HealthPotion);
@@ -44,8 +45,7 @@ namespace TextRpg_MonsterHunting
                         break;
                     case ItemType.Attack:
                         character.inventory.Add(Utils.Sword);
-                        Console.WriteLine("단검 x1");
-                        ((ManaPotionQuest)quest).ClearMonsterCount();
+                        Console.WriteLine("단검 x1");                   
                         break;
                 }
                 character.ChangeGold(quest.RewardGold);
