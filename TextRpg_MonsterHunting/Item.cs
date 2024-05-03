@@ -32,7 +32,9 @@ namespace TextRpg_MonsterHunting
 		public string Name { get; }
 		public string Discription { get; }
 		public int Price { get; }
-		public void PrintData();
+		public ItemType ItemType { get; }
+		public int Stat { get; }
+		public string GetType();
 	}
 
 	//장비 아이템 클래스
@@ -73,29 +75,27 @@ namespace TextRpg_MonsterHunting
 			Price = price;
 		}
 
-		//장비 아이템 정보 출력
-		public void PrintData()
+		//장비 아이템 스탯 정보 출력
+		public string GetType()
 		{
-			//if (equipped && isShop == false)
-			//{
-			//	Console.Write($"[E]{Name}\t|");
-			//}
-			//else
-			//{
-			//	Console.Write($"{Name}  \t|");
-			//}
-			//switch (itemType)
-			//{
-			//	case ITEMTYPE.DEFENCE:
-			//		Console.Write($"방어력 +{stat} | {discription}");
-			//		break;
-			//	case ITEMTYPE.ATTACK:
-			//		Console.Write($"공격력 +{stat} | {discription}");
-			//		break;
-			//	case ITEMTYPE.HEALTH:
-			//		Console.Write($"체력회복 +{stat} | {discription}");
-			//		break;
-			//}
+			switch(ItemType)
+			{
+				case ItemType.Mana:
+					return "마나";
+					break;
+				case ItemType.Attack:
+					return "공격력";
+					break;
+				case ItemType.Health:
+					return "체력";
+					break;
+				case ItemType.Defence:
+					return "방어력";
+					break;
+				default:
+					return "";
+					break;
+			}
 		}
 	}
 
@@ -140,28 +140,27 @@ namespace TextRpg_MonsterHunting
 			//hero.Inventory.Remove(this);
 		}
 
-		public void PrintData()
+		//장비 아이템 스탯 정보 출력
+		public string GetType()
 		{
-			//if (equipped && isShop == false)
-			//{
-			//	Console.Write($"[E]{Name}\t|");
-			//}
-			//else
-			//{
-			//	Console.Write($"{Name}  \t|");
-			//}
-			//switch (itemType)
-			//{
-			//	case ITEMTYPE.DEFENCE:
-			//		Console.Write($"방어력 +{stat} | {discription}");
-			//		break;
-			//	case ITEMTYPE.ATTACK:
-			//		Console.Write($"공격력 +{stat} | {discription}");
-			//		break;
-			//	case ITEMTYPE.HEALTH:
-			//		Console.Write($"체력회복 +{stat} | {discription}");
-			//		break;
-			//}
+			switch (ItemType)
+			{
+				case ItemType.Mana:
+					return "마나";
+					break;
+				case ItemType.Attack:
+					return "공격력";
+					break;
+				case ItemType.Health:
+					return "체력";
+					break;
+				case ItemType.Defence:
+					return "방어력";
+					break;
+				default:
+					return "";
+					break;
+			}
 		}
 	}
 
