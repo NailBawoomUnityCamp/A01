@@ -42,7 +42,7 @@ namespace TextRpg_MonsterHunting
 		}
 
 		//상점 아이템 저장 함수
-		public static void SaveShopItems(ItemList shopItemList)
+		public static void SaveShopItems(EquipmentList shopItemList)
 		{
 			var options = new JsonSerializerOptions
 			{
@@ -74,7 +74,7 @@ namespace TextRpg_MonsterHunting
 
 		//상점 아이템 로딩 함수
 		//로딩 성공시 true 반환
-		public static bool LoadShopItems(out ItemList shopItemList)
+		public static bool LoadShopItems(out EquipmentList shopItemList)
 		{
 			shopItemList = null; // 초기화
 			string? jsonString = null;
@@ -85,7 +85,7 @@ namespace TextRpg_MonsterHunting
 			catch { }
 			if (jsonString != null)
 			{
-				shopItemList = JsonSerializer.Deserialize<ItemList>(jsonString);
+				shopItemList = JsonSerializer.Deserialize<EquipmentList>(jsonString);
 				return true;
 			}
 

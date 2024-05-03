@@ -108,7 +108,10 @@ namespace TextRpg_MonsterHunting
             Console.Write($"체 력 : ");
             Console.WriteLine($"{CurrentHealth}");
 
-            Console.Write($"골드 : ");
+			Console.Write($"마 나 : ");
+			Console.WriteLine($"{CurrentMana}");
+
+			Console.Write($"골드 : ");
             Console.WriteLine($"{Gold}");
         }
         
