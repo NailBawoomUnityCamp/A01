@@ -58,10 +58,6 @@ namespace TextRpg_MonsterHunting
         {
             if (Instance == null)
             {
-                Instance = new Character(name);
-            }
-            else
-            {
                 Instance = this;
             }
 
@@ -87,7 +83,7 @@ namespace TextRpg_MonsterHunting
         {
             Console.Write($"Lv.");
             Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine($"{Level.ToString("N2")}");
+            Console.WriteLine($"{Level.ToString("00")}");
             Console.ResetColor();
 
             Console.Write($"직업 (");
@@ -243,7 +239,7 @@ namespace TextRpg_MonsterHunting
                 return 0;
             }
             else // 적중 성공,적 체력 감소
-            {               
+            {
                 return attackDamage;
             }
         }

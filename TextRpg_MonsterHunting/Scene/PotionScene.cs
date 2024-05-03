@@ -10,6 +10,7 @@ namespace TextRpg_MonsterHunting
     {
         public void loadScene(UI ui, Character character)
         {
+            Console.Clear();
             int userInput;
             do
             {

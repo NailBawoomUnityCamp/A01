@@ -22,12 +22,12 @@ namespace TextRpg_MonsterHunting
             {
 				Console.Write("스파르타 던전에 오신 여러분 환영합니다.\n원하시는 이름을 설정해주세요.\n>> ");
 				string? heroName = Console.ReadLine();
+				Console.Clear();
 
+				Console.WriteLine("원하시는 직업을 선택하세요:");
 				Console.WriteLine("1. 전사");
 				Console.WriteLine("2. 마법사");
 				Console.WriteLine("3. 궁수");
-
-				Console.Write("\n원하시는 직업을 선택하세요: \n>> ");
 
 				//UI에 직업 선택 함수 결과
 				int inputForClass = ui.UserChoiceInput(1, 3);
@@ -46,11 +46,12 @@ namespace TextRpg_MonsterHunting
 				}
 			}
 
+            Console.Clear();
             Console.WriteLine($"\n입력한 정보 확인");
             Console.WriteLine($"이름 : {character.Name}");
-            Console.WriteLine($"직업 : {character.ReturnGameClassName}");
+            Console.WriteLine($"직업 : {character.ReturnGameClassName()}\n");
 
-            ui.CountdownComment(2, "마을로 이동합니다."); //2초 후 마을로 이동
+            ui.CountdownComment(3, "마을로 이동합니다."); //3초 후 마을로 이동
             SceneManager.Instance._startScene.loadScene(ui, character);
         }
     }

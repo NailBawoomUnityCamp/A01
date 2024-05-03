@@ -24,10 +24,6 @@ namespace TextRpg_MonsterHunting
         {
             if (Instance == null)
             {
-                Instance = new SceneManager();
-            }
-            else
-            {
                 Instance = this;
             }
 

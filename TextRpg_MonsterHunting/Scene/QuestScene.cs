@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace TextRpg_MonsterHunting
 {
-    internal class QuestScene : Scene
+    public class QuestScene : Scene
     {
         int userInput;
-        List<Quest> QuestList = QuestManager.Instance.Quests;
 
         public void loadScene(UI ui, Character character)
         {
+            Console.Clear();
             ui.PrintTitle("퀘스트");
 
+            List<Quest> QuestList = QuestManager.Instance.Quests;
             for (int i = 0; i <= QuestList.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {QuestList[i].Title}");
