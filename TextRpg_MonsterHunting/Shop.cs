@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace TextRpg_MonsterHunting
 {	class Shop
 	{
-		public ItemList soldItems;
+		public EquipmentList soldItems;
 
 		[JsonIgnore]
 		Character _customer;
@@ -24,7 +24,7 @@ namespace TextRpg_MonsterHunting
 			bool isItemListLoaded = Utils.LoadShopItems(out soldItems);
 			if (!isItemListLoaded)
 			{
-				soldItems = new ItemList();
+				soldItems = new EquipmentList();
 				Add(new Equipment("갑옷1", EquipmentType.Body, 1, "아주 단단한 갑옷", ItemType.Defence, 400));
 				Add(new Equipment("갑옷2", EquipmentType.Body, 2, "더욱 단단한 갑옷", ItemType.Defence, 700));
 				Add(new Equipment("수련자 갑옷", EquipmentType.Body, 5, " 수련에 도움을 주는 갑옷입니다. ", ItemType.Defence, 2000));
@@ -49,6 +49,7 @@ namespace TextRpg_MonsterHunting
 			bool buyFromCustomer = false;
 			while (!exitShop)
 			{
+				Console.Clear();
 				Console.Write("상점");
 				if (buyFromCustomer)
 				{
@@ -72,7 +73,7 @@ namespace TextRpg_MonsterHunting
 					Console.WriteLine("\n[상점 아이템 목록]");
 					for (int i = 0; i < soldItems.Count; i++)
 					{
-						Item item = soldItems[i];
+						Equipment item = soldItems[i];
 						if (selling)
 						{
 							Console.Write($"- {i + 1} ");
@@ -130,7 +131,7 @@ namespace TextRpg_MonsterHunting
 						}
 						else if(selling) // 상점에서 구매
 						{
-							Item item = soldItems[input - 1];
+							Equipment item = soldItems[input - 1];
 							if (_customer.Gold >= item.Price)
 							{
 								Console.WriteLine("구매를 완료했습니다.");
