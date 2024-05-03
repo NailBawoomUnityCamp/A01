@@ -312,14 +312,6 @@ namespace TextRpg_MonsterHunting
 			_ui.UserChoiceInput(0, 0);
 		}
 
-        // 보상 획득
-        public void GetReward(Character hero)
-        {
-            hero.inventory.Add(new Potion("마나포션", 30, "마나를 30회복합니다.", ItemType.Mana));
-            hero.inventory.Add(new Potion("체력포션", 30, "체력을 30회복합니다.", ItemType.Health));
-            hero.inventory.Add(new Equipment("브로드소드", EquipmentType.OneHand, 2, "공격력이 2증가합니다.", ItemType.Attack));
-        }
-		
 		//캐릭터 상태 출력
 		void PrintCharacterInfo()
 		{
@@ -376,13 +368,13 @@ namespace TextRpg_MonsterHunting
 			}
 			//무기 공격력  random.Next(_stageNum/2, _stageNum+1);
 			int weaponAttack = random.Next(_stageNum/2, _stageNum+1);
-			Equipment dungeonSword = new Equipment("던전의 잔혹함", EquipmentType.OneHand, weaponAttack, "매서운 던전에서만 벼려진다는 날카로운 칼입니다.", ItemType.Attack, false);
+			Equipment dungeonSword = new Equipment("던전의 잔혹함", EquipmentType.OneHand, weaponAttack, "매서운 던전에서만 벼려진다는 날카로운 칼입니다.", ItemType.Attack, _stageNum*3);
 			_hero.inventory.Add(dungeonSword);
 			Console.WriteLine($"무기 : {dungeonSword.Name} | 공격력 + {dungeonSword.Stat} | {dungeonSword.Discription}");
 
 			//방어구 방어력 random.Next(_stageNum / 10, _stageNum - 1);
 			int armorDefence = random.Next(_stageNum / 10, _stageNum - 1);
-			Equipment dungeonArmor = new Equipment("던전의 고요함", EquipmentType.Body, armorDefence, "던전의 깊은 어둠을 담아낸 갑옷입니다.", ItemType.Defence, false);
+			Equipment dungeonArmor = new Equipment("던전의 고요함", EquipmentType.Body, armorDefence, "던전의 깊은 어둠을 담아낸 갑옷입니다.", ItemType.Defence, _stageNum * 3);
 			_hero.inventory.Add(dungeonArmor);
 			Console.WriteLine($"무기 : {dungeonArmor.Name} | 방어력 + {dungeonArmor.Stat} | {dungeonArmor.Discription}");
 		}
