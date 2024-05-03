@@ -66,9 +66,11 @@ namespace TextRpg_MonsterHunting
 
                     // 랜덤 지정된 몬스터 공격( 공격력 * 배수 )
                     double attackDamage = character.TotalAttackPower * skillToUse.DamageMultiplier;
+                    attackDamage = Math.Round(attackDamage);
+                    Console.WriteLine($"{monsters[randomIndex].Name}에게 '{attackDamage}'데미지를 입혔습니다!");
                     monsters[randomIndex].ChangeHealth(-attackDamage);
                     // 마나 감소
-                    character.ChangeMana(skillToUse.MpCost);
+                    character.ChangeMana(-skillToUse.MpCost);
                 }
             }
             else

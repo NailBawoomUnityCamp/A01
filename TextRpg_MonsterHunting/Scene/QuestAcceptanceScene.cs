@@ -9,10 +9,13 @@ namespace TextRpg_MonsterHunting
     internal class QuestAcceptScene : Scene
     {
         int userInput;
-        List<Quest> QuestList = QuestManager.Instance.Quests;
+
         public void loadScene(UI ui, Character character)
         {
+            Console.Clear();
             ui.PrintTitle("퀘스트");
+
+            List<Quest> QuestList = QuestManager.Instance.Quests;
 
             switch (userInput)
             {

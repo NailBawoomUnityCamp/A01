@@ -16,9 +16,9 @@ namespace TextRpg_MonsterHunting
         public QuestManager()
         {
             if (Instance == null)
-                Instance = new QuestManager();
-            else
+            {
                 Instance = this;
+            }
 
             Quests = new List<Quest>();
             Quests.Add(new ManaPotionQuest("마을을 위협하는 미니언 처치", 5));

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace TextRpg_MonsterHunting
 {
@@ -182,6 +183,8 @@ namespace TextRpg_MonsterHunting
 
         public void ManageEquipments(int userInput)
         {
+            if (userInput <= 0)
+                return;
             Equipment item = EquipmentsInBag[userInput - 1];
 
             if (item.Equipped)//장착된 아이템 해제
@@ -212,26 +215,16 @@ namespace TextRpg_MonsterHunting
                 }
             }
 
-            for (int i = 1; i < PotionsInBag.Data.Count; i++)
+            int i = 1;
+            var manaPotion = Utils.ManaPotion;
+            var healthPotion = Utils.HealthPotion;
+            if (PotionsInBag.Contains(Utils.ManaPotion))
             {
-                Console.Write($"- {i}. ");
-
-                foreach (var item in PotionsInBag.Data)
-                {
-                    string name = item.Name;
-                    int stat = item.Stat;
-                    string discription = item.Discription;
-                    ItemType itemType = item.ItemType;
-
-                    if (item.ItemType == ItemType.Health)
-                    {
-                        Console.WriteLine($"- {name} | {itemType}+{stat} | {healthPotionCount}\n　　{discription}");
-                    }
-                    else if (item.ItemType == ItemType.Mana)
-                    {
-                        Console.WriteLine($"- {name} | {itemType}+{stat} | {manaPotionCount}\n　　{discription}");
-                    }
-                }
+                Console.WriteLine($"- {i++}. {manaPotion.Name} | {manaPotion.ItemType}+{manaPotion.Stat} | {manaPotionCount}\n　　{manaPotion.Discription}");
+            }
+            else if (PotionsInBag.Contains(Utils.HealthPotion))
+            {
+                Console.WriteLine($"- {i++}. {healthPotion.Name} | {healthPotion.ItemType}+{healthPotion.Stat} | {healthPotionCount}\n　　{healthPotion.Discription}");
             }
         }
 
