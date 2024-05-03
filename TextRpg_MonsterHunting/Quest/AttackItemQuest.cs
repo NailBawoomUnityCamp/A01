@@ -19,7 +19,10 @@ namespace TextRpg_MonsterHunting
             Console.WriteLine("\n== 더욱 더 강해지기! ==");
             Console.WriteLine("자네, 이제 더욱 강해질 때가 되었네. 경험치를 쌓아 레벨업을 해보게.");
             Console.WriteLine("\n보상");
+
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("단검 x1, 5G");
+            Console.ResetColor();
         }
         public override void CheckQuestProgress()
         {
