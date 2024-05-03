@@ -50,7 +50,7 @@ namespace TextRpg_MonsterHunting
                     SceneManager.Instance._potionScene.loadScene(ui, character);
                     break;
                 case 4: //상점 입장
-                    shop.ShowItems();
+                    shop.ShowItems(ui, character);
                     break;
                 case 5:  //퀘스트
                     SceneManager.Instance._questScene.loadScene(ui, character);
