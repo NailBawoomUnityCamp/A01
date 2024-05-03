@@ -8,8 +8,7 @@ namespace TextRpg_MonsterHunting
 {
     public class Game
     {
-        //우리의 주인공
-        Character _hero;
+        IntroScene _introScene = new IntroScene();
         UI _ui = new UI(); //UI 객체화
         bool leaveTown = false; //게임 실행 상태
 
@@ -23,8 +22,8 @@ namespace TextRpg_MonsterHunting
         {
             while (!leaveTown)
             {
-                //싱글톤 사용하여 바로 불러오기
-                SceneManager.Instance._introScene.loadScene(_ui, _hero); //이름, 직업 받은 후 마을로 이동
+                //introScene 불러오기
+                _introScene.loadScene(_ui); //이름, 직업 받은 후 마을로 이동
             }
         }
     }

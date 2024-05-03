@@ -21,6 +21,7 @@ namespace TextRpg_MonsterHunting
             titleTexts.Add("인벤토리 관리", "보유 중인 아이템을 관리할 수 있습니다.\n");
             titleTexts.Add("인벤토리 - 장착 관리", "보유 중인 아이템을 관리할 수 있습니다.\n");
             titleTexts.Add("회복", "포션을 사용하면 체력/마나를 30 회복할 수 있습니다.\n");
+            titleTexts.Add("퀘스트", "");
             titleTexts.Add("전투 시작", "전투가 시작되었습니다.\n");
         }
 
