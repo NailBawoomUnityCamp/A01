@@ -11,6 +11,7 @@ namespace TextRpg_MonsterHunting
         public AttackItemQuest(string title, int rewardGold) 
             : base(title, rewardGold) 
         {
+            Id = 3;
             RewardItem = ItemType.Attack;
         }
 
@@ -20,8 +21,6 @@ namespace TextRpg_MonsterHunting
             Console.WriteLine("자네, 이제 더욱 강해질 때가 되었네. 경험치를 쌓아 레벨업을 해보게.");
             Console.WriteLine("\n보상");
             Console.WriteLine("단검 x1, 5G");
-            Console.WriteLine("1. 수락");
-            Console.WriteLine("2. 거절");
         }
         public void CheckQuestProgress()
         {
