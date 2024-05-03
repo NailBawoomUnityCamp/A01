@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextRpg_MonsterHunting
 {
-    public class ManaPotionQuest : Quest, IQuest
+    public class ManaPotionQuest : Quest
     {
         int monstersKilledCount;
         public ManaPotionQuest(string title, int rewardGold)
@@ -17,7 +17,7 @@ namespace TextRpg_MonsterHunting
             monstersKilledCount = 0;
         }
 
-        public void QuestContent()
+        public override void QuestContent()
         {
             Console.WriteLine("\n== 마을을 위협하는 미니언 처치 ==");
             Console.WriteLine("이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나? \n마을 주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n모험가인 자네가 좀 처치해주게!");
@@ -25,7 +25,7 @@ namespace TextRpg_MonsterHunting
             Console.WriteLine("\n보상");
             Console.WriteLine("마나 포션 x1, 5G");
         }
-        public void CheckQuestProgress()
+        public override void CheckQuestProgress()
         {          
             if (this.IsAccept)
             {

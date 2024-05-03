@@ -44,6 +44,8 @@ namespace TextRpg_MonsterHunting
                 }
             }
         }
+        public virtual void QuestContent() { }
+        public virtual void CheckQuestProgress() { }
 
         /*public void Quest1R()
         {
