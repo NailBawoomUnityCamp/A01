@@ -26,12 +26,12 @@ namespace TextRpg_MonsterHunting
         {
             if (IsAccept)
             {
-                Console.WriteLine("1. 보상 받기");
+                Console.WriteLine("\n1. 보상 받기");
                 Console.WriteLine("2. 돌아가기");
             }
             else
             {
-                Console.WriteLine("1. 수락");
+                Console.WriteLine("\n1. 수락");
                 Console.WriteLine("2. 거절");
             }
         }

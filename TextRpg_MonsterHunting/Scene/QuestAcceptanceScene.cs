@@ -12,7 +12,6 @@ namespace TextRpg_MonsterHunting
 
         public void loadScene(UI ui, Character character)
         {
-            Console.Clear();
             ui.PrintTitle("퀘스트");
 
             List<Quest> QuestList = QuestManager.Instance.Quests;
