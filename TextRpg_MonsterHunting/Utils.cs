@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
@@ -19,12 +20,54 @@ namespace TextRpg_MonsterHunting
         Archer       // 궁수
     }
 
-    internal class Utils
+    internal static class Utils
 	{
+		//json파일 이름
+		public static string PlayerFileName = "TextRpgPlayer.json";
+
 		public static Potion HealthPotion = new Potion("체력 포션", 30, "현재 체력을 30 회복합니다.", ItemType.Health);
 		public static Potion ManaPotion = new Potion("마나 포션", 30, "현재 마나를 30 회복합니다.", ItemType.Mana);
 		public static Equipment Sword = new Equipment("단검", EquipmentType.OneHand, 5, "추가 공격력이 5 증가합니다.", ItemType.Attack);
-    }
+
+		//영웅 저장 함수
+		public static void SaveHero(Character hero)
+		{
+			string jsonString = JsonSerializer.Serialize(hero);
+			File.WriteAllText(PlayerFileName, jsonString);
+		}
+
+		//영웅 로딩 함수
+		//로딩 성공시 true 반환
+		public static bool LoadHero(out Character hero)
+		{
+			hero = null; // 초기화
+			string? jsonString = null;
+			try
+			{
+				jsonString = File.ReadAllText(PlayerFileName);
+			}
+			catch { }
+			if (jsonString != null)
+			{
+				hero = JsonSerializer.Deserialize<Character>(jsonString);
+				return true;
+			}
+
+			return false;
+		}
+
+		//저장 파괴 함수
+		//플레이어 사망시 또는 인위적으로 작동
+		public static void SaveDestory()
+		{
+			if (File.Exists(PlayerFileName))
+			{
+				File.Delete(PlayerFileName);
+			}
+
+			Console.WriteLine("세이브가 초기화되고 종료됩니다!");
+		}
+	}
 
 	//캐릭터, 몬스터 용 인터페이스
 	public interface Humanoid
