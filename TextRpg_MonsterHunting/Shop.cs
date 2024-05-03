@@ -42,7 +42,7 @@ namespace TextRpg_MonsterHunting
 		 * 상점 아이템 확인창
 		 * 1을 누르면 selling상태가 활성화 되고 판매창 기능이 같이 켜짐
 		 */
-		public bool ShowItems()
+		public void ShowItems(UI ui, Character character)
 		{
 			bool exitShop = false;
 			bool selling = false;
@@ -158,7 +158,7 @@ namespace TextRpg_MonsterHunting
 						break;
 				}
 			}
-			return false; //마을로 돌아가기
+			SceneManager.Instance._startScene.loadScene(ui, character); //마을로 돌아가기
 		}
 
 		//상점에 아이템 추가

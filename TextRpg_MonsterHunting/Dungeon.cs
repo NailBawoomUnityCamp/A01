@@ -182,7 +182,14 @@ namespace TextRpg_MonsterHunting
             {
                 Monster monster = _monsterHouse[i];
                 Console.Write($"- {i + 1}. ");
-                Console.Write($"Lv.{monster.EnemyExp} {monster.Name} HP {monster.CurrentHealth}\n");
+                if (monster.IsDie)
+                {
+                    Console.Write($"Lv.{monster.EnemyExp} {monster.Name} Dead\n");
+                }
+                else
+                {
+                    Console.Write($"Lv.{monster.EnemyExp} {monster.Name} HP {monster.CurrentHealth}\n");
+                }              
             }
 
             PrintCharacterInfo();

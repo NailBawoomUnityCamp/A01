@@ -22,7 +22,7 @@ namespace TextRpg_MonsterHunting
                     Console.WriteLine($"{i + 1}. {QuestList[i].Title}");
                 }
 
-                Console.WriteLine("0. 나가기");
+                Console.WriteLine("\n0. 나가기");
                 userInput = ui.UserChoiceInput(0, QuestList.Count + 1);
 
                 //
