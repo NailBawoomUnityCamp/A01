@@ -39,19 +39,41 @@ namespace TextRpg_MonsterHunting
         }
 
         // 번호에 해당하는 스킬 사용(1번은 0번 스킬)
-        public void UseSkill(int skillIndex, List<Monster> monsters, Character character)
+        public bool UseSkill(int skillIndex, List<Monster> monsters, Character character)
         {
+            bool isAbleToUse = true;
+            Console.Clear();
             if (skillIndex >= 1 && skillIndex <= skills.Count)
             {
                 Skill skillToUse = skills[skillIndex - 1];
-                Console.WriteLine($"스킬 '{skillToUse.Name}'을(를) 사용했습니다.");
-
-                // 해당 스킬이 공격하는 몬스터수만큼 랜덤값 발생
-                int targetCount = skillToUse.TargetCount;
-                // 스킬로 공격가능한 몬스터수보다 현재 몬스터수가 더 작은지 체크
-                if(targetCount > monsters.Count)
+                if(skillToUse.MpCost > character.CurrentMana)
                 {
-                    targetCount = monsters.Count;
+                    isAbleToUse = false;
+					Console.WriteLine($"스킬 '{skillToUse.Name}'을(를) 사용하기에 마나가 부족합니다.");
+					Console.WriteLine("아무키나 누르세요~~~~");
+					Console.ReadLine();
+					return isAbleToUse;
+                }
+                Console.WriteLine($"스킬 '{skillToUse.Name}'을(를) 사용했습니다.");
+				Console.WriteLine("아무키나 누르세요~~~~");
+				Console.ReadLine();
+
+                int monsterCount = 0;
+                List<Monster> monstersAlive = new List<Monster>();
+                foreach(Monster _monster in monsters)
+                {
+                    if (!_monster.IsDie)
+                    {
+                        monsterCount++;
+                        monstersAlive.Add( _monster );
+                    }
+                }
+				// 해당 스킬이 공격하는 몬스터수만큼 랜덤값 발생
+				int targetCount = skillToUse.TargetCount;
+                // 스킬로 공격가능한 몬스터수보다 현재 몬스터수가 더 작은지 체크
+                if(targetCount > monsterCount)
+                {
+                    targetCount = monsterCount;
                 }
                 // 몬스터 목록의 몬스터 중에서 랜덤으로 공격
                 HashSet<int> generatedIndex = new HashSet<int>();
@@ -61,22 +83,27 @@ namespace TextRpg_MonsterHunting
                     int randomIndex;
                     do
                     {
-                        randomIndex = new Random().Next(monsters.Count);
+                        randomIndex = new Random().Next(monsterCount);
                     } while (!generatedIndex.Add(randomIndex)); // 이미 생성된 값이면 다시 생성
 
                     // 랜덤 지정된 몬스터 공격( 공격력 * 배수 )
                     double attackDamage = character.TotalAttackPower * skillToUse.DamageMultiplier;
                     attackDamage = Math.Round(attackDamage);
-                    Console.WriteLine($"{monsters[randomIndex].Name}에게 '{attackDamage}'데미지를 입혔습니다!");
-                    monsters[randomIndex].ChangeHealth(-attackDamage);
-                    // 마나 감소
-                    character.ChangeMana(-skillToUse.MpCost);
+                    Console.WriteLine($"{monstersAlive[randomIndex].Name}에게 '{attackDamage}'데미지를 입혔습니다!");
+                    double beforeHealth = monstersAlive[randomIndex].CurrentHealth;
+
+					monstersAlive[randomIndex].ChangeHealth(-attackDamage);
+                    Console.Write($"{monstersAlive[randomIndex].Name}의 체력 :");
+                    Console.WriteLine($"{beforeHealth} -> {monstersAlive[randomIndex].CurrentHealth}");
                 }
-            }
+				// 마나 감소
+				character.ChangeMana(-skillToUse.MpCost);
+			}
             else
             {
                 Console.WriteLine("잘못된 번호입니다.");
             }
+            return isAbleToUse;
         }
     }
 }

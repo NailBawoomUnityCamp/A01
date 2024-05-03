@@ -12,14 +12,14 @@ namespace TextRpg_MonsterHunting
 		public ItemList soldItems;
 
 		[JsonIgnore]
-		Warrior _customer;
+		Character _customer;
 
 		[JsonIgnore]
 		UI _ui;
 
 		//기본 세팅
 		//기본 아이템 추가		
-		public Shop(Warrior customer, UI ui)
+		public Shop(Character customer, UI ui)
 		{
 			bool isItemListLoaded = Utils.LoadShopItems(out soldItems);
 			if (!isItemListLoaded)

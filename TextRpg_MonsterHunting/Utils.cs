@@ -33,14 +33,22 @@ namespace TextRpg_MonsterHunting
 		//영웅 저장 함수
 		public static void SaveHero(Character hero)
 		{
-			string jsonString = JsonSerializer.Serialize(hero);
+			var options = new JsonSerializerOptions
+			{
+				WriteIndented = true // 들여쓰기 설정
+			};
+			string jsonString = JsonSerializer.Serialize(hero, options);
 			File.WriteAllText(PlayerFileName, jsonString);
 		}
 
 		//상점 아이템 저장 함수
 		public static void SaveShopItems(ItemList shopItemList)
 		{
-			string jsonString = JsonSerializer.Serialize(shopItemList);
+			var options = new JsonSerializerOptions
+			{
+				WriteIndented = true // 들여쓰기 설정
+			};
+			string jsonString = JsonSerializer.Serialize(shopItemList, options);
 			File.WriteAllText(ShopItemsFileName, jsonString);
 		}
 
@@ -127,10 +135,10 @@ namespace TextRpg_MonsterHunting
 
 		//Json 저장용 constructor
 		[JsonConstructor]
-		public ItemList(List<Item> data, int count)
+		public ItemList(List<Item> Data, int Count)
 		{
-			this.Data = data;
-			this.Count = count;
+			this.Data = Data;
+			this.Count = Count;
 		}
 
 		public ItemList()
@@ -193,10 +201,10 @@ namespace TextRpg_MonsterHunting
 		public int Count { get; private set; }
 
 		[JsonConstructor]
-		public EquipmentList(List<Equipment> data, int count)
+		public EquipmentList(List<Equipment> Data, int Count)
 		{
-			this.Data = data;
-			this.Count = data.Count;
+			this.Data = Data;
+			this.Count = Count;
 		}
 
 		public EquipmentList()
@@ -253,10 +261,10 @@ namespace TextRpg_MonsterHunting
 		public int Count { get; private set; }
 
 		[JsonConstructor]
-		public PotionList(List<Potion> data, int count)
+		public PotionList(List<Potion> Data, int Count)
 		{
-			this.Data = data;
-			this.Count = data.Count;
+			this.Data = Data;
+			this.Count = Count;
 		}
 
 		public PotionList()
@@ -315,10 +323,10 @@ namespace TextRpg_MonsterHunting
 
         //Json 저장용 constructor
         [JsonConstructor]
-        public SkillList(List<Skill> data, uint count)
+        public SkillList(List<Skill> Data, uint Count)
         {
-            this.Data = data;
-            this.Count = count;
+            this.Data = Data;
+            this.Count = Count;
         }
 
         public SkillList()

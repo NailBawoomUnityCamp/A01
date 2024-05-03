@@ -21,7 +21,7 @@ namespace TextRpg_MonsterHunting
             sceneManager = new SceneManager();
             questManager = new QuestManager();
             _introScene = new IntroScene();
-            Utils.SaveDestory();
+            //Utils.SaveDestory();
         }
 
         //게임 시작 method
