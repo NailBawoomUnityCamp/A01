@@ -248,6 +248,8 @@ namespace TextRpg_MonsterHunting
 
                 //현재 체력 30 증가
                 character.ChangeHealth(UseHealthPotion);
+
+                Console.WriteLine("회복을 완료했습니다.");
             }
             else if (userInput == 2 && PotionsInBag.Contains(Utils.ManaPotion)) //마나 포션 사용
             {
@@ -256,6 +258,8 @@ namespace TextRpg_MonsterHunting
 
                 //현재 마나 30 증가
                 character.ChangeMana(UseManaPotion);
+
+                Console.WriteLine("회복을 완료했습니다.");
             }
             else
             {
