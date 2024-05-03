@@ -18,6 +18,7 @@ namespace TextRpg_MonsterHunting
         public Scene _equipmentScene;
         public Scene _potionScene;
         public Scene _questScene;
+        public Scene _questAcceptScene;
 
         public SceneManager()
         {
@@ -29,13 +30,14 @@ namespace TextRpg_MonsterHunting
             {
                 Instance = this;
             }
-            
+
             _startScene = new StartScene();
             _characterInfoScene = new CharacterInfoScene();
             _inventoryScene = new InventoryScene();
             _equipmentScene = new EquipmentScene();
             _potionScene = new PotionScene();
             _questScene = new QuestScene();
-    }
+            _questAcceptScene = new QuestAcceptScene();
+        }
     }
 }
