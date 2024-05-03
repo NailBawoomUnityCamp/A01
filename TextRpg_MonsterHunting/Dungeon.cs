@@ -25,7 +25,7 @@ namespace TextRpg_MonsterHunting
 			_hero = hero; //hero = new Character(heroClass, heroName ?? "홍길동"); 이므로 선언된 값 불러오기.
             List<Monster> monsterKind;
             Console.Write($"\n"); //public string Name { get; private set; }
-			Console.ForegroundColor = ConsoleColor.Red;
+			Console.ForegroundColor = ConsoleColor.DarkGreen;
 			Console.Write($"\"{_hero.Name}\"")
 			Console.ResetColor();
 			Console.Write("은(는) 던전에 입장했습니다.")
@@ -73,7 +73,7 @@ namespace TextRpg_MonsterHunting
 			while (!fightEnd)
 			{
 				Console.Write("Stage{0}");
-				Console.ForegroundColor = ConsoleColor.Red;
+				Console.ForegroundColor = ConsoleColor.DarkGreen;
 				Console.Write(" Battle!!\n");
 				Console.ResetColor();
 				for (int i = 0; i < _monsterHouse.Count; i++)
@@ -121,7 +121,7 @@ namespace TextRpg_MonsterHunting
 		{
 			bool didAttack = false;
 			Console.Write("Stage{0}");
-				Console.ForegroundColor = ConsoleColor.Red;
+				Console.ForegroundColor = ConsoleColor.DarkGreen;
 				Console.Write(" Battle!!\n");
 				Console.ResetColor();
 
@@ -151,7 +151,7 @@ namespace TextRpg_MonsterHunting
 		{
 			bool didAttack = false;
 			Console.Write("Stage{0}");
-				Console.ForegroundColor = ConsoleColor.Red;
+				Console.ForegroundColor = ConsoleColor.DarkGreen;
 				Console.Write(" Battle!!\n");
 				Console.ResetColor();
 			for (int i = 0; i < _monsterHouse.Count; i++)
@@ -212,21 +212,21 @@ namespace TextRpg_MonsterHunting
 		public void AttackTarget(Humanoid attacker, Humanoid target)
         {
 			Console.Write("Stage{0}");
-				Console.ForegroundColor = ConsoleColor.Red;
+				Console.ForegroundColor = ConsoleColor.DarkGreen;
 				Console.Write(" Battle!!\n");
 				Console.ResetColor();
 			if(attacker is Monster)
 			{
 				Monster monster = attacker as Monster;
 				Console.Write($"Lv. ");
-				Console.ForegroundColor = ConsoleColor.Red;
+				Console.ForegroundColor = ConsoleColor.DarkGreen;
 				Console.Write($"{monster.EnemyExp} {monster.Name} ")
 				Console.ResetColor();
 				Console.Write("의 공격!");
 			}
 			else
 			{
-				Console.ForegroundColor = ConsoleColor.Red;
+				Console.ForegroundColor = ConsoleColor.DarkGreen;
 				Console.Write($"{attacker.Name} ");
 				Console.ResetColor();
 				Console.Write("의 공격!");
@@ -256,13 +256,13 @@ namespace TextRpg_MonsterHunting
 					Monster monster = (Monster)target;
 					Console.Write($"Lv.");
 
-					Console.ForegroundColor = ConsoleColor.Red;
+					Console.ForegroundColor = ConsoleColor.DarkGreen;
 					Console.Write($"{monster.EnemyExp} {monster.Name}")
 					Console.ResetColor();
 
 					Console.Write("을(를) 맞췄습니다. [데미지 : ");
 
-					Console.ForegroundColor = ConsoleColor.Red;
+					Console.ForegroundColor = ConsoleColor.DarkGreen;
 					Console.Write($"{totalDamage}");
 					Console.ResetColor();
 
@@ -335,7 +335,7 @@ namespace TextRpg_MonsterHunting
 			Console.WriteLine("Stage{0} Battle!! - Result\n");
 			if (_stageClear)
 			{
-				Console.ForegroundColor = ConsoleColor.Red;
+				Console.ForegroundColor = ConsoleColor.DarkGreen;
 				Console.WriteLine("Victory\n");
 				Console.ResetColor();
 				
