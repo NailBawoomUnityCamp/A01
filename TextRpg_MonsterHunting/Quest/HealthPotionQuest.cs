@@ -11,7 +11,6 @@ namespace TextRpg_MonsterHunting
         public HealthPotionQuest(string title, int rewardGold) 
             : base(title, rewardGold) 
         {
-            Id = 2;
             RewardItem = ItemType.Health;
         }
 
