@@ -11,7 +11,6 @@ namespace TextRpg_MonsterHunting
         public AttackItemQuest(string title, int rewardGold) 
             : base(title, rewardGold) 
         {
-            Id = 3;
             RewardItem = ItemType.Attack;
         }
 

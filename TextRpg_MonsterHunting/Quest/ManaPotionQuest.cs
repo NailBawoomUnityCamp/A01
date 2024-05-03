@@ -12,7 +12,6 @@ namespace TextRpg_MonsterHunting
         public ManaPotionQuest(string title, int rewardGold)
             : base(title, rewardGold) 
         {
-            Id = 1;
             RewardItem = ItemType.Mana;
             monstersKilledCount = 0;
         }
