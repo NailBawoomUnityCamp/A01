@@ -64,8 +64,8 @@ namespace TextRpg_MonsterHunting
 					{
 						Console.Write($"- {i + 1} ");
 
-						//_customer.inventory.EquipmentsInBag.PrintData(true);
-						//Console.WriteLine($"\t| {_customer.Inventory.equipmentItems.data[i].Price} G");
+						//_customer.inventory.EquipmentsInBag[i]; PrintData(true);
+						//Console.WriteLine($"\t| {_customer.inventory.EquipmentsInBag[i].Price} G");
 					}
 				}
 				else
@@ -99,11 +99,11 @@ namespace TextRpg_MonsterHunting
 				}
 				else if (buyFromCustomer)
 				{
-					input = Utils.GetInput(0, _customer.Inventory.equipmentItems.data.Count);
+					input = _ui.UserChoiceInput(0, _customer.inventory.EquipmentsInBag.Count);
 				}
 				else
 				{
-					input = Utils.GetInput(0, 2);
+					input = _ui.UserChoiceInput(0, 2);
 				}
 				switch (input)
 				{
@@ -132,32 +132,23 @@ namespace TextRpg_MonsterHunting
 						}
 						else if(selling) // 상점에서 구매
 						{
-							Equipment item = soldItems[input - 1];
-							if (item.Sold)
+							Item item = soldItems[input - 1];
+							if (_customer.Gold >= item.Price)
 							{
-								Console.WriteLine("이미 구매한 아이템입니다");
+								Console.WriteLine("구매를 완료했습니다.");
+								_customer.ChangeGold(-item.Price);
+								_customer.inventory.Add(item);
 							}
 							else
 							{
-								if(_customer.Gold >= item.Price)
-								{
-									Console.WriteLine("구매를 완료했습니다.");
-									_customer.Gold -= item.Price;
-									_customer.Inventory.Add(item);
-									item.Sold = true;
-								}
-								else
-								{
-									Console.WriteLine("Gold 가 부족합니다.");
-								}
+								Console.WriteLine("Gold 가 부족합니다.");
 							}
 						}
 						else if (buyFromCustomer) //상점에 판매
 						{
-							Equipment item = _customer.Inventory.equipmentItems.data[input - 1];
-							_customer.Gold += (int)(item.Price*0.85f);
-							item.Sold = false;
-							_customer.Inventory.Remove(item);
+							Equipment item = _customer.inventory.EquipmentsInBag[input - 1];
+							_customer.ChangeGold((int)(item.Price*0.85f));
+							_customer.inventory.Remove(item);
 							Add(item);
 						}
 						break;
@@ -169,10 +160,6 @@ namespace TextRpg_MonsterHunting
 		//상점에 아이템 추가
 		public void Add(Equipment item)
 		{
-			if(soldItems.Find(existingItem =>  existingItem.ID == item.ID) != null)
-			{
-				soldItems.Remove(item);
-			}
 			soldItems.Add(item);
 		}
 	}
