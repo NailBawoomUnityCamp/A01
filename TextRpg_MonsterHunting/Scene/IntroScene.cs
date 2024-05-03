@@ -35,13 +35,13 @@ namespace TextRpg_MonsterHunting
 				switch (inputForClass)
 				{       //명시적 형변환
 					case (int)GameClassType.Warrior:
-						character = new Warrior(heroName ?? "르탄이");
+						character = new Character(GameClassType.Warrior, heroName ?? "르탄이");
 						break;
 					case (int)GameClassType.Wizard:
-						character = new Wizard(heroName ?? "르탄이");
+						character = new Character(GameClassType.Wizard, heroName ?? "르탄이");
 						break;
 					case (int)GameClassType.Archer:
-						character = new Archer(heroName ?? "르탄이");
+						character = new Character(GameClassType.Archer, heroName ?? "르탄이");
 						break;
 				}
 			}
