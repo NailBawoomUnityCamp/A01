@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace TextRpg_MonsterHunting
 {
-    public class IntroScene : Scene
+    public class IntroScene
     {
-        public void loadScene(UI ui, Character hero)
+        Character character;
+
+        public void loadScene(UI ui)
         {
             Console.Write("스파르타 던전에 오신 여러분 환영합니다.\n원하시는 이름을 설정해주세요.\n>> ");
             string? heroName = Console.ReadLine();
@@ -26,22 +28,22 @@ namespace TextRpg_MonsterHunting
             switch (inputForClass)
             {       //명시적 형변환
                 case (int)GameClassType.Warrior:
-                    hero = new Warrior(heroName ?? "르탄이");
+                    character = new Warrior(heroName ?? "르탄이");
                     break;
                 case (int)GameClassType.Wizard:
-                    hero = new Wizard(heroName ?? "르탄이");
+                    character = new Wizard(heroName ?? "르탄이");
                     break;
                 case (int)GameClassType.Archer:
-                    hero = new Archer(heroName ?? "르탄이");
+                    character = new Archer(heroName ?? "르탄이");
                     break;
             }
 
             Console.WriteLine($"\n입력한 정보 확인");
             Console.WriteLine($"이름 : {heroName}");
-            Console.WriteLine($"직업 : {hero.ReturnGameClassName}");
+            Console.WriteLine($"직업 : {character.ReturnGameClassName}");
 
             ui.CountdownComment(2, "마을로 이동합니다."); //2초 후 마을로 이동
-            SceneManager.Instance._startScene.loadScene(ui, hero);
+            SceneManager.Instance._startScene.loadScene(ui, character);
         }
     }
 }
