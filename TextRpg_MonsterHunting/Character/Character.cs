@@ -12,6 +12,7 @@ namespace TextRpg_MonsterHunting
 {
     public class Character : Humanoid
 	{
+        public GameClassType ClassType { get; private set; }
         public int Level { get; private set; }
         public string Name { get; private set; }
         public double BaseAttackPower { get; protected set; }
@@ -35,9 +36,10 @@ namespace TextRpg_MonsterHunting
 		public const double MaxHealth = 100;
 
 		[JsonConstructor]
-		public Character(int Level, string Name, double BaseAttackPower, double TotalAttackPower, double BaseDefensePower, double TotalDefensePower,
+		public Character(GameClassType ClassType, int Level, string Name, double BaseAttackPower, double TotalAttackPower, double BaseDefensePower, double TotalDefensePower,
 	double CurrentHealth, double MaxMana, double CurrentMana, int Experience, int Gold, bool IsDie, int CurrentStage, Inventory inventory)
 		{
+            this.ClassType = ClassType;
 			this.Level = Level;
 			this.Name = Name;
 			this.BaseAttackPower = BaseAttackPower;
@@ -55,19 +57,20 @@ namespace TextRpg_MonsterHunting
 		}
 
 
-		public Character(string name)
+		public Character(GameClassType ClassType, string name)
         {
             if (Instance == null)
             {
                 Instance = this;
             }
 
+            this.ClassType = ClassType;
             Name = name;
 
             Level = 1;
             CurrentHealth = 100;
             Gold = 1500;
-			CurrentStage = 0;
+            CurrentStage = 0;          
 
 			inventory = new Inventory();
             skillManager = new SkillManager();
@@ -76,6 +79,41 @@ namespace TextRpg_MonsterHunting
             for(int i = 0; i < 3; i++)
             {
                 inventory.Add(Utils.HealthPotion);
+            }
+
+            ChangeAttack(0);
+            ChangeDefense(0);
+
+            switch (ClassType)
+            {
+                case GameClassType.Warrior:
+                    BaseAttackPower = 10;
+                    BaseDefensePower = 5;
+                    MaxMana = 50;
+                    CurrentMana = 50;
+
+                    // 스킬 추가
+                    skillManager.AddSkill(new Skill("알파 스트라이크", 10, 2f, 1));
+                    skillManager.AddSkill(new Skill("더블 스트라이크", 15, 1.5f, 2));
+                    break;
+                case GameClassType.Wizard:
+                    BaseAttackPower = 15;
+                    BaseDefensePower = 1;
+                    MaxMana = 150;
+                    CurrentMana = 150;
+
+                    skillManager.AddSkill(new Skill("크리스탈 블레이드", 60, 5f, 1));
+                    skillManager.AddSkill(new Skill("파이어 스톰", 30, 3f, 2));
+                    break;
+                case GameClassType.Archer:
+                    BaseAttackPower = 18;
+                    BaseDefensePower = 3;
+                    MaxMana = 100;
+                    CurrentMana = 100;
+
+                    skillManager.AddSkill(new Skill("레드 스윙", 50, 3f, 2));
+                    skillManager.AddSkill(new Skill("바이올렛 샷", 30, 2f, 3));
+                    break;
             }
         }
 
@@ -118,20 +156,17 @@ namespace TextRpg_MonsterHunting
         // 직업명 한글로 변환
         public string ReturnGameClassName()
         {
-            string ClassName = "전사";
-            if (this.GetType() == typeof(Warrior))
+            switch (ClassType)
             {
-                ClassName = "전사";
+                case GameClassType.Warrior:
+                    return "전사";
+                case GameClassType.Wizard:
+                    return "마법사";
+                case GameClassType.Archer:
+                    return "궁수";
+                default:
+                    return "전사";
             }
-            else if(this.GetType() == typeof(Wizard)) 
-            {
-                ClassName = "마법사";
-            }
-            else if(this.GetType() == typeof(Archer))
-            {
-                ClassName = "궁수";
-            }
-            return ClassName;
         }
 
         // 총 방어력 합산/감산
