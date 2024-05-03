@@ -12,6 +12,7 @@ namespace TextRpg_MonsterHunting
         public ManaPotionQuest(string title, int rewardGold)
             : base(title, rewardGold) 
         {
+            Id = 1;
             RewardItem = ItemType.Mana;
             monstersKilledCount = 0;
         }
@@ -23,8 +24,6 @@ namespace TextRpg_MonsterHunting
             Console.WriteLine("\n\n미니언 5마리 처치 (0/5)");
             Console.WriteLine("\n보상");
             Console.WriteLine("마나 포션 x1, 5G");
-            Console.WriteLine("1. 수락");
-            Console.WriteLine("2. 거절");
         }
         public void CheckQuestProgress()
         {          

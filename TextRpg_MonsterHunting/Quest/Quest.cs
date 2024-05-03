@@ -9,7 +9,7 @@ namespace TextRpg_MonsterHunting
 {
     public class Quest //2024.05.02 박재우
     {
-        //public int Id { get; set; }
+        public int Id { get; protected set; }
         public string Title { get; private set; }
         public int RewardGold { get; private set; }
         public ItemType RewardItem { get; protected set; }
@@ -22,6 +22,28 @@ namespace TextRpg_MonsterHunting
             RewardGold = rewardGold;
         }
 
+        public void PrintQuestStatus()
+        {
+            if (IsClear)
+            {
+                Console.WriteLine("1. 퀘스트 완료하기\n");
+                Console.WriteLine("0. 나가기");
+
+            }
+            else
+            {
+                if (IsAccept == false)
+                {
+                    Console.WriteLine("1. 수락");
+                    Console.WriteLine("2. 거절");
+                }
+                else if (IsAccept == true)
+                {
+                    Console.WriteLine("퀘스트 진행중\n");
+                    Console.WriteLine("0. 나가기");
+                }
+            }
+        }
 
         /*public void Quest1R()
         {
