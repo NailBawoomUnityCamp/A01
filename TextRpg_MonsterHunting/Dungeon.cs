@@ -26,7 +26,7 @@ namespace TextRpg_MonsterHunting
             List<Monster> monsterKind;
             Console.Write($"\n"); //public string Name { get; private set; }
 			Console.ForegroundColor = ConsoleColor.DarkGreen;
-			Console.Write($"\"{_hero.Name}\"")
+			Console.Write($"\"{_hero.Name}\"");
 			Console.ResetColor();
 			Console.Write("은(는) 던전에 입장했습니다.");
 
@@ -220,7 +220,7 @@ namespace TextRpg_MonsterHunting
 				Monster monster = attacker as Monster;
 				Console.Write($"Lv. ");
 				Console.ForegroundColor = ConsoleColor.DarkGreen;
-				Console.Write($"{monster.EnemyExp} {monster.Name} ")
+				Console.Write($"{monster.EnemyExp} {monster.Name} ");
 				Console.ResetColor();
 				Console.Write("의 공격!");
 			}
@@ -257,7 +257,7 @@ namespace TextRpg_MonsterHunting
 					Console.Write($"Lv.");
 
 					Console.ForegroundColor = ConsoleColor.DarkGreen;
-					Console.Write($"{monster.EnemyExp} {monster.Name}")
+					Console.Write($"{monster.EnemyExp} {monster.Name}");
 					Console.ResetColor();
 
 					Console.Write("을(를) 맞췄습니다. [데미지 : ");
