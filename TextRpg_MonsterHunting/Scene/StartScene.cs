@@ -10,13 +10,16 @@ namespace TextRpg_MonsterHunting
     {
         public void loadScene(UI ui, Character character)
         {
+
             Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.");
             Console.WriteLine("이제 전투를 시작할 수 있습니다.\n");
 
+            Utils.SaveHero(character);
             Console.WriteLine("1. 상태 보기");
             Console.WriteLine("2. 인벤토리 관리");
             Console.WriteLine("3. 회복 아이템 사용");
             Console.WriteLine("4. 전투 시작");
+            Console.WriteLine("5. 저장 초기화");
             Console.WriteLine("\n0. 나가기");
 
             int userInput = ui.UserChoiceInput(0, 4);
@@ -44,6 +47,9 @@ namespace TextRpg_MonsterHunting
                 case 4: //전투 시작(던전 입장)
                     Dungeon dungeon = new Dungeon();
                     dungeon.InDungeon(character, ui);
+                    break;
+                case 5:
+                    Utils.SaveDestory();
                     break;
             }
         }
