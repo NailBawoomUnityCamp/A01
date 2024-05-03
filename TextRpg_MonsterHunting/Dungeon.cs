@@ -28,7 +28,7 @@ namespace TextRpg_MonsterHunting
 			Console.ForegroundColor = ConsoleColor.DarkGreen;
 			Console.Write($"\"{_hero.Name}\"")
 			Console.ResetColor();
-			Console.Write("은(는) 던전에 입장했습니다.")
+			Console.Write("은(는) 던전에 입장했습니다.");
 
 
 

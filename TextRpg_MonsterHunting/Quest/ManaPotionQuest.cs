@@ -22,9 +22,22 @@ namespace TextRpg_MonsterHunting
             Console.WriteLine("이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나? ");
             Console.WriteLine("마을 주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!");
             Console.WriteLine("모험가인 자네가 좀 처치해주게!\n");
-            Console.WriteLine($"미니언 5마리 처치 ({monstersKilledCount}/5)");
+
+            Console.Write($"미니언 ");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.Write($"5");
+            Console.ResetColor();
+            Console.Write($"마리 처치 (");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.Write($"{monstersKilledCount}/5");
+            Console.ResetColor();
+            Console.WriteLine($")");
+
             Console.WriteLine("\n보상");
+
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("마나 포션 x1, 5G");
+            Console.ResetColor();
         }
         public override void CheckQuestProgress()
         {          
