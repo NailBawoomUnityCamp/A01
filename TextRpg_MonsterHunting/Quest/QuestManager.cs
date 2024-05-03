@@ -49,6 +49,8 @@ namespace TextRpg_MonsterHunting
             else
             {
                 Console.WriteLine("아직 퀘스트가 진행중입니다!\n");
+                Console.WriteLine("아무키나 누르세요~~~~");
+                Console.ReadLine();
             }
         }
 
