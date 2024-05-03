@@ -13,7 +13,7 @@ namespace TextRpg_MonsterHunting
         public string Title { get; private set; }
         public int RewardGold { get; private set; }
         public ItemType RewardItem { get; protected set; }
-        public bool IsAccept { get; private set; }
+        public bool IsAccept { get; set; }
         public bool IsClear { get; protected set; }
 
         public Quest(string title, int rewardGold)
