@@ -189,8 +189,6 @@ namespace TextRpg_MonsterHunting
 				}
 				_stageClear = fightEnd;
 			}
-            QuestManager.Instance.CheckQuestCompletion(_hero);
-
             return fightEnd;
 		}
 

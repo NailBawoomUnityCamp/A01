@@ -102,9 +102,7 @@ namespace TextRpg_MonsterHunting
                 }
                 RightHand = item;              
             }
-            item.Equipped = true;
-            if (QuestManager.Instance.Quests is HealthPotionQuest)
-                ((IQuest)QuestManager.Instance.Quests).CheckQuestProgress();           
+            item.Equipped = true;          
         }
 
         //장착 해제
