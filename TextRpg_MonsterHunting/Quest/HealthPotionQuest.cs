@@ -19,7 +19,10 @@ namespace TextRpg_MonsterHunting
             Console.WriteLine("\n== 장비 장착해보자 ==");
             Console.WriteLine("자네, 이제 장비를 장착해볼 때가 되었네. 자네가 가진 장비들을 살펴보게.");
             Console.WriteLine("\n보상");
+
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("체력 포션 x1, 5G");
+            Console.ResetColor();
         }
         public override void CheckQuestProgress()
         {
