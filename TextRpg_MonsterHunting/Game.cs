@@ -8,6 +8,9 @@ namespace TextRpg_MonsterHunting
 {
     public class Game
     {
+        SceneManager sceneManager = new SceneManager();
+        QuestManager questManager = new QuestManager();
+
         IntroScene _introScene = new IntroScene();
         UI _ui = new UI(); //UI 객체화
         bool leaveTown = false; //게임 실행 상태
