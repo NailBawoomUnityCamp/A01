@@ -23,16 +23,24 @@ namespace TextRpg_MonsterHunting
     internal static class Utils
 	{
 		//json파일 이름
-		public static string PlayerFileName = "TextRpgPlayer.json";
+		public static string PlayerFileName = "Player.json";
+		public static string ShopFileName = "Shop.json";
 
-		public static Potion HealthPotion = new Potion("체력 포션", 30, "현재 체력을 30 회복합니다.", ItemType.Health);
-		public static Potion ManaPotion = new Potion("마나 포션", 30, "현재 마나를 30 회복합니다.", ItemType.Mana);
-		public static Equipment Sword = new Equipment("단검", EquipmentType.OneHand, 5, "추가 공격력이 5 증가합니다.", ItemType.Attack);
+		public static Potion HealthPotion = new Potion("체력 포션", 30, "현재 체력을 30 회복합니다.", ItemType.Health, 10);
+		public static Potion ManaPotion = new Potion("마나 포션", 30, "현재 마나를 30 회복합니다.", ItemType.Mana, 10);
+		public static Equipment Sword = new Equipment("단검", EquipmentType.OneHand, 5, "추가 공격력이 5 증가합니다.", ItemType.Attack, 5);
 
 		//영웅 저장 함수
 		public static void SaveHero(Character hero)
 		{
 			string jsonString = JsonSerializer.Serialize(hero);
+			File.WriteAllText(PlayerFileName, jsonString);
+		}
+
+		//상점 저장 함수
+		public static void SaveShop(Shop shop)
+		{
+			string jsonString = JsonSerializer.Serialize(shop);
 			File.WriteAllText(PlayerFileName, jsonString);
 		}
 
@@ -56,6 +64,26 @@ namespace TextRpg_MonsterHunting
 			return false;
 		}
 
+		//상점 로딩 함수
+		//로딩 성공시 true 반환
+		public static bool LoadShop(out Shop shop)
+		{
+			shop = null; // 초기화
+			string? jsonString = null;
+			try
+			{
+				jsonString = File.ReadAllText(ShopFileName);
+			}
+			catch { }
+			if (jsonString != null)
+			{
+				shop = JsonSerializer.Deserialize<Shop>(jsonString);
+				return true;
+			}
+
+			return false;
+		}
+
 		//저장 파괴 함수
 		//플레이어 사망시 또는 인위적으로 작동
 		public static void SaveDestory()
@@ -63,6 +91,10 @@ namespace TextRpg_MonsterHunting
 			if (File.Exists(PlayerFileName))
 			{
 				File.Delete(PlayerFileName);
+			}
+			if (File.Exists(ShopFileName))
+			{
+				File.Delete(ShopFileName);
 			}
 
 			Console.WriteLine("세이브가 초기화되고 종료됩니다!");
@@ -91,11 +123,11 @@ namespace TextRpg_MonsterHunting
 		public List<Item> Data { get; private set; }
 
 		[JsonInclude]
-		public uint Count { get; private set; }
+		public int Count { get; private set; }
 
 		//Json 저장용 constructor
 		[JsonConstructor]
-		public ItemList(List<Item> data, uint count)
+		public ItemList(List<Item> data, int count)
 		{
 			this.Data = data;
 			this.Count = count;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -30,6 +31,7 @@ namespace TextRpg_MonsterHunting
 	{
 		public string Name { get; }
 		public string Discription { get; }
+		public int Price { get; }
 		public void PrintData();
 	}
 
@@ -40,13 +42,26 @@ namespace TextRpg_MonsterHunting
 		public EquipmentType EquipType { get; private set; }
 		public int Stat { get; private set; }
 		public string Discription { get; private set; }
+		public int Price { get; private set; }
 		public ItemType ItemType { get; private set; }
 
 		public bool Equipped { get; set; }
 
+		public Equipment(string name, EquipmentType equipType, int stat, string discription,
+			 ItemType itemType, int price)
+		{
+			Name = name;
+			EquipType = equipType;
+			Stat = stat;
+			Discription = discription;
+			ItemType = itemType;
+			Equipped = false;
+			Price = price;
+		}
+
 		//Json 불러오는용 생성자
 		[JsonConstructor]
-		public Equipment(string name, EquipmentType equipType, int stat, string discription,
+		public Equipment(string name, EquipmentType equipType, int stat, string discription, int price,
 			 ItemType itemType, bool equipped)
 		{
 			this.Name = name;
@@ -55,17 +70,7 @@ namespace TextRpg_MonsterHunting
 			this.Discription = discription;
 			this.ItemType = itemType;
 			this.Equipped = equipped;
-		}
-
-		public Equipment(string name, EquipmentType equipType, int stat, string discription,
-			 ItemType itemType)
-		{
-			Name = name;
-			EquipType = equipType;
-			Stat = stat;
-			Discription = discription;
-			ItemType = itemType;
-			Equipped = false;
+			Price = price;
 		}
 
 		//장비 아이템 정보 출력
@@ -100,27 +105,17 @@ namespace TextRpg_MonsterHunting
 		public int Stat { get; private set; }
 		public string Discription { get; private set; }
 		public ItemType ItemType { get; private set; }
-		public bool Equipped { get; set; }
+		public int Price { get; private set; }
 
 		[JsonConstructor]
 		public Potion(string name, int stat, string discription,
-			 ItemType itemType, int id, bool equipped)
+			 ItemType itemType, int price)
 		{
 			this.Name = name;
 			this.Stat = stat;
 			this.Discription = discription;
 			this.ItemType = itemType;
-			this.Equipped = equipped;
-		}
-
-		public Potion(string name, int stat, string discription,
-			 ItemType itemType)
-		{
-			Name = name;
-			Stat = stat;
-			Discription = discription;
-			ItemType = itemType;
-			Equipped = false;
+			Price = price;
 		}
 
 		//아이템 소비 기능
