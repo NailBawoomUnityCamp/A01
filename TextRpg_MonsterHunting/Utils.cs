@@ -24,7 +24,7 @@ namespace TextRpg_MonsterHunting
 	{
 		//json파일 이름
 		public static string PlayerFileName = "Player.json";
-		public static string ShopFileName = "Shop.json";
+		public static string ShopItemsFileName = "ShopItems.json";
 
 		public static Potion HealthPotion = new Potion("체력 포션", 30, "현재 체력을 30 회복합니다.", ItemType.Health, 10);
 		public static Potion ManaPotion = new Potion("마나 포션", 30, "현재 마나를 30 회복합니다.", ItemType.Mana, 10);
@@ -37,11 +37,11 @@ namespace TextRpg_MonsterHunting
 			File.WriteAllText(PlayerFileName, jsonString);
 		}
 
-		//상점 저장 함수
-		public static void SaveShop(Shop shop)
+		//상점 아이템 저장 함수
+		public static void SaveShopItems(ItemList shopItemList)
 		{
-			string jsonString = JsonSerializer.Serialize(shop);
-			File.WriteAllText(PlayerFileName, jsonString);
+			string jsonString = JsonSerializer.Serialize(shopItemList);
+			File.WriteAllText(ShopItemsFileName, jsonString);
 		}
 
 		//영웅 로딩 함수
@@ -64,20 +64,20 @@ namespace TextRpg_MonsterHunting
 			return false;
 		}
 
-		//상점 로딩 함수
+		//상점 아이템 로딩 함수
 		//로딩 성공시 true 반환
-		public static bool LoadShop(out Shop shop)
+		public static bool LoadShopItems(out ItemList shopItemList)
 		{
-			shop = null; // 초기화
+			shopItemList = null; // 초기화
 			string? jsonString = null;
 			try
 			{
-				jsonString = File.ReadAllText(ShopFileName);
+				jsonString = File.ReadAllText(ShopItemsFileName);
 			}
 			catch { }
 			if (jsonString != null)
 			{
-				shop = JsonSerializer.Deserialize<Shop>(jsonString);
+				shopItemList = JsonSerializer.Deserialize<ItemList>(jsonString);
 				return true;
 			}
 
@@ -92,9 +92,9 @@ namespace TextRpg_MonsterHunting
 			{
 				File.Delete(PlayerFileName);
 			}
-			if (File.Exists(ShopFileName))
+			if (File.Exists(ShopItemsFileName))
 			{
-				File.Delete(ShopFileName);
+				File.Delete(ShopItemsFileName);
 			}
 
 			Console.WriteLine("세이브가 초기화되고 종료됩니다!");
