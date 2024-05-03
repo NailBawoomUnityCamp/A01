@@ -44,12 +44,18 @@ namespace TextRpg_MonsterHunting
         //유저 선택 Input 받기
         public int UserChoiceInput(int start, int end)
         {
-            Console.Write("\n원하시는 행동을 입력해 주세요.\n>> ");
+            Console.WriteLine("\n원하시는 행동을 입력해 주세요.");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.Write(">> ");
+            Console.ResetColor();
             int userInput = int.Parse(Console.ReadLine());
 
             while (userInput < start || userInput > end)
             {
-                Console.Write("잘못된 입력입니다. 다시 입력해 주세요. \n>> ");
+                Console.WriteLine("잘못된 입력입니다. 다시 입력해 주세요.");
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.Write(">> ");
+                Console.ResetColor();
                 userInput = int.Parse(Console.ReadLine());
             }
             return userInput;
