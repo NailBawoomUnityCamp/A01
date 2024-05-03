@@ -205,7 +205,23 @@ namespace TextRpg_MonsterHunting
             double UseManaPotion = 30;
             double beforeHealth = character.CurrentHealth;
             double beforeMana = character.CurrentMana;
-            if (userInput == 1 && PotionsInBag.Contains(Utils.HealthPotion)) //체력 포션 사용
+
+			int healthPotionCount = 0;
+			int manaPotionCount = 0;
+
+			foreach (var item in PotionsInBag.Data)
+			{
+				if (item.ItemType == ItemType.Health)
+				{
+					healthPotionCount++;
+				}
+				else if (item.ItemType == ItemType.Mana)
+				{
+					manaPotionCount++;
+				}
+			}
+
+			if (userInput == 1 && healthPotionCount > 0) //체력 포션 사용
             {
                 //소지 중인 체력 포션 1개 감소
                 PotionsInBag.Remove(Utils.HealthPotion);
@@ -213,10 +229,10 @@ namespace TextRpg_MonsterHunting
                 //현재 체력 30 증가
                 character.ChangeHealth(UseHealthPotion);
 
-                Console.WriteLine("회복을 완료했습니다.");
+                Console.WriteLine("체력 회복을 완료했습니다.");
 				Console.WriteLine($"HP {beforeHealth} -> {character.CurrentHealth}");
 			}
-            else if (userInput == 2 && PotionsInBag.Contains(Utils.ManaPotion)) //마나 포션 사용
+            else if (userInput == 2 && manaPotionCount > 0) //마나 포션 사용
             {
                 //소지 중인 마나 포션 1개 감소
                 PotionsInBag.Remove(Utils.ManaPotion);
@@ -224,7 +240,7 @@ namespace TextRpg_MonsterHunting
                 //현재 마나 30 증가
                 character.ChangeMana(UseManaPotion);
 
-                Console.WriteLine("회복을 완료했습니다.");
+                Console.WriteLine("마나 회복을 완료했습니다.");
 				Console.WriteLine($"MP {beforeMana} -> {character.CurrentMana}");
 			}
             else if(userInput == 0)

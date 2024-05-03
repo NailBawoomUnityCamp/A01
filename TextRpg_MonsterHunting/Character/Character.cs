@@ -54,6 +54,31 @@ namespace TextRpg_MonsterHunting
 			this.IsDie = IsDie;
 			this.CurrentStage = CurrentStage;
 			this.inventory = inventory;
+
+			if (Instance == null)
+			{
+				Instance = this;
+			}
+            skillManager = new SkillManager();
+			switch (this.ClassType)
+			{
+				case GameClassType.Warrior:
+
+					// 스킬 추가
+					skillManager.AddSkill(new Skill("알파 스트라이크", 10, 2f, 1));
+					skillManager.AddSkill(new Skill("더블 스트라이크", 15, 1.5f, 2));
+					break;
+				case GameClassType.Wizard:
+
+					skillManager.AddSkill(new Skill("크리스탈 블레이드", 60, 5f, 1));
+					skillManager.AddSkill(new Skill("파이어 스톰", 30, 3f, 2));
+					break;
+				case GameClassType.Archer:
+
+					skillManager.AddSkill(new Skill("레드 스윙", 50, 3f, 2));
+					skillManager.AddSkill(new Skill("바이올렛 샷", 30, 2f, 3));
+					break;
+			}
 		}
 
 
@@ -80,9 +105,6 @@ namespace TextRpg_MonsterHunting
             {
                 inventory.Add(Utils.HealthPotion);
             }
-
-            ChangeAttack(0);
-            ChangeDefense(0);
 
             switch (ClassType)
             {
@@ -115,7 +137,10 @@ namespace TextRpg_MonsterHunting
                     skillManager.AddSkill(new Skill("바이올렛 샷", 30, 2f, 3));
                     break;
             }
-        }
+
+			ChangeAttack(0);
+			ChangeDefense(0);
+		}
 
         // 캐릭터의 정보 출력
         public void PrintCharacterInfo() 

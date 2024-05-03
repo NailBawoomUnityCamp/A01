@@ -407,13 +407,13 @@ namespace TextRpg_MonsterHunting
 
             //무기 공격력  random.Next(1, _stageNum + 1);
             int weaponAttack = random.Next(1, _stageNum+3);
-            Equipment dungeonSword = new Equipment($"던전의 잔혹함{_stageNum}", EquipmentType.OneHand, weaponAttack, "매서운 던전에서만 벼려진다는 날카로운 칼입니다.", ItemType.Attack, _stageNum * 3);
+            Equipment dungeonSword = new Equipment($"던전의 잔혹함{_stageNum}", EquipmentType.OneHand, weaponAttack, "매서운 던전에서만 벼려진다는 날카로운 칼입니다.", ItemType.Attack, _stageNum*200);
             _hero.inventory.Add(dungeonSword);
             Console.WriteLine($"무기 : {dungeonSword.Name} | 공격력 + {dungeonSword.Stat} | {dungeonSword.Discription}\n");
 
             //방어구 방어력 random.Next(1, _stageNum + 1);
             int armorDefence = random.Next(1, _stageNum+3);
-            Equipment dungeonArmor = new Equipment($"던전의 고요함{_stageNum}", EquipmentType.Body, armorDefence, "던전의 깊은 어둠을 담아낸 갑옷입니다.", ItemType.Defence, _stageNum * 3);
+            Equipment dungeonArmor = new Equipment($"던전의 고요함{_stageNum}", EquipmentType.Body, armorDefence, "던전의 깊은 어둠을 담아낸 갑옷입니다.", ItemType.Defence, _stageNum*200);
             _hero.inventory.Add(dungeonArmor);
             Console.WriteLine($"방어구 : {dungeonArmor.Name} | 방어력 + {dungeonArmor.Stat} | {dungeonArmor.Discription}\n");
         

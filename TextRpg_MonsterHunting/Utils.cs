@@ -281,7 +281,14 @@ namespace TextRpg_MonsterHunting
 
 		public void Remove(Potion item)
 		{
-			Data.Remove(item);
+			foreach(Potion potion in Data)
+			{
+				if(potion.ItemType == item.ItemType)
+				{
+					Data.Remove(potion);
+					break;
+				}
+			}
 			Count--;
 		}
 

@@ -65,7 +65,7 @@ namespace TextRpg_MonsterHunting
 					for (int i = 0; i < _customer.inventory.EquipmentsInBag.Count; i++)
 					{
 						Item item = _customer.inventory.EquipmentsInBag[i];
-						Console.WriteLine($"- {i + 1} {item.Name} | {item.GetType()} +{item.Stat} | {item.Discription} | {item.Price} G");
+						Console.WriteLine($"- {i + 1} {item.Name} | {item.GetType()} +{item.Stat} | {item.Discription} | {Math.Round(item.Price * 0.85f)} G");
 					}
 				}
 				else
