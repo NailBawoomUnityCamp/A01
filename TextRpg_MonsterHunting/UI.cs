@@ -61,6 +61,7 @@ namespace TextRpg_MonsterHunting
             return userInput;
         }
 
+        //카운트 다운 함수
         public void CountdownComment(int time, string comment)
         {
             for (int i = time; i > 0; i--)

@@ -8,6 +8,8 @@ namespace TextRpg_MonsterHunting
 {
     public class InventoryScene : Scene
     {
+        //인벤토리 관리 창
+        //장착 관리창으로 이동 가능
         public void loadScene(UI ui, Character character)
         {
             ui.PrintTitle("인벤토리 관리");

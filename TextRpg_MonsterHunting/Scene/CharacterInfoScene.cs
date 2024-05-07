@@ -8,6 +8,7 @@ namespace TextRpg_MonsterHunting
 {
     public class CharacterInfoScene : Scene
     {
+        //캐릭터 정보 창 출력
         public void loadScene(UI ui, Character character)
         {
             ui.PrintTitle("상태 보기");

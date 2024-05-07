@@ -10,7 +10,6 @@ namespace TextRpg_MonsterHunting
 {
     public class SceneManager
     {
-        //싱글톤 생성
         public static SceneManager Instance;
         public Scene _startScene;
         public Scene _characterInfoScene;
@@ -18,22 +17,22 @@ namespace TextRpg_MonsterHunting
         public Scene _equipmentScene;
         public Scene _potionScene;
         public Scene _questScene;
-        //public Scene _questAcceptScene;
 
         public SceneManager()
         {
-            if (Instance == null)
+			//싱글톤 생성
+			if (Instance == null)
             {
                 Instance = this;
             }
 
+            //씬 목록 추가
             _startScene = new StartScene();
             _characterInfoScene = new CharacterInfoScene();
             _inventoryScene = new InventoryScene();
             _equipmentScene = new EquipmentScene();
             _potionScene = new PotionScene();
             _questScene = new QuestScene();
-            //_questAcceptScene = new QuestAcceptScene();
         }
     }
 }

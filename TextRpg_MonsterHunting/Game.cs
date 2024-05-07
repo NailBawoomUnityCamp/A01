@@ -21,7 +21,6 @@ namespace TextRpg_MonsterHunting
             sceneManager = new SceneManager();
             questManager = new QuestManager();
             _introScene = new IntroScene();
-            //Utils.SaveDestory();
         }
 
         //게임 시작 method
@@ -29,7 +28,6 @@ namespace TextRpg_MonsterHunting
         {
             while (!leaveTown)
             {
-                //introScene 불러오기
                 _introScene.loadScene(_ui); //이름, 직업 받은 후 마을로 이동
             }
         }
