@@ -8,7 +8,8 @@ namespace TextRpg_MonsterHunting
 {
     internal class EquipmentScene : Scene
     {
-        public void loadScene(UI ui, Character character)
+		//장착 관리 창 출력
+		public void loadScene(UI ui, Character character)
         {
             int userInput;
             do

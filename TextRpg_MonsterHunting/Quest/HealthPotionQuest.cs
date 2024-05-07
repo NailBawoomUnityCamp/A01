@@ -13,8 +13,8 @@ namespace TextRpg_MonsterHunting
         {
             RewardItem = ItemType.Health;
         }
-
-        public override void QuestContent()
+		//퀘스트 설명
+		public override void QuestContent()
         {
             Console.WriteLine("\n== 장비 장착해보자 ==");
             Console.WriteLine("자네, 이제 장비를 장착해볼 때가 되었네. 자네가 가진 장비들을 살펴보게.");
@@ -24,7 +24,8 @@ namespace TextRpg_MonsterHunting
             Console.WriteLine("체력 포션 x1, 5G");
             Console.ResetColor();
         }
-        public override void CheckQuestProgress()
+		//퀘스트 클리어 업데이트
+		public override void CheckQuestProgress()
         {
             if (this.IsAccept)
             {

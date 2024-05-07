@@ -16,7 +16,8 @@ namespace TextRpg_MonsterHunting
             monstersKilledCount = 0;
         }
 
-        public override void QuestContent()
+		//퀘스트 설명
+		public override void QuestContent()
         {
             Console.WriteLine("\n== 마을을 위협하는 미니언 처치 ==");
             Console.WriteLine("이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나? ");
@@ -39,7 +40,8 @@ namespace TextRpg_MonsterHunting
             Console.WriteLine("마나 포션 x1, 5G");
             Console.ResetColor();
         }
-        public override void CheckQuestProgress()
+		//퀘스트 클리어 업데이트
+		public override void CheckQuestProgress()
         {          
             if (this.IsAccept) // 수락후
             {
@@ -50,6 +52,7 @@ namespace TextRpg_MonsterHunting
                 }          
             }
         }
+        //몬스터 처치 수 초기화
         public void ClearMonsterCount()
         {
             this.monstersKilledCount = 0;          
