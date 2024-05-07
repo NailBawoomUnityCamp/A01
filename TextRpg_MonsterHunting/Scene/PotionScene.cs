@@ -8,6 +8,8 @@ namespace TextRpg_MonsterHunting
 {
     internal class PotionScene : Scene
     {
+        //포션 사용 창
+        //회복 또는 마나 회복 가능
         public void loadScene(UI ui, Character character)
         {
             int userInput;

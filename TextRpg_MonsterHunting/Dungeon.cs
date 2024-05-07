@@ -364,6 +364,8 @@ namespace TextRpg_MonsterHunting
         }
 
         //전투 끝나고 마무리 작업
+        //게임 클리어 또는 패배 정보 출력
+        //클리어 시 보상 획득 함수 호출
         void AfterFight(double heroHealthBeforeFight)
         {
             Console.Clear();
@@ -389,7 +391,7 @@ namespace TextRpg_MonsterHunting
             SceneManager.Instance._startScene.loadScene(_ui, _hero);
         }
 
-        //던전 보상 추가
+        //던전 보상 지급
         void Reward()
         {
             Console.Clear();

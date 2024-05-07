@@ -11,6 +11,8 @@ namespace TextRpg_MonsterHunting
     {
         Character character;
 
+		//게임 시작 시 캐릭터를 생성하는 인트로 창
+		//종료시 게임 메인 창으로 이동
         public void loadScene(UI ui)
         {
             bool isHeroLoaded = Utils.LoadHero(out character);

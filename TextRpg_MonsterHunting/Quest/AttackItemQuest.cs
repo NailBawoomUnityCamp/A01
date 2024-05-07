@@ -14,6 +14,7 @@ namespace TextRpg_MonsterHunting
             RewardItem = ItemType.Attack;
         }
 
+        //퀘스트 설명
         public override void QuestContent()
         {
             Console.WriteLine("\n== 더욱 더 강해지기! ==");
@@ -24,6 +25,8 @@ namespace TextRpg_MonsterHunting
             Console.WriteLine("단검 x1, 5G");
             Console.ResetColor();
         }
+
+        //퀘스트 클리어 업데이트
         public override void CheckQuestProgress()
         {
             if (this.IsAccept)

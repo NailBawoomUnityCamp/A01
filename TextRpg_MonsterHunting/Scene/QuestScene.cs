@@ -10,6 +10,8 @@ namespace TextRpg_MonsterHunting
     {
         int userInput;
 
+        //퀘스트 관리 창
+        //퀘스트를 수락, 거절 또는 클리어 시 보상 획득을 할 수 있음
         public void loadScene(UI ui, Character character)
         {
             do

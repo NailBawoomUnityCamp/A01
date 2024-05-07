@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace TextRpg_MonsterHunting
 {
+    //메인 씬
+    //상태 보기, 인벤토리 관리 등 다른 창으로 이동 가능
+    //7번을 입력하면 게임 저장 데이터를 초기화하고 게임을 종료함
+    //여기에 들어오면 게임이 저장됨
+    //전투 종료 후 죽을 경우 여기서 체력 1%로 회복
     public class StartScene : Scene
     {
         public void loadScene(UI ui, Character character)
@@ -32,9 +37,6 @@ namespace TextRpg_MonsterHunting
             switch(userInput)
             {
                 case 0: //게임 종료
-
-                    //게임 저장 기능 구현되면 추가하기
-
                     ui.CountdownComment(2, "게임이 종료됩니다.");
 
                     Environment.Exit(0); //정상 종료 코드 0, 음수값이 들어가면 비정상 종료
